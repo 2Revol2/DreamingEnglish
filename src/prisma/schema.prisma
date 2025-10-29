@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EnglishLevel {
+  A0
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+model User {
+  id         String       @id @default(cuid())
+  username   String
+  email      String       @unique
+  password   String
+  dailyGoal  Int          @default(0) // second
+  totalInput Int          @default(0) // minutes
+  level      EnglishLevel @default(A0)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  videoProgress UserVideoProgress[]
+  dailyWatch    UserDailyWatch[]
+}
+
+model Video {
+  id         String       @id @default(cuid())
+  title      String
+  level      EnglishLevel
+  duration   Int // second
+  url        String
+  thumbnail  String
+  transcript String
+
+  progress UserVideoProgress[]
+}
+
+model UserVideoProgress {
+  id             String  @id @default(cuid())
+  userId         String
+  videoId        String
+  watchedSeconds Int     @default(0)
+  completed      Boolean @default(false)
+
+  user  User  @relation(fields: [userId], references: [id])
+  video Video @relation(fields: [videoId], references: [id])
+
+  @@unique([userId, videoId])
+}
+
+model UserDailyWatch {
+  id             String   @id @default(cuid())
+  userId         String
+  watchedSeconds Int      @default(0)
+  date           DateTime
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
+}
