@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+body {
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    background-color: var(--background);
+    color: var(--text);
+}
+
+:root {
+    --background: #f3f2f7;
+    --secondary-background: #ffffff;
+    --text: #1A1A1A;
+    --border:  #f3f2f7;
+    --hover: #ff552d;
+}
+
+.dark {
+    --background: #0E1117;
+    --secondary-background: #1C1F26;
+    --text: #E5E7EB;
+    --border: #0E1117;
+    --hover: #ff552d;
+}
+
+@theme {
+    --color-background: var(--background);
+    --color-secondary-background: var(--secondary-background);
+    --color-borderColor: var(--border);
+    --color-textColor: var(--text);
+    --color-hoverColor: var(--hover);
+}

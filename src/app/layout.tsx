@@ -1,5 +1,7 @@
-import "./globals.css";
+import "./styles/globals.css";
 import { Poppins } from "next/font/google";
+import { Header } from "@/widgets/Header";
+import { Sidebar } from "@/widgets/Sidebar";
 import type { ReactNode } from "react";
 
 const poppins = Poppins({
@@ -14,7 +16,15 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className={poppins.variable}>{children}</body>
+      <body className={poppins.variable}>
+        <div className={"flex lg:flex-row min-h-screen"}>
+          <Sidebar />
+          <div className={"flex-1"}>
+            <Header />
+            <main>{children}</main>
+          </div>
+        </div>
+      </body>
     </html>
   );
 };
