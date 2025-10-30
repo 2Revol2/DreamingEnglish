@@ -8,16 +8,16 @@ export const SidebarItems: SidebarItemType[] = [
   {
     text: "Watch",
     path: RoutePath.watch,
-    Icon: <FaRegCirclePlay className={"text-[#e83e8c]"} size={30} />,
+    Icon: <FaRegCirclePlay className={"text-[#e83e8c] lg:text-[30px] text-[24px]"} />,
   },
   {
     text: "Progress",
     path: RoutePath.progress,
-    Icon: <GiProgression className={"text-[#6f42c1]"} size={30} />,
+    Icon: <GiProgression className={"text-[#6f42c1] lg:text-[30px] text-[24px]"} />,
   },
   {
     text: "Library",
     path: RoutePath.library,
-    Icon: <BsFillCollectionPlayFill className={"text-[#20c997]"} size={30} />,
+    Icon: <BsFillCollectionPlayFill className={"text-[#20c997] lg:text-[30px] text-[24px]"} />,
   },
 ];

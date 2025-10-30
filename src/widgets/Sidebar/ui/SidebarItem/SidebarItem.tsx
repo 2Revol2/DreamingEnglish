@@ -1,5 +1,5 @@
+"use client";
 import Link from "next/link";
-import Image from "next/image";
 import type { SidebarItemType } from "../../model/types/types";
 
 interface SidebarItemProps {
@@ -8,10 +8,11 @@ interface SidebarItemProps {
 
 export const SidebarItem = (props: SidebarItemProps) => {
   const { item } = props;
+
   return (
-    <Link href={item.path} className={"flex gap-2 items-center justify-center"}>
+    <Link href={item.path} className={"flex gap-2 lg:flex-row flex-col items-center justify-center"}>
       {item.Icon}
-      <span className={"text-[20px] font-medium"}>{item.text}</span>
+      <span className={"lg:text-[20px] text-xs font-medium"}>{item.text}</span>
     </Link>
   );
 };
