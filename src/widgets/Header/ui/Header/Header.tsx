@@ -1,7 +1,7 @@
 import { FaPen } from "react-icons/fa";
 import { Progress } from "@/shared/ui/progress";
 import { Separator } from "@/shared/ui/separator";
-import { AvatarDropdown } from "@/features/AvatarDropdown";
+import { AvatarDropdown } from "../AvatarDropdown/AvatarDropdown";
 
 export const Header = () => {
   return (
