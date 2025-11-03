@@ -18,16 +18,20 @@ enum EnglishLevel {
 }
 
 model User {
-  id         String       @id @default(cuid())
-  username   String
-  email      String       @unique
-  password   String
+  id String @id @default(cuid())
+
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+
   dailyGoal  Int          @default(0) // second
   totalInput Int          @default(0) // minutes
   level      EnglishLevel @default(A0)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
 
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
   videoProgress UserVideoProgress[]
   dailyWatch    UserDailyWatch[]
 }

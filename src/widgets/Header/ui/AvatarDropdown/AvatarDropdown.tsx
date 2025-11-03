@@ -1,4 +1,5 @@
 "use client";
+import { signOut } from "next-auth/react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,6 +9,8 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@/shared/ui/avatar";
 import { ThemeSwitcher } from "@/features/ThemeSwitcher";
+import { Button } from "@/shared/ui/button";
+import { RoutePath } from "@/shared/constants/router";
 
 export const AvatarDropdown = () => {
   return (
@@ -21,6 +24,18 @@ export const AvatarDropdown = () => {
         <DropdownMenuGroup className={"p-1"}>
           <DropdownMenuItem className={"flex items-center justify-between"} onSelect={(e) => e.preventDefault()}>
             <ThemeSwitcher />
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuGroup className={"p-1"}>
+          <DropdownMenuItem className={"flex items-center justify-between"} onSelect={(e) => e.preventDefault()}>
+            <Button
+              onClick={() => signOut({ callbackUrl: RoutePath.main })}
+              variant={"ghost"}
+              className={"w-full justify-start"}
+            >
+              Logout
+            </Button>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
