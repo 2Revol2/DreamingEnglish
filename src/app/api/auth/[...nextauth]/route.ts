@@ -3,15 +3,11 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "@/prisma/prismaClient";
 
-const clientId = process.env.NODE_ENV === "development" ? process.env.GITHUB_ID_DEV : process.env.GITHUB_ID_PROD;
-const clientSecret =
-  process.env.NODE_ENV === "development" ? process.env.GITHUB_SECRET_DEV : process.env.GITHUB_SECRET_PROD;
-
 const handler = NextAuth({
   providers: [
     GithubProvider({
-      clientId: clientId || "",
-      clientSecret: clientSecret || "",
+      clientId: process.env.GITHUB_ID || "",
+      clientSecret: process.env.GITHUB_SECRET || "",
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
