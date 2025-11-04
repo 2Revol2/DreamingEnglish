@@ -1,5 +1,6 @@
 import "./styles/globals.css";
 import { Poppins } from "next/font/google";
+import { AuthProvider } from "./providers/AuthProvider";
 import type { ReactNode } from "react";
 
 const poppins = Poppins({
@@ -14,7 +15,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className={poppins.variable}>{children}</body>
+      <body className={poppins.variable}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 };

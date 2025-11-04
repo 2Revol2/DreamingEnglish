@@ -1,5 +1,5 @@
 "use client";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,11 +13,13 @@ import { Button } from "@/shared/ui/button";
 import { RoutePath } from "@/shared/constants/router";
 
 export const AvatarDropdown = () => {
+  const { data: session } = useSession();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage src={session?.user?.image ?? "https://github.com/shadcn.png"} />
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
