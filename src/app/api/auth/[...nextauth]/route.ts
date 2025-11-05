@@ -25,6 +25,15 @@ const handler = NextAuth({
           where: { email: user.email! },
         });
 
+        if (existingUser) {
+          await prisma.user.update({
+            where: { email: existingUser.email!, id: existingUser.id },
+            data: {
+              image: user.image,
+            },
+          });
+        }
+
         if (!existingUser) {
           await prisma.user.create({
             data: {
