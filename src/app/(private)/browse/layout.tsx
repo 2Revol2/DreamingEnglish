@@ -1,4 +1,4 @@
-import { Header } from "@/widgets/Header";
+import { AuthHeader } from "@/widgets/Header";
 import { Sidebar } from "@/widgets/Sidebar";
 import type { ReactNode } from "react";
 
@@ -11,7 +11,7 @@ const RootLayout = ({
     <div className={"flex lg:flex-row min-h-screen"}>
       <Sidebar />
       <div className={"flex-1"}>
-        <Header />
+        <AuthHeader />
         <main>{children}</main>
       </div>
     </div>

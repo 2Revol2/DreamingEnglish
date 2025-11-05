@@ -23,11 +23,13 @@ export const Sidebar = () => {
           </h1>
         </div>
       </Link>
-      <div className={"flex w-full lg:flex-col justify-around gap-7 items-center lg:mt-8"}>
-        {SidebarItems.map((item) => (
-          <SidebarItem item={item} key={item.path} />
-        ))}
-      </div>
+      <nav>
+        <ul className={"flex w-full lg:flex-col justify-around gap-7 items-center lg:mt-8"}>
+          {SidebarItems.map((item) => (
+            <SidebarItem item={item} key={item.path} />
+          ))}
+        </ul>
+      </nav>
     </aside>
   );
 };

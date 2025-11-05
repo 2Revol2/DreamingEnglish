@@ -3,7 +3,7 @@ import { Progress } from "@/shared/ui/progress";
 import { Separator } from "@/shared/ui/separator";
 import { AvatarDropdown } from "../AvatarDropdown/AvatarDropdown";
 
-export const Header = () => {
+export const AuthHeader = () => {
   return (
     <header
       className={"bg-secondary-background border-l border-borderColor h-12 flex justify-between items-center p-3"}

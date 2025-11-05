@@ -15,6 +15,10 @@ svg {
     height: auto;
 }
 
+button {
+    cursor: pointer;
+}
+
 :root {
     --background: #f3f2f7;
     --secondary-background: #ffffff;
