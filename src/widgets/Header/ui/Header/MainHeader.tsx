@@ -8,8 +8,8 @@ import { NavbarItems } from "../../model/constants/consts";
 
 export const MainHeader = () => {
   return (
-    <header className={"bg-secondary-background h-20 sticky top-0 w-full"}>
-      <Container className={"flex justify-between"}>
+    <header className={"bg-secondary-background h-20 sticky top-0 w-full shadow-sm"}>
+      <Container className={"flex justify-between h-full"}>
         <Link href="/" className={"flex items-center"}>
           <Image src={Logo} alt="Logo" className={"w-20 h-20"} />
           <h1 className={"text-3xl font-bold text-primary"}>Dreaming</h1>

@@ -23,8 +23,8 @@ export const Sidebar = () => {
           </h1>
         </div>
       </Link>
-      <nav>
-        <ul className={"flex w-full lg:flex-col justify-around gap-7 items-center lg:mt-8"}>
+      <nav className={"w-full"}>
+        <ul className={"flex h-full w-full lg:flex-col justify-around gap-7 items-center lg:mt-8"}>
           {SidebarItems.map((item) => (
             <SidebarItem item={item} key={item.path} />
           ))}
