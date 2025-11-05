@@ -1,5 +1,6 @@
 import { MainHeader } from "@/widgets/Header";
 import { Container } from "@/shared/ui/container";
+import { Footer } from "@/widgets/Footer";
 import type { ReactNode } from "react";
 
 const RootLayout = ({
@@ -16,7 +17,7 @@ const RootLayout = ({
         <Container>{children}</Container>
         {modal}
       </main>
-      <footer>Footer</footer>
+      <Footer />
     </div>
   );
 };
