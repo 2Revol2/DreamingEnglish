@@ -1,7 +1,7 @@
 import { RoutePath } from "@/shared/constants/router";
-import type { NavbarItemType } from "../types/types";
+import type { NavbarItemType } from "../types/type";
 
-export const NavbarItems: NavbarItemType[] = [
+export const mainNavLinks: NavbarItemType[] = [
   {
     text: "About us",
     path: RoutePath.about,

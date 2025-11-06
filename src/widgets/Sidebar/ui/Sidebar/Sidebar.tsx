@@ -26,7 +26,9 @@ export const Sidebar = () => {
       <nav className={"w-full"}>
         <ul className={"flex h-full w-full lg:flex-col justify-around gap-7 items-center lg:mt-8"}>
           {SidebarItems.map((item) => (
-            <SidebarItem item={item} key={item.path} />
+            <li key={item.path}>
+              <SidebarItem item={item} />
+            </li>
           ))}
         </ul>
       </nav>
