@@ -11,6 +11,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Button } from "@/shared/ui/button";
 import { mainNavLinks, NavLink } from "@/entities/NavLink";
+import { RoutePath } from "@/shared/constants/router";
 
 export const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +30,7 @@ export const MobileMenu = () => {
             </DropdownMenuItem>
           ))}
           <DropdownMenuItem onClick={() => setIsOpen(false)}>
-            <Link href="/browse">
+            <Link href={RoutePath.browse}>
               <Button className={"rounded-3xl p-6 text-2xl"}>Get Started</Button>
             </Link>
           </DropdownMenuItem>

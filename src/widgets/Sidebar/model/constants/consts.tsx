@@ -7,7 +7,7 @@ import type { SidebarItemType } from "../types/types";
 export const SidebarItems: SidebarItemType[] = [
   {
     text: "Watch",
-    path: RoutePath.watch,
+    path: RoutePath.browse,
     Icon: <FaRegCirclePlay className={"text-[#e83e8c] lg:text-[30px] text-[24px]"} />,
   },
   {

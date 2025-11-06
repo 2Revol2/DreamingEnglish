@@ -13,14 +13,14 @@ export const LoginFormContent = () => {
         <Button
           variant="default"
           className="bg-[#24292e] text-white hover:bg-[#1b1f23]"
-          onClick={() => signIn("github", { callbackUrl: RoutePath.watch })}
+          onClick={() => signIn("github", { callbackUrl: RoutePath.browse })}
         >
           <FaGithub size={20} />
           Github
         </Button>
         <Button
           className=" bg-white text-black border border-gray-300 hover:bg-gray-50"
-          onClick={() => signIn("google", { callbackUrl: RoutePath.watch })}
+          onClick={() => signIn("google", { callbackUrl: RoutePath.browse })}
         >
           <FcGoogle size={20} />
           Google

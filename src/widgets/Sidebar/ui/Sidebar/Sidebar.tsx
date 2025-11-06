@@ -11,7 +11,7 @@ export const Sidebar = () => {
       className={"w-full h-16 lg:w-65 lg:h-[100vh] bg-secondary-background fixed bottom-0 lg:static flex lg:flex-col"}
     >
       <Link
-        href={RoutePath.watch}
+        href={RoutePath.browse}
         className={"h-40 border-b hidden border-borderColor lg:flex items-center justify-center"}
       >
         <Image src={Logo} alt="Logo" className={"w-30 h-30"} />

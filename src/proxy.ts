@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 import { RoutePath } from "@/shared/constants/router";
 import type { NextRequest } from "next/server";
 
-const protectedRoutes = [RoutePath.watch];
+const protectedRoutes = [RoutePath.browse];
 
 export async function proxy(request: NextRequest) {
   const token = await getToken({ req: request });
@@ -12,7 +12,7 @@ export async function proxy(request: NextRequest) {
   const isProtected = protectedRoutes.some((route) => pathname.startsWith(route));
 
   if (isProtected && !token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL(RoutePath.login, request.url));
   }
 
   return NextResponse.next();
