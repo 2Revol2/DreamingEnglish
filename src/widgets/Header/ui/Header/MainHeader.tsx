@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/shared/ui/container";
 import Logo from "@/shared/assets/logo.png";
-import { DesktopMenu, MobileMenu } from "@/features/NavigationMenu";
+import { NavigationMenu } from "@/features/NavigationMenu";
 
 export const MainHeader = () => {
   return (
@@ -12,9 +12,7 @@ export const MainHeader = () => {
           <Image src={Logo} alt="Logo" className={"w-20 h-20"} />
           <h1 className={"text-3xl font-bold text-primary"}>Dreaming</h1>
         </Link>
-
-        <DesktopMenu />
-        <MobileMenu />
+        <NavigationMenu />
       </Container>
     </header>
   );

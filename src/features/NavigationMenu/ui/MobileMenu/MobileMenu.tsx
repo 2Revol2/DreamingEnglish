@@ -16,7 +16,7 @@ export const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger asChild className={"md:hidden"}>
+      <DropdownMenuTrigger asChild>
         <Button variant={"ghost"}>
           <RxHamburgerMenu size={30} />
         </Button>
