@@ -18,6 +18,13 @@ enum EnglishLevel {
   C2
 }
 
+enum VideoLevel {
+  SUPER_BEGINNER
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
 model User {
   id String @id @default(cuid())
 
@@ -38,9 +45,9 @@ model User {
 }
 
 model Video {
-  id         String       @id @default(cuid())
+  id         String     @id @default(cuid())
   title      String
-  level      EnglishLevel
+  level      VideoLevel
   duration   Int // second
   url        String
   thumbnail  String
