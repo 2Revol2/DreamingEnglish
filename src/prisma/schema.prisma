@@ -45,15 +45,15 @@ model User {
 }
 
 model Video {
-  id         String     @id @default(cuid())
-  title      String
-  level      VideoLevel
-  duration   Int // second
-  url        String
-  thumbnail  String
-  transcript String
+  id        String     @id @default(cuid())
+  title     String
+  level     VideoLevel
+  duration  Int // second
+  url       String
+  thumbnail String
 
-  progress UserVideoProgress[]
+  progress   UserVideoProgress[]
+  transcript VideoTranscript?
 }
 
 model UserVideoProgress {
@@ -78,4 +78,12 @@ model UserDailyWatch {
   user User @relation(fields: [userId], references: [id])
 
   @@unique([userId, date])
+}
+
+model VideoTranscript {
+  id      String @id @default(cuid())
+  videoId String @unique
+  content String
+
+  video Video @relation(fields: [videoId], references: [id])
 }
