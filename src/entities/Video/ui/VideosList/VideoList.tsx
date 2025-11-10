@@ -13,36 +13,6 @@ export const VideoList = (props: VideoListProps) => {
       {videos.map((video) => (
         <VideoItem key={video.id} video={video} />
       ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
-      {videos.map((video) => (
-        <VideoItem key={video.id} video={video} />
-      ))}
     </div>
   );
 };
