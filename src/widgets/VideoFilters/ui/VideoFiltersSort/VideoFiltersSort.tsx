@@ -1,6 +1,6 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from "@/shared/ui/select";
 
-export const BrowsePageSortProps = () => {
+export const VideoFiltersSort = () => {
   return (
     <Select defaultValue={"new"}>
       <SelectTrigger className="w-[100px] bg-background border-none">

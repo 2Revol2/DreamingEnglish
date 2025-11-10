@@ -12,7 +12,7 @@ import {
 import { Label } from "@/shared/ui/label";
 import { levels } from "@/shared/constants/levels";
 
-export const BrowsePageLevels = () => {
+export const VideoFiltersLevels = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -34,7 +34,7 @@ export const BrowsePageLevels = () => {
       params.delete("levels");
     }
 
-    router.push(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   return (
