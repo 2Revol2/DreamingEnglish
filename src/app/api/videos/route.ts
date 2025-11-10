@@ -3,12 +3,21 @@ import { prisma } from "@/prisma/prismaClient";
 import type { VideoLevel } from "@prisma/client";
 import type { NextRequest } from "next/server";
 
+const LEVEL_ORDER: Record<VideoLevel, number> = {
+  SUPER_BEGINNER: 1,
+  BEGINNER: 2,
+  INTERMEDIATE: 3,
+  ADVANCED: 4,
+};
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
   const levelsParam = searchParams.get("levels");
-
   const levelsArray = levelsParam ? levelsParam.split(",") : [];
+
+  const sortParam = searchParams.get("sort") ?? "new";
+  const sortByTime = sortParam === "new" ? "desc" : "asc";
 
   const video = await prisma.video.findMany({
     where: {
@@ -19,7 +28,20 @@ export async function GET(req: NextRequest) {
             }
           : undefined,
     },
+    orderBy: [{ createdAt: sortByTime }],
   });
+
+  if (sortParam === "hard" || sortParam === "easy") {
+    video.sort((a, b) => {
+      const orderA = LEVEL_ORDER[a.level];
+      const orderB = LEVEL_ORDER[b.level];
+      if (sortParam === "hard") {
+        return orderB - orderA;
+      } else {
+        return orderA - orderB;
+      }
+    });
+  }
 
   return NextResponse.json(video);
 }

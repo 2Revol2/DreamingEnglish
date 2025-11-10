@@ -45,15 +45,19 @@ model User {
 }
 
 model Video {
-  id        String     @id @default(cuid())
-  title     String
-  level     VideoLevel
+  id    String @id @default(cuid())
+  title String
+
+  level VideoLevel
+
   duration  Int // second
   url       String
   thumbnail String
 
   progress   UserVideoProgress[]
   transcript VideoTranscript?
+
+  createdAt DateTime @default(now())
 }
 
 model UserVideoProgress {

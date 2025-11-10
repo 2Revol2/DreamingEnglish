@@ -5,8 +5,8 @@ import { VideoFilters } from "@/widgets/VideoFilters";
 const BrowsePage = async ({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) => {
   const sp = await searchParams;
   const levels = sp.levels ? sp.levels.split(",") : [];
-
-  const videos = await getVideos(levels);
+  const sortBy = sp.sort || "new";
+  const videos = await getVideos(levels, sortBy);
 
   return (
     <div className={"flex flex-col gap-4"}>
