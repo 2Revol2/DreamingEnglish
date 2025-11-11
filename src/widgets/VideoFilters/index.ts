@@ -1,1 +1,1 @@
-export { VideoFilters } from "./ui/VideoFilters/VideoFilters";
+export { VideoFilters } from "./ui/VideoFilters";

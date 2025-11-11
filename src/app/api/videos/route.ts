@@ -19,6 +19,13 @@ export async function GET(req: NextRequest) {
   const sortParam = searchParams.get("sort") ?? "new";
   const sortByTime = sortParam === "new" ? "desc" : "asc";
 
+  const durationParam = searchParams.get("duration") ?? "";
+  console.log("durationParam", durationParam);
+
+  const [minStr, maxStr] = durationParam ? durationParam.split("to") : [];
+  const min = minStr ? Number(minStr) * 60 : undefined;
+  const max = maxStr ? Number(maxStr) * 60 : undefined;
+
   const video = await prisma.video.findMany({
     where: {
       level:
@@ -27,6 +34,7 @@ export async function GET(req: NextRequest) {
               in: levelsArray as VideoLevel[],
             }
           : undefined,
+      duration: min !== undefined && max !== undefined ? { gte: min, lte: max } : undefined,
     },
     orderBy: [{ createdAt: sortByTime }],
   });

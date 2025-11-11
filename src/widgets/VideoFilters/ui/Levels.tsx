@@ -1,6 +1,5 @@
 "use client";
 import { ChevronDownIcon } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Checkbox } from "@/shared/ui/checkbox";
 import {
   DropdownMenu,
@@ -11,12 +10,12 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Label } from "@/shared/ui/label";
 import { levels } from "@/shared/constants/levels";
+import { useQueryParams } from "@/shared/hooks/useQueryParams";
 
-export const VideoFiltersLevels = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const selectedLevels = searchParams?.get("levels")?.split(",") || [];
+export const Levels = () => {
+  const { getParam, setParam } = useQueryParams();
+
+  const selectedLevels = getParam("levels")?.split(",") || [];
 
   const handleLevelChange = (level: string) => {
     let newLevels = [...selectedLevels];
@@ -27,14 +26,7 @@ export const VideoFiltersLevels = () => {
       newLevels.push(level);
     }
 
-    const params = new URLSearchParams(searchParams?.toString());
-    if (newLevels.length > 0) {
-      params.set("levels", newLevels.join(","));
-    } else {
-      params.delete("levels");
-    }
-
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    setParam("levels", newLevels.length ? newLevels.join(",") : undefined);
   };
 
   return (
