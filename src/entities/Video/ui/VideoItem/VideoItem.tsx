@@ -10,7 +10,7 @@ export const VideoItem = (props: VideoItemProps) => {
   return (
     <div
       className={
-        "lg:max-w-[300px] sm:max-w-[250px] md:max-w-[280px] hover:shadow-md w-full bg-secondary-background rounded overflow-hidden cursor-pointer"
+        "lg:max-w-[308px] sm:max-w-[250px] md:max-w-[280px] hover:shadow-md w-full bg-secondary-background rounded overflow-hidden cursor-pointer"
       }
     >
       <div className="w-full aspect-video">
