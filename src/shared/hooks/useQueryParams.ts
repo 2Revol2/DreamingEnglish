@@ -1,23 +1,28 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useMemo } from "react";
 
 export const useQueryParams = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const setParam = (key: string, value?: string) => {
-    const params = new URLSearchParams(searchParams?.toString());
+  const setParam = useCallback(
+    (key: string, value?: string) => {
+      const params = new URLSearchParams(searchParams?.toString());
 
-    if (value === undefined || value === "") {
-      params.delete(key);
-    } else {
-      params.set(key, value);
-    }
+      if (value === undefined || value === "") {
+        params.delete(key);
+      } else {
+        if (params.get(key) === value) return;
+        params.set(key, value);
+      }
 
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  };
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
 
-  const getParam = (key: string) => searchParams.get(key);
+  const getParam = useCallback((key: string) => searchParams.get(key), [searchParams]);
 
-  return { getParam, setParam };
+  return useMemo(() => ({ getParam, setParam }), [getParam, setParam]);
 };

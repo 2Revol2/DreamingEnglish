@@ -1,5 +1,6 @@
 "use client";
 import { ChevronDownIcon } from "lucide-react";
+import { memo, useCallback, useMemo } from "react";
 import { Checkbox } from "@/shared/ui/checkbox";
 import {
   DropdownMenu,
@@ -12,27 +13,30 @@ import { Label } from "@/shared/ui/label";
 import { levels } from "@/shared/constants/levels";
 import { useQueryParams } from "@/shared/hooks/useQueryParams";
 
-export const Levels = () => {
+export const Levels = memo(() => {
   const { getParam, setParam } = useQueryParams();
 
-  const selectedLevels = getParam("levels")?.split(",") || [];
+  const selectedLevels = useMemo(() => getParam("levels")?.split(",") || [], [getParam]);
 
-  const handleLevelChange = (level: string) => {
-    let newLevels = [...selectedLevels];
+  const handleLevelChange = useCallback(
+    (level: string) => {
+      let newLevels = [...selectedLevels];
 
-    if (newLevels.includes(level)) {
-      newLevels = newLevels.filter((l) => l !== level);
-    } else {
-      newLevels.push(level);
-    }
+      if (newLevels.includes(level)) {
+        newLevels = newLevels.filter((l) => l !== level);
+      } else {
+        newLevels.push(level);
+      }
 
-    setParam("levels", newLevels.length ? newLevels.join(",") : undefined);
-  };
+      setParam("levels", newLevels.length ? newLevels.join(",") : undefined);
+    },
+    [selectedLevels, setParam],
+  );
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <span className="w-[100px] bg-background px-2 py-1.5 rounded-sm flex justify-between">
+        <span className=" bg-background px-2 py-1.5 rounded-sm flex justify-between">
           Levels <ChevronDownIcon className="size-4 opacity-50" />
         </span>
       </DropdownMenuTrigger>
@@ -54,4 +58,4 @@ export const Levels = () => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
+});

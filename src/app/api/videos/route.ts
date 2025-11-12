@@ -20,7 +20,8 @@ export async function GET(req: NextRequest) {
   const sortByTime = sortParam === "new" ? "desc" : "asc";
 
   const durationParam = searchParams.get("duration") ?? "";
-  console.log("durationParam", durationParam);
+
+  const search = searchParams.get("search") ?? "";
 
   const [minStr, maxStr] = durationParam ? durationParam.split("to") : [];
   const min = minStr ? Number(minStr) * 60 : undefined;
@@ -35,6 +36,10 @@ export async function GET(req: NextRequest) {
             }
           : undefined,
       duration: min !== undefined && max !== undefined ? { gte: min, lte: max } : undefined,
+      title: {
+        contains: search,
+        mode: "insensitive",
+      },
     },
     orderBy: [{ createdAt: sortByTime }],
   });

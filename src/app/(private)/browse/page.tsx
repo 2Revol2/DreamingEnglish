@@ -7,7 +7,8 @@ const BrowsePage = async ({ searchParams }: { searchParams: Promise<{ [key: stri
   const levels = sp.levels ? sp.levels.split(",") : [];
   const sortBy = sp.sort || "new";
   const duration = sp.duration;
-  const videos = await getVideos({ levels, sortBy, duration });
+  const search = sp.search;
+  const videos = await getVideos({ levels, sortBy, duration, search });
 
   return (
     <div className={"flex flex-col gap-4"}>

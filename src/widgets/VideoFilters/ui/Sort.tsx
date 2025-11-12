@@ -1,16 +1,16 @@
+"use client";
+import { memo } from "react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from "@/shared/ui/select";
 import { sortBy } from "@/shared/constants/sortBy";
 import { useQueryParams } from "@/shared/hooks/useQueryParams";
 
-export const Sort = () => {
+export const Sort = memo(() => {
   const { getParam, setParam } = useQueryParams();
   const sortedBy = getParam("sort") ?? "new";
 
   return (
     <Select defaultValue={sortedBy} onValueChange={(value) => setParam("sort", value)}>
-      <SelectTrigger className="w-[100px] bg-background border-none">
-        <span>Sort by</span>
-      </SelectTrigger>
+      <SelectTrigger className="bg-background border-none">Sort by</SelectTrigger>
       <SelectContent>
         <SelectGroup>
           {sortBy.map((item) => (
@@ -22,4 +22,4 @@ export const Sort = () => {
       </SelectContent>
     </Select>
   );
-};
+});

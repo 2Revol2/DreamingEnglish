@@ -1,10 +1,11 @@
-import { useState } from "react";
+"use client";
+import { memo, useState } from "react";
 import { ChevronDownIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger } from "@/shared/ui/dropdown-menu";
 import { Slider } from "@/shared/ui/slider-14";
 import { useQueryParams } from "@/shared/hooks/useQueryParams";
 
-export const Duration = () => {
+export const Duration = memo(() => {
   const { getParam, setParam } = useQueryParams();
 
   const durationParam = getParam("duration");
@@ -37,4 +38,4 @@ export const Duration = () => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
+});
