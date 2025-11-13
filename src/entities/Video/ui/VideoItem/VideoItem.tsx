@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { RoutePath } from "@/shared/constants/router";
 import type { Video } from "@prisma/client";
 
 interface VideoItemProps {
@@ -8,7 +10,8 @@ export const VideoItem = (props: VideoItemProps) => {
   const { video } = props;
 
   return (
-    <div
+    <Link
+      href={RoutePath.watch + video.id}
       className={
         "lg:max-w-[308px] sm:max-w-[250px] md:max-w-[280px] hover:shadow-md w-full bg-secondary-background rounded overflow-hidden cursor-pointer"
       }
@@ -24,6 +27,6 @@ export const VideoItem = (props: VideoItemProps) => {
           <span>{Math.floor(video.duration / 60)} мин</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

@@ -9,11 +9,11 @@ const RootLayout = ({
   children: ReactNode;
 }>) => {
   return (
-    <div className={"flex lg:flex-row min-h-screen"}>
+    <div className={"flex lg:flex-row h-screen overflow-hidden"}>
       <Sidebar />
-      <div className={"flex-1"}>
+      <div className={"flex-1 flex flex-col"}>
         <AuthHeader />
-        <main className={"lg:pt-8 pt-0 pb-16 overflow-y-auto"}>
+        <main className={"lg:pt-8 pt-0 flex-1 overflow-y-auto"}>
           <Container>{children}</Container>
         </main>
       </div>
