@@ -7,7 +7,7 @@ export const AuthHeader = () => {
   return (
     <header
       className={
-        "bg-secondary-background border-l border-borderColor sticky top-0 z-9999 h-12 flex justify-between items-center p-3"
+        "bg-secondary-background border-l border-borderColor sticky top-0 z-1000 h-12 flex justify-between items-center p-3"
       }
     >
       <div className={"flex-1 bg-background p-1 rounded flex items-center justify-between gap-1.5"}>

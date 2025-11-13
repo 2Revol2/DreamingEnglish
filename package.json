@@ -29,6 +29,7 @@
     "lucide-react": "^0.548.0",
     "next": "16.0.0",
     "next-auth": "^4.24.13",
+    "nextjs-toploader": "^3.9.17",
     "radix-ui": "^1.4.3",
     "react": "19.2.0",
     "react-dom": "19.2.0",

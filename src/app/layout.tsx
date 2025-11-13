@@ -1,5 +1,6 @@
 import "./styles/globals.css";
 import { Poppins } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import { AuthProvider } from "./providers/AuthProvider";
 import type { ReactNode } from "react";
 
@@ -16,6 +17,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={poppins.variable}>
+        <NextTopLoader color={"#ff552d"} zIndex={9999} showSpinner={false} />
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
