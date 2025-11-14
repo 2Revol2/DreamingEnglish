@@ -1,5 +1,6 @@
 import ReactPlayer from "react-player";
 import { getVideoById } from "@/shared/api/videos/getVideoById";
+import { VideoLevel } from "@/shared/ui/video-level";
 
 const Watch = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -13,7 +14,9 @@ const Watch = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
         <div className={"p-5 flex flex-col gap-3"}>
           <h4 className={"text-xl font-bold"}>{video.title}</h4>
-          <p className={"text-sm"}>{video.level}</p>
+          <div>
+            <VideoLevel level={video.level} />
+          </div>
         </div>
       </div>
       <div className={"w-full bg-secondary-background rounded-lg"}>Chat with AI</div>

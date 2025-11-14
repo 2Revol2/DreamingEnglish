@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { RoutePath } from "@/shared/constants/router";
+import { VideoLevel } from "@/shared/ui/video-level";
 import type { Video } from "@prisma/client";
 
 interface VideoItemProps {
@@ -22,9 +23,9 @@ export const VideoItem = (props: VideoItemProps) => {
 
       <div className="p-3 flex flex-col gap-1">
         <h5 className="text-base font-semibold line-clamp-2">{video.title}</h5>
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-          <span className="capitalize">{video.level}</span>
-          <span>{Math.floor(video.duration / 60)} мин</span>
+        <div className="flex items-center justify-between ">
+          <VideoLevel level={video.level} />
+          <span className={"text-sm text-gray-500 dark:text-gray-400"}>{Math.floor(video.duration / 60)} min</span>
         </div>
       </div>
     </Link>
