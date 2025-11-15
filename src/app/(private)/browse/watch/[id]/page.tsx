@@ -1,10 +1,12 @@
 import ReactPlayer from "react-player";
 import { getVideoById } from "@/shared/api/videos/getVideoById";
 import { VideoLevel } from "@/shared/ui/video-level";
+import { updateUserVideosHistory } from "@/shared/api/history/updateUserVideosHistory";
 
 const Watch = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const video = await getVideoById(id);
+  await updateUserVideosHistory({ videoId: video.id });
 
   return (
     <div className={"flex flex-col gap-8"}>

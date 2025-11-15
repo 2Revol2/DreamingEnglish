@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/prismaClient";
 import type { NextRequest } from "next/server";
 
@@ -15,12 +16,12 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     });
 
     if (!video) {
-      return Response.json({ error: "Video not found" }, { status: 404 });
+      return NextResponse.json({ error: "Video not found" }, { status: 404 });
     }
 
-    return Response.json(video);
+    return NextResponse.json(video);
   } catch (error) {
     console.error("Error fetching video:", error);
-    return Response.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
