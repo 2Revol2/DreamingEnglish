@@ -1,23 +1,30 @@
 import Link from "next/link";
 import { RoutePath } from "@/shared/constants/router";
 import { VideoLevel } from "@/shared/ui/video-level";
+import { cn } from "@/shared/lib/utils";
 import type { Video } from "@prisma/client";
 
 interface VideoItemProps {
   video: Video;
+  horizontal?: boolean;
 }
 
 export const VideoItem = (props: VideoItemProps) => {
-  const { video } = props;
+  const { video, horizontal } = props;
 
   return (
     <Link
       href={RoutePath.watch + video.id}
-      className={
-        "lg:max-w-[308px] sm:max-w-[250px] md:max-w-[280px] hover:shadow-md w-full bg-secondary-background rounded overflow-hidden cursor-pointer"
-      }
+      className={cn(
+        "hover:shadow-md bg-secondary-background rounded overflow-hidden cursor-pointer",
+        horizontal ? "flex w-full" : "lg:max-w-[308px] sm:max-w-[250px] md:max-w-[280px] w-full",
+      )}
     >
-      <div className="w-full aspect-video">
+      <div
+        className={cn(
+          horizontal ? "flex-shrink-0 w-[186px] h-[106px] lg:w-[308px] lg:h-[186px]" : "w-full aspect-video",
+        )}
+      >
         <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover" />
       </div>
 

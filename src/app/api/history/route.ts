@@ -3,6 +3,28 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/prismaClient";
 import type { NextRequest } from "next/server";
 
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const limitParams = searchParams.get("limit");
+    const limit = limitParams === "undefined" ? undefined : Number(limitParams);
+
+    const historyData = await prisma.userVideoHistory.findMany({
+      take: limit,
+      include: {
+        video: true,
+      },
+    });
+
+    const videos = historyData.map((data) => data.video);
+
+    return NextResponse.json(videos);
+  } catch (error) {
+    console.error("Error fetching video:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body: { videoId: string } = await req.json();
