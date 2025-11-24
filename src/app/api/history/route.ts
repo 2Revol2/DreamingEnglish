@@ -8,11 +8,27 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const limitParams = searchParams.get("limit");
     const limit = limitParams === "undefined" ? undefined : Number(limitParams);
+    const session = await getServerSession();
+
+    const user = await prisma.user.findFirst({
+      where: {
+        email: session?.user?.email,
+      },
+      select: {
+        id: true,
+      },
+    });
 
     const historyData = await prisma.userVideoHistory.findMany({
       take: limit,
+      where: {
+        userId: user?.id,
+      },
       include: {
         video: true,
+      },
+      orderBy: {
+        viewedAt: "desc",
       },
     });
 
@@ -38,7 +54,6 @@ export async function POST(req: NextRequest) {
         id: true,
       },
     });
-
     const { videoId } = body;
 
     if (!user) {

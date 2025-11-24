@@ -17,7 +17,7 @@ import { RoutePath } from "@/shared/constants/router";
 
 export const AvatarDropdown = memo(() => {
   const { data: session } = useSession();
-
+  console.log(session);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
