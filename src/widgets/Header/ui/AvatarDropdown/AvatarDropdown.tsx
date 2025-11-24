@@ -1,5 +1,5 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { memo } from "react";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import {
@@ -14,15 +14,16 @@ import { Avatar, AvatarImage } from "@/shared/ui/avatar";
 import { ThemeSwitcher } from "@/features/ThemeSwitcher";
 import { Button } from "@/shared/ui/button";
 import { RoutePath } from "@/shared/constants/router";
+import { useUserDataStore } from "@/entities/User";
 
 export const AvatarDropdown = memo(() => {
-  const { data: session } = useSession();
-  console.log(session);
+  const userAvatar = useUserDataStore((state) => state.userData?.image);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={session?.user?.image ?? "https://github.com/shadcn.png"} />
+          <AvatarImage src={userAvatar ?? "https://github.com/shadcn.png"} />
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

@@ -34,7 +34,7 @@ model User {
   image         String?
   password      String?
 
-  dailyGoal  Int          @default(0) // second
+  dailyGoal  Int          @default(900) // second
   totalInput Int          @default(0) // minutes
   level      EnglishLevel @default(A0)
 

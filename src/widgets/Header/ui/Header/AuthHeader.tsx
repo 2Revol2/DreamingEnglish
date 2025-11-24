@@ -2,9 +2,12 @@
 import { Progress } from "@/shared/ui/progress";
 import { Separator } from "@/shared/ui/separator";
 import { SetDailyGoal } from "@/features/SetDailyGoal";
+import { useUserDataStore } from "@/entities/User";
 import { AvatarDropdown } from "../AvatarDropdown/AvatarDropdown";
 
 export const AuthHeader = () => {
+  const userDailyGoal = useUserDataStore((state) => state.userData?.dailyGoal);
+  const dailyGoal = userDailyGoal ? String(userDailyGoal / 60) : "15";
   return (
     <header
       className={
@@ -13,8 +16,8 @@ export const AuthHeader = () => {
     >
       <div className={"flex-1 bg-background p-1 rounded flex items-center justify-between gap-1.5"}>
         <p className={"text-sm shrink-0 font-medium"}>Daily Goal</p>
-        <Progress className={"bg-[#d5dde5]"} />
-        <p className={"text-sm shrink-0 font-medium"}>0/15 min</p>
+        <Progress className={"bg-[#d5dde5]"} max={Number(dailyGoal)} />
+        <p className={"text-sm shrink-0 font-medium"}>0/{dailyGoal} min</p>
         <SetDailyGoal />
       </div>
       <Separator orientation={"vertical"} className={"mx-5"} />
