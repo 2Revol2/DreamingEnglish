@@ -3,4 +3,5 @@ export interface DailyGoalType {
   value: string;
   header: string;
   description: string;
+  withInput?: boolean;
 }

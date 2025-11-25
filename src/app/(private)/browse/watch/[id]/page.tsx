@@ -5,9 +5,8 @@ import { updateUserVideosHistory } from "@/shared/api/history/updateUserVideosHi
 
 const Watch = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const video = await getVideoById(id);
-  await updateUserVideosHistory({ videoId: video.id });
 
+  const [video] = await Promise.all([getVideoById(id), updateUserVideosHistory({ videoId: id })]);
   return (
     <div className={"flex flex-col gap-8"}>
       <div className={"w-full bg-secondary-background pb-2.5 rounded-lg"}>
