@@ -1,4 +1,3 @@
-export { updateUserData } from "./model/api/updateUserData";
-export { getUserData } from "./model/api/getUserData";
+export { useUpdateUserData } from "./api/queries/useUpdateUserData";
+export { useUserData } from "./api/queries/useUserData";
 export type { UserData } from "./model/types/type";
-export { useUserDataStore } from "./model/store/useUserDataStore";

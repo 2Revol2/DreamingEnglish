@@ -14,16 +14,16 @@ import { Avatar, AvatarImage } from "@/shared/ui/avatar";
 import { ThemeSwitcher } from "@/features/ThemeSwitcher";
 import { Button } from "@/shared/ui/button";
 import { RoutePath } from "@/shared/constants/router";
-import { useUserDataStore } from "@/entities/User";
+import { useUserData } from "@/entities/User";
 
 export const AvatarDropdown = memo(() => {
-  const userAvatar = useUserDataStore((state) => state.userData?.image);
+  const { data: image } = useUserData((user) => user?.image);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={userAvatar ?? "https://github.com/shadcn.png"} />
+          <AvatarImage src={image || "https://github.com/shadcn.png"} />
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

@@ -2,12 +2,13 @@
 import { Progress } from "@/shared/ui/progress";
 import { Separator } from "@/shared/ui/separator";
 import { SetDailyGoal } from "@/features/SetDailyGoal";
-import { useUserDataStore } from "@/entities/User";
+import { useUserData } from "@/entities/User";
 import { AvatarDropdown } from "../AvatarDropdown/AvatarDropdown";
 
 export const AuthHeader = () => {
-  const userDailyGoal = useUserDataStore((state) => state.userData?.dailyGoal);
+  const { data: userDailyGoal } = useUserData((user) => user?.dailyGoal);
   const dailyGoal = userDailyGoal ? String(userDailyGoal / 60) : "15";
+
   return (
     <header
       className={
