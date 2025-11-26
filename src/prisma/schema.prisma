@@ -76,10 +76,10 @@ model UserVideoProgress {
 }
 
 model UserDailyWatch {
-  id             String   @id @default(cuid())
+  id             String @id @default(cuid())
   userId         String
-  watchedSeconds Int      @default(0)
-  date           DateTime
+  watchedSeconds Int    @default(0)
+  date           String
 
   user User @relation(fields: [userId], references: [id])
 
