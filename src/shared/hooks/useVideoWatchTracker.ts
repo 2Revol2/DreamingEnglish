@@ -1,7 +1,9 @@
 import { type SyntheticEvent, useCallback, useEffect, useRef } from "react";
-import { updateDailyWatch } from "@/shared/api/dailyWatch/updateDailyWatch";
+import { useUpdateUserWatchedTime } from "@/shared/api/queries/useUpdateUserWatchedTime";
 
 export const useVideoWatchTracker = ({ userId }: { userId?: string }) => {
+  const { mutate } = useUpdateUserWatchedTime();
+
   const watchSeconds = useRef(0);
   const lastSavedSeconds = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -11,17 +13,13 @@ export const useVideoWatchTracker = ({ userId }: { userId?: string }) => {
     async (currentSeconds: number) => {
       if (!userId || currentSeconds === lastSavedSeconds.current) return;
 
-      try {
-        await updateDailyWatch({
-          userId,
-          watchedSeconds: currentSeconds,
-        });
-        lastSavedSeconds.current = currentSeconds;
-      } catch (error) {
-        console.error("Failed to update watch time:", error);
-      }
+      mutate({
+        userId,
+        watchedSeconds: currentSeconds,
+      });
+      lastSavedSeconds.current = currentSeconds;
     },
-    [userId],
+    [mutate, userId],
   );
 
   const onPlay = useCallback(async () => {

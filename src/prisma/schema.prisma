@@ -35,7 +35,7 @@ model User {
   password      String?
 
   dailyGoal  Int          @default(900) // second
-  totalInput Int          @default(0) // minutes
+  totalInput Int          @default(0) // second
   level      EnglishLevel @default(A0)
 
   createdAt        DateTime            @default(now())
