@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { RadioGroupItem } from "@/shared/ui/radio-group";
 import { Label } from "@/shared/ui/label";
 import { Input } from "@/shared/ui/input";
@@ -10,7 +11,7 @@ interface RadioOptionCardProps {
   onChange?: (value: string) => void;
 }
 
-export const RadioOptionCard = (props: RadioOptionCardProps) => {
+export const RadioOptionCard = memo((props: RadioOptionCardProps) => {
   const { option, value, onChange } = props;
   return (
     <Label
@@ -41,4 +42,4 @@ export const RadioOptionCard = (props: RadioOptionCardProps) => {
       </div>
     </Label>
   );
-};
+});
