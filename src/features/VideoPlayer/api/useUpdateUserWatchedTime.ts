@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateUserWatchTime } from "../watch/updateUserWatchTime";
+import { updateUserWatchTime } from "./updateUserWatchTime";
 
 export const useUpdateUserWatchedTime = () => {
   const queryClient = useQueryClient();

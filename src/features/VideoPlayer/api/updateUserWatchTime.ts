@@ -1,4 +1,4 @@
-import { api } from "../api";
+import { api } from "@/shared/api/api";
 
 export const updateUserWatchTime = (props: { userId: string; watchedSeconds: number }) => {
   const { userId, watchedSeconds } = props;

@@ -1,5 +1,5 @@
 import { Progress } from "@/shared/ui/progress";
-import { useUserWatchedTime } from "@/shared/api/queries/useUserWatchedTime";
+import { useUserWatchedTime } from "@/entities/User";
 
 interface DailyGoalProgressProps {
   dailyGoal: number;

@@ -1,7 +1,7 @@
 "use client";
 import ReactPlayer from "react-player";
 import { useUserData } from "@/entities/User";
-import { useVideoWatchTracker } from "@/shared/hooks/useVideoWatchTracker";
+import { useVideoWatchTracker } from "../../lib/useVideoWatchTracker";
 
 interface VideoPlayerProps {
   url: string;

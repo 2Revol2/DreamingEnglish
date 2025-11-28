@@ -1,5 +1,5 @@
 import { type SyntheticEvent, useCallback, useEffect, useRef } from "react";
-import { useUpdateUserWatchedTime } from "@/shared/api/queries/useUpdateUserWatchedTime";
+import { useUpdateUserWatchedTime } from "../api/useUpdateUserWatchedTime";
 
 export const useVideoWatchTracker = ({ userId }: { userId?: string }) => {
   const { mutate } = useUpdateUserWatchedTime();
