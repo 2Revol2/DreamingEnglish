@@ -4,7 +4,7 @@ import { SetDailyGoal } from "@/features/SetDailyGoal";
 import { useUserData } from "@/entities/User";
 import { DailyGoalProgress } from "@/features/DailyGoalProgress";
 import { Skeleton } from "@/shared/ui/skeleton";
-import { AvatarDropdown } from "../AvatarDropdown/AvatarDropdown";
+import { AvatarDropdown } from "../../AvatarDropdown/AvatarDropdown";
 
 export const AuthHeader = () => {
   const { data: userData } = useUserData((user) => ({ userId: user.id, userDailyGoal: user.dailyGoal }));
