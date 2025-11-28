@@ -1,3 +1,5 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
 import { defineConfig, globalIgnores } from "eslint/config";
 // eslint-disable-next-line import/no-unresolved
 import nextVitals from "eslint-config-next/core-web-vitals";
@@ -16,6 +18,7 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   reactHooks.configs.flat.recommended,
+  storybook.configs["flat/recommended"],
   {
     plugins: {
       prettier: prettierPlugin,
