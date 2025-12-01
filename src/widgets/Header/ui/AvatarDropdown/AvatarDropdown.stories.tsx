@@ -1,15 +1,15 @@
 import { http, HttpResponse } from "msw";
-import { AuthHeader } from "./AuthHeader";
+import { AvatarDropdown } from "./AvatarDropdown";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-const meta: Meta<typeof AuthHeader> = {
-  title: "widgets/Header/AuthHeader",
-  component: AuthHeader,
+const meta: Meta<typeof AvatarDropdown> = {
+  title: "widgets/Header/AvatarDropdown",
+  component: AvatarDropdown,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof AuthHeader>;
+type Story = StoryObj<typeof AvatarDropdown>;
 
 export const Default: Story = {
   parameters: {

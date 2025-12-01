@@ -1,6 +1,7 @@
 import { initialize, mswLoader } from "msw-storybook-addon";
-import { TanstackProvider } from "../src/app/providers/TanstackProvider";
-import Layout from "../src/app/layout";
+import { StyleDecorator } from "../src/shared/config/storybook/StyleDecorator/StyleDecorator";
+import { TanstackDecorator } from "../src/shared/config/storybook/TanstackDecorator/TanstackDecorator";
+import { AuthDecorator } from "../src/shared/config/storybook/AuthDecorator/AuthDecorator";
 import type { Preview } from "@storybook/nextjs-vite";
 
 initialize();
@@ -22,18 +23,7 @@ const preview: Preview = {
     },
   },
   loaders: [mswLoader],
-  decorators: [
-    (Story) => (
-      <Layout>
-        <Story />
-      </Layout>
-    ),
-    (Story) => (
-      <TanstackProvider>
-        <Story />
-      </TanstackProvider>
-    ),
-  ],
+  decorators: [StyleDecorator, TanstackDecorator, AuthDecorator],
 };
 
 export default preview;
