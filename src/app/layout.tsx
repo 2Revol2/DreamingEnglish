@@ -8,6 +8,7 @@ import type { ReactNode } from "react";
 const poppins = Poppins({
   variable: "--font-poppins",
   weight: ["400", "500", "600"],
+  subsets: ["latin"],
 });
 
 const RootLayout = ({

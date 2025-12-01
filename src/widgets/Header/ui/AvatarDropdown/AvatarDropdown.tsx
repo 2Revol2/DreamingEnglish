@@ -20,7 +20,7 @@ export const AvatarDropdown = memo(() => {
   const { data: image } = useUserData((user) => user?.image);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage src={image || "https://github.com/shadcn.png"} />
