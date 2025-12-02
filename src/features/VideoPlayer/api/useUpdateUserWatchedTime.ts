@@ -5,8 +5,8 @@ export const useUpdateUserWatchedTime = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ userId, watchedSeconds }: { userId: string; watchedSeconds: number }) => {
-      return updateUserWatchTime({ userId, watchedSeconds });
+    mutationFn: ({ watchedSeconds }: { watchedSeconds: number }) => {
+      return updateUserWatchTime({ watchedSeconds });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["watchedTime"] });

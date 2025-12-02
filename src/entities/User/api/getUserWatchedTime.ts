@@ -1,7 +1,6 @@
 import { api } from "@/shared/api/api";
 
 interface getWatchedTimeProps {
-  userId: string;
   date?: string;
 }
 
@@ -11,11 +10,11 @@ interface watchedTime {
 }
 
 export const getUserWatchedTime = async (props: getWatchedTimeProps) => {
-  const { userId, date } = props;
-  let url = `/watch?userId=${userId}`;
+  const { date } = props;
+  let url = `/watch`;
 
   if (date) {
-    url += `&date=${date}`;
+    url += `?date=${date}`;
   }
 
   return await api<watchedTime[]>(url);

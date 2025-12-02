@@ -1,22 +1,25 @@
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
 import { prisma } from "@/prisma/prismaClient";
+import { authOptions } from "@/shared/constants/authOptions";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+
     const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
     const date = searchParams.get("date");
 
-    if (!userId) {
-      return NextResponse.json({ error: "userId is required" }, { status: 500 });
+    if (!session) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
     if (date) {
       const userDailyWatchTime = await prisma.userDailyWatch.findFirst({
         where: {
           date: date,
-          userId: userId,
+          userId: session.user.id,
         },
         select: {
           watchedSeconds: true,
@@ -28,7 +31,7 @@ export async function GET(req: NextRequest) {
     }
     const records = await prisma.userDailyWatch.findMany({
       where: {
-        userId: userId,
+        userId: session.user.id,
       },
       select: {
         watchedSeconds: true,
@@ -45,19 +48,25 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const body: { date: string; userId: string; watchedSeconds: number } = await req.json();
-    const { date, userId, watchedSeconds } = body;
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const body: { date: string; watchedSeconds: number } = await req.json();
+    const { date, watchedSeconds } = body;
 
     await prisma.$transaction([
       prisma.userDailyWatch.upsert({
         where: {
           userId_date: {
-            userId: userId,
+            userId: session.user.id,
             date,
           },
         },
         create: {
-          userId,
+          userId: session.user.id,
           date,
           watchedSeconds: watchedSeconds,
         },
@@ -68,7 +77,7 @@ export async function POST(req: NextRequest) {
         },
       }),
       prisma.user.update({
-        where: { id: userId },
+        where: { id: session.user.id },
         data: {
           totalInput: {
             increment: watchedSeconds,
