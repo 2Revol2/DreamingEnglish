@@ -1,16 +1,20 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/prismaClient";
-import { authOptions } from "@/shared/constants/authOptions";
-import type { UserData } from "@/entities/User";
+import { withAuth } from "@/shared/lib/api/withAuth";
 import type { NextRequest } from "next/server";
+import type { UserData } from "@/entities/User";
 
 export async function GET(req: NextRequest) {
-  const session = await getServerSession(authOptions);
   try {
+    const { error, userId } = await withAuth();
+
+    if (error) {
+      return error;
+    }
+
     const user = await prisma.user.findUnique({
       where: {
-        id: session?.user.id,
+        id: userId,
       },
       select: {
         name: true,
@@ -42,7 +46,7 @@ export async function PUT(req: NextRequest) {
 
     await prisma.user.update({
       where: {
-        email: body.email,
+        email: body.id,
       },
       data: body,
     });

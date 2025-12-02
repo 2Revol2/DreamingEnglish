@@ -14,7 +14,6 @@ export const useVideoWatchTracker = ({ userId }: { userId?: string }) => {
       if (!userId || currentSeconds === lastSavedSeconds.current) return;
 
       mutate({
-        userId,
         watchedSeconds: currentSeconds,
       });
       lastSavedSeconds.current = currentSeconds;

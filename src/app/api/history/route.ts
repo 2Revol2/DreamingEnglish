@@ -1,20 +1,24 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/prismaClient";
-import { authOptions } from "@/shared/constants/authOptions";
+import { withAuth } from "@/shared/lib/api/withAuth";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    const { error, userId } = await withAuth();
+
+    if (error) {
+      return error;
+    }
+
     const { searchParams } = new URL(req.url);
     const limitParams = searchParams.get("limit");
     const limit = limitParams && limitParams !== "undefined" ? Number(limitParams) : undefined;
-    const session = await getServerSession(authOptions);
 
     const historyData = await prisma.userVideoHistory.findMany({
       take: limit,
       where: {
-        userId: session?.user.id,
+        userId: userId,
       },
       include: {
         video: true,
@@ -35,19 +39,20 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const { error, userId } = await withAuth();
+
+    if (error) {
+      return error;
+    }
+
     const body: { videoId: string } = await req.json();
-    const session = await getServerSession(authOptions);
 
     const { videoId } = body;
-
-    if (!session?.user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
 
     await prisma.userVideoHistory.upsert({
       where: {
         userId_videoId: {
-          userId: session.user.id,
+          userId: userId,
           videoId,
         },
       },
@@ -55,7 +60,7 @@ export async function POST(req: NextRequest) {
         viewedAt: new Date(),
       },
       create: {
-        userId: session.user.id,
+        userId: userId,
         videoId,
       },
     });
