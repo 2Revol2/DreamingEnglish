@@ -1,4 +1,4 @@
-import { api } from "../api";
+import { serverApi } from "../serverApi";
 
 interface updateUserVideosHistoryProps {
   videoId: string;
@@ -7,7 +7,7 @@ interface updateUserVideosHistoryProps {
 export const updateUserVideosHistory = async (props: updateUserVideosHistoryProps) => {
   const { videoId } = props;
 
-  return await api("/history", {
+  return await serverApi("/history", {
     method: "POST",
     body: JSON.stringify({ videoId }),
   });

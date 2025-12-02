@@ -1,15 +1,16 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/prismaClient";
-import type { NextRequest } from "next/server";
+import { authOptions } from "@/shared/constants/authOptions";
 import type { UserData } from "@/entities/User";
+import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: {
-        email: session?.user?.email,
+        id: session?.user.id,
       },
       select: {
         name: true,

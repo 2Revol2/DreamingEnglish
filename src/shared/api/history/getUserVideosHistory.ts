@@ -1,6 +1,6 @@
-import { api } from "../api";
+import { serverApi } from "../serverApi";
 import type { Video } from "@prisma/client";
 
 export const getUserVideosHistory = async (limit?: number) => {
-  return (await api<Video[]>(`/history?limit=${limit}`)) || [];
+  return (await serverApi<Video[]>(`/history?limit=${limit}`)) || [];
 };

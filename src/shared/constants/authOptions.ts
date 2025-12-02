@@ -62,12 +62,19 @@ export const authOptions: NextAuthOptions = {
             name: true,
             image: true,
             level: true,
+            password: false,
           },
         });
 
-        token.user = dbUser;
+        if (dbUser) {
+          token.user = {
+            ...dbUser,
+            email: dbUser.email || "",
+            name: dbUser.name || "",
+            image: dbUser.image || "",
+          };
+        }
       }
-
       return token;
     },
 
