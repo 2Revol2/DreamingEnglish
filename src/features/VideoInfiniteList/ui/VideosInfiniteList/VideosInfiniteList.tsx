@@ -16,7 +16,7 @@ export const VideosInfiniteList = () => {
   const levels = levelsParam ? levelsParam.split(",") : [];
   const { ref, inView, entry } = useInView();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
     queryKey: ["videos", search, sortBy, duration, levels],
     queryFn: async ({ pageParam = 1 }) => {
       return await getVideos({
@@ -45,8 +45,8 @@ export const VideosInfiniteList = () => {
 
   return (
     <div>
-      <VideoList videos={videos} />
-      {isFetchingNextPage ? <p>Loading</p> : hasNextPage && <div ref={ref} />}
+      <VideoList videos={videos} isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} />
+      {hasNextPage && <div ref={ref} />}
     </div>
   );
 };
