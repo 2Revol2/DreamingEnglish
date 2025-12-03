@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/prismaClient";
-import type { VideoLevel } from "@prisma/client";
 import type { NextRequest } from "next/server";
+import type { VideoLevel } from "@prisma/client";
 
 const LEVEL_ORDER: Record<VideoLevel, number> = {
   SUPER_BEGINNER: 1,
@@ -27,6 +27,11 @@ export async function GET(req: NextRequest) {
   const min = minStr ? Number(minStr) * 60 : undefined;
   const max = maxStr ? Number(maxStr) * 60 : undefined;
 
+  const page = Number(searchParams.get("page") ?? 1);
+  const limit = Number(searchParams.get("limit") ?? 12);
+
+  const skip = (page - 1) * limit;
+
   const video = await prisma.video.findMany({
     where: {
       level:
@@ -42,6 +47,8 @@ export async function GET(req: NextRequest) {
       },
     },
     orderBy: [{ createdAt: sortByTime }],
+    skip,
+    take: limit,
   });
 
   if (sortParam === "hard" || sortParam === "easy") {

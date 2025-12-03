@@ -46,7 +46,7 @@ export async function PUT(req: NextRequest) {
 
     await prisma.user.update({
       where: {
-        email: body.id,
+        email: body.email,
       },
       data: body,
     });

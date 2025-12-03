@@ -1,7 +1,7 @@
 import { MdOutlineHistory } from "react-icons/md";
 import Link from "next/link";
 import { getUserVideosHistory } from "@/shared/api/history/getUserVideosHistory";
-import { VideoHistoryList } from "@/entities/Video";
+import { VideoList } from "@/entities/Video";
 import { RoutePath } from "@/shared/constants/router";
 
 const Library = async () => {
@@ -17,7 +17,7 @@ const Library = async () => {
             View all {">"}
           </Link>
         </div>
-        <VideoHistoryList videos={videos} />
+        <VideoList videos={videos} cardHorizontal />
       </section>
       <section>
         <div className={"flex items-center gap-2"}>
