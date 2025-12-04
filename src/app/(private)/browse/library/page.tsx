@@ -17,7 +17,7 @@ const Library = async () => {
             View all {">"}
           </Link>
         </div>
-        <VideoList videos={videos} cardHorizontal />
+        <VideoList videos={videos} view={"list"} />
       </section>
       <section>
         <div className={"flex items-center gap-2"}>

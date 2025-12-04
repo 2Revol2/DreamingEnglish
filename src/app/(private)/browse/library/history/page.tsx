@@ -6,7 +6,7 @@ const History = async () => {
   return (
     <div className={"pb-2"}>
       <h3 className={"text-3xl font-bold"}>History</h3>
-      <VideoList videos={videos} cardHorizontal />
+      <VideoList videos={videos} view={"list"} />
     </div>
   );
 };

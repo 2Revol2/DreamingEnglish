@@ -1,28 +1,30 @@
 import Link from "next/link";
+import { memo } from "react";
 import { RoutePath } from "@/shared/constants/router";
 import { VideoLevel } from "@/shared/ui/video-level";
 import { cn } from "@/shared/lib/utils";
+import type { VideoView } from "../../model/constants/constants";
 import type { Video } from "@prisma/client";
 
 interface VideoItemProps {
   video: Video;
-  horizontal?: boolean;
+  view?: VideoView;
 }
 
-export const VideoItem = (props: VideoItemProps) => {
-  const { video, horizontal } = props;
+export const VideoItem = memo((props: VideoItemProps) => {
+  const { video, view = "grid" } = props;
 
   return (
     <Link
       href={RoutePath.watch + video.id}
       className={cn(
         "hover:shadow-md bg-secondary-background rounded overflow-hidden cursor-pointer",
-        horizontal ? "flex w-full" : "lg:max-w-[308px] sm:max-w-[250px] md:max-w-[280px] w-full",
+        view === "list" ? "flex w-full" : "lg:max-w-[308px] sm:max-w-[250px] md:max-w-[280px] w-full",
       )}
     >
       <div
         className={cn(
-          horizontal ? "flex-shrink-0 w-[186px] h-[106px] lg:w-[308px] lg:h-[186px]" : "w-full aspect-video",
+          view === "list" ? "flex-shrink-0 w-[186px] h-[106px] lg:w-[308px] lg:h-[186px]" : "w-full aspect-video",
         )}
       >
         <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover" />
@@ -37,4 +39,4 @@ export const VideoItem = (props: VideoItemProps) => {
       </div>
     </Link>
   );
-};
+});

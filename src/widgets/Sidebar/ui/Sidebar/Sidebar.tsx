@@ -8,7 +8,9 @@ import { SidebarItems } from "../../model/constants/consts";
 export const Sidebar = () => {
   return (
     <aside
-      className={"w-full h-16 lg:w-65 lg:h-[100vh] bg-secondary-background fixed bottom-0 lg:static flex lg:flex-col"}
+      className={
+        "w-full h-16 lg:w-65 lg:h-[100vh] z-40 bg-secondary-background fixed bottom-0 lg:static flex lg:flex-col"
+      }
     >
       <Link
         href={RoutePath.browse}

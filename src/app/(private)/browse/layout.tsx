@@ -13,7 +13,7 @@ const RootLayout = ({
       <Sidebar />
       <div className={"flex-1 flex flex-col"}>
         <AuthHeader />
-        <main className={"lg:pt-8 pt-0 flex-1 pb-20 lg:pb-0 overflow-y-auto"}>
+        <main id={"main"} className={"lg:pt-8 pt-0 flex-1 pb-20 lg:pb-0 overflow-y-auto"}>
           <Container>{children}</Container>
         </main>
       </div>
