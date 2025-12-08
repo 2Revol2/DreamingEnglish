@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { COLUMN_BREACKPOINTS } from "../model/constants/constants";
+import { COLUMN_BREAKPOINTS } from "../model/constants/constants";
 import type { VideoView } from "../model/constants/constants";
 
 const getColumn = (width: number) => {
-  const point = COLUMN_BREACKPOINTS.find((point) => width < point.width);
+  const point = COLUMN_BREAKPOINTS.find((point) => width < point.width);
   return point?.cols ?? 4;
 };
 

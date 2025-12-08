@@ -2,6 +2,11 @@ import type { VideoView } from "../model/constants/constants";
 
 export const estimateRowHeight = (view: VideoView) => {
   if (view === "list") return 200;
+
+  if (typeof window === "undefined") {
+    return 290;
+  }
+
   const width = window.innerWidth;
   if (width < 350) return 300;
   else if (width < 420) return 340;
