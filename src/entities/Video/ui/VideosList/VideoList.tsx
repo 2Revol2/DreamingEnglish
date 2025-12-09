@@ -1,10 +1,9 @@
 "use client";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useMemo } from "react";
-import { useColumn } from "../../lib/useColumn";
+import { useResponsiveGrid } from "../../lib/useResponsiveGrid";
 import { VideoItem } from "../VideoItem/VideoItem";
 import { VideoItemSkeleton } from "../VideoItem/VideoItemSkeleton";
-import { estimateRowHeight } from "../../lib/calculateEstimateSize";
 import type { VideoView } from "../../model/constants/constants";
 import type { Video } from "@prisma/client";
 
@@ -24,7 +23,7 @@ const getSkeleton = (view: VideoView) => {
 export const VideoList = (props: VideoListProps) => {
   const { videos, isLoading, isFetchingNextPage, view = "grid" } = props;
 
-  const columns = useColumn(view);
+  const { columns, rowHeight } = useResponsiveGrid(view);
 
   const rowsData: Video[][] = useMemo(() => {
     const result: Video[][] = [];
@@ -37,12 +36,11 @@ export const VideoList = (props: VideoListProps) => {
   const rows = rowsData.length;
 
   const skeletons = useMemo(() => getSkeleton(view), [view]);
-  const estimatedRowHeight = useMemo(() => estimateRowHeight(view), [view]);
 
   const rowVirtualizer = useVirtualizer({
     count: rows,
     getScrollElement: () => document.getElementById("main"),
-    estimateSize: () => estimatedRowHeight,
+    estimateSize: () => rowHeight,
     overscan: 3,
   });
 
