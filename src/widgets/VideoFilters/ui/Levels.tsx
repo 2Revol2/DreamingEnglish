@@ -1,6 +1,7 @@
 "use client";
 import { ChevronDownIcon } from "lucide-react";
 import { memo, useCallback, useMemo } from "react";
+import { IoIosStats } from "react-icons/io";
 import { Checkbox } from "@/shared/ui/checkbox";
 import {
   DropdownMenu,
@@ -36,8 +37,8 @@ export const Levels = memo(() => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <span className=" bg-background px-2 py-1.5 rounded-sm flex justify-between">
-          Levels <ChevronDownIcon className="size-4 opacity-50" />
+        <span className="bg-background px-2 py-1.5 rounded-sm flex justify-between gap-1">
+          <IoIosStats className={"text-textColor"} /> Levels <ChevronDownIcon className="size-4 opacity-50" />
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

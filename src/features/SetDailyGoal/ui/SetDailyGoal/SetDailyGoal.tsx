@@ -17,7 +17,7 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
 
   const isCustom = !GOAL_DEFAULT_OPTIONS.some((option) => Number(option.value) === dailyGoal);
   const defaultValue = isCustom ? "Own Goal" : String(dailyGoal);
-
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const [customValue, setCustomValue] = useState(isCustom ? String(dailyGoal) : "15");
 
@@ -33,6 +33,7 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
       const minutesToSeconds = Number(selectedOption) * 60;
       mutate({ dailyGoal: minutesToSeconds });
     }
+    setIsOpen(false);
   }, [customValue, mutate, selectedOption]);
 
   const handleChange = useCallback((v: string) => {
@@ -40,7 +41,7 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
   }, []);
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger>
         <FaPen />
       </DialogTrigger>

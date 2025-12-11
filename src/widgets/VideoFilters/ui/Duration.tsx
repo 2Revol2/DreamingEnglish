@@ -1,6 +1,7 @@
 "use client";
 import { memo, useState } from "react";
 import { ChevronDownIcon } from "lucide-react";
+import { GoClockFill } from "react-icons/go";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger } from "@/shared/ui/dropdown-menu";
 import { Slider } from "@/shared/ui/slider-14";
 import { useQueryParams } from "@/shared/hooks/useQueryParams";
@@ -21,8 +22,8 @@ export const Duration = memo(() => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={"bg-background border-none rounded-sm px-1 py-1.5 flex justify-between"}>
-        Duration <ChevronDownIcon className="size-4 opacity-50" />
+      <DropdownMenuTrigger className={"bg-background border-none rounded-sm px-1 py-1.5 flex justify-between gap-1"}>
+        <GoClockFill className={"text-textColor"} /> Duration <ChevronDownIcon className="size-4 opacity-50" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className={"w-[200px] ml-32"}>
         <DropdownMenuGroup>

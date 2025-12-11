@@ -1,6 +1,6 @@
 "use client";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useResponsiveGrid } from "../../lib/useResponsiveGrid";
 import { VideoItem } from "../VideoItem/VideoItem";
 import { VideoItemSkeleton } from "../VideoItem/VideoItemSkeleton";
@@ -20,7 +20,7 @@ const getSkeleton = (view: VideoView) => {
     .map((_, index) => <VideoItemSkeleton view={view} key={`skeleton-${index}`} />);
 };
 
-export const VideoList = (props: VideoListProps) => {
+export const VideoList = memo((props: VideoListProps) => {
   const { videos, isLoading, isFetchingNextPage, view = "grid" } = props;
 
   const { columns, rowHeight } = useResponsiveGrid(view);
@@ -77,4 +77,4 @@ export const VideoList = (props: VideoListProps) => {
       {(isLoading || isFetchingNextPage) && skeletons}
     </div>
   );
-};
+});
