@@ -10,6 +10,7 @@ export const useUpdateUserWatchedTime = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["watchedTime"] });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 };
