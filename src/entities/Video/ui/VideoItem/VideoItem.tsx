@@ -3,6 +3,7 @@ import { memo } from "react";
 import { RoutePath } from "@/shared/constants/router";
 import { VideoLevel } from "@/shared/ui/video-level";
 import { cn } from "@/shared/lib/utils";
+import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
 import type { VideoView } from "../../model/constants/constants";
 import type { Video } from "@prisma/client";
 
@@ -34,7 +35,7 @@ export const VideoItem = memo((props: VideoItemProps) => {
         <h5 className="text-base font-semibold line-clamp-2">{video.title}</h5>
         <div className="flex items-center justify-between ">
           <VideoLevel level={video.level} />
-          <span className={"text-sm text-gray-500 dark:text-gray-400"}>{Math.floor(video.duration / 60)} min</span>
+          <span className={"text-sm text-gray-500 dark:text-gray-400"}>{secondsToMinutes(video.duration)} min</span>
         </div>
       </div>
     </Link>
