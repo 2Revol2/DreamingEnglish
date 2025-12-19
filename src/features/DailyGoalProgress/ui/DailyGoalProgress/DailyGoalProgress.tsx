@@ -1,5 +1,6 @@
 import { Progress } from "@/shared/ui/progress";
 import { useUserWatchedTime } from "@/entities/User";
+import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
 
 interface DailyGoalProgressProps {
   dailyGoal: number;
@@ -9,7 +10,7 @@ interface DailyGoalProgressProps {
 export const DailyGoalProgress = (props: DailyGoalProgressProps) => {
   const { dailyGoal, userId } = props;
   const date = new Date().toISOString().split("T")[0];
-  const { data: progressData } = useUserWatchedTime(userId, date);
+  const { data: progressData } = useUserWatchedTime(date);
 
   const normalizedData = progressData?.[0] || { watchedSeconds: 0 };
 
@@ -21,7 +22,7 @@ export const DailyGoalProgress = (props: DailyGoalProgressProps) => {
         className={"bg-[#d5dde5]"}
       />
       <p className={"text-sm shrink-0 font-medium"}>
-        {Math.floor(normalizedData.watchedSeconds / 60)}/{dailyGoal} min
+        {secondsToMinutes(normalizedData.watchedSeconds)}/{dailyGoal} min
       </p>
     </>
   );
