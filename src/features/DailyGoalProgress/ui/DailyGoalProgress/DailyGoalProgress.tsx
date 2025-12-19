@@ -10,7 +10,7 @@ interface DailyGoalProgressProps {
 export const DailyGoalProgress = (props: DailyGoalProgressProps) => {
   const { dailyGoal, userId } = props;
   const date = new Date().toISOString().split("T")[0];
-  const { data: progressData } = useUserWatchedTime(userId, date);
+  const { data: progressData } = useUserWatchedTime(date);
 
   const normalizedData = progressData?.[0] || { watchedSeconds: 0 };
 
