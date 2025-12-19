@@ -44,6 +44,10 @@ export const VideoList = memo((props: VideoListProps) => {
     overscan: 3,
   });
 
+  if (isLoading) {
+    return <div className={"w-full flex flex-wrap justify-center gap-4"}>{skeletons}</div>;
+  }
+
   return (
     <div className={"w-full flex flex-wrap justify-center gap-4"}>
       <div
@@ -74,7 +78,7 @@ export const VideoList = memo((props: VideoListProps) => {
           );
         })}
       </div>
-      {(isLoading || isFetchingNextPage) && skeletons}
+      {isFetchingNextPage && skeletons}
     </div>
   );
 });
