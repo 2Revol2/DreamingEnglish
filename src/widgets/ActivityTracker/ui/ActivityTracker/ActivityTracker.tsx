@@ -22,11 +22,11 @@ export const ActivityTracker = () => {
   }, [data]);
 
   return (
-    <div className={"bg-secondary-background rounded-xl p-7 flex-1 flex lg:flex-row flex-col"}>
+    <div className={"bg-secondary-background rounded-xl p-7 flex lg:flex-row flex-col"}>
       <div className={"flex-1"}>
         <h5 className={"font-bold text-2xl"}>Your activity</h5>
       </div>
-      <div className={"flex-1"}>
+      <div className={"flex-1 flex justify-center"}>
         <Calendar
           showOutsideDays={false}
           mode="single"

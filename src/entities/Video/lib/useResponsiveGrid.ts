@@ -3,13 +3,15 @@ import { useDebouncedCallback } from "use-debounce";
 import { COLUMN_BREAKPOINTS, ROW_HEIGHT_BREAKPOINTS } from "../model/constants/constants";
 import type { VideoView } from "../model/constants/constants";
 
-const getColumn = (width: number) => {
+const getColumn = (view: VideoView, width: number) => {
+  if (view === "list") return 1;
+
   const point = COLUMN_BREAKPOINTS.find((point) => width < point.width);
   return point?.cols ?? 4;
 };
 
 export const estimateRowHeight = (view: VideoView, width: number) => {
-  if (view === "list") return 200;
+  if (view === "list") return width < 1000 ? 120 : 200;
 
   const bp = ROW_HEIGHT_BREAKPOINTS.find((point) => width < point.maxWidth);
   return bp ? bp.height : 290;
@@ -21,13 +23,8 @@ export const useResponsiveGrid = (view: VideoView) => {
 
   const debounced = useDebouncedCallback(() => {
     const width = window.innerWidth;
-    if (view === "list") {
-      setColumns(1);
-      setHeight(200);
-      return;
-    }
     setHeight(estimateRowHeight(view, width));
-    setColumns(getColumn(width));
+    setColumns(getColumn(view, width));
   }, 500);
 
   useEffect(() => {
