@@ -1,4 +1,3 @@
-"use client";
 import { OverallProgression } from "@/widgets/OverallProgression";
 import { ActivityTracker } from "@/widgets/ActivityTracker";
 

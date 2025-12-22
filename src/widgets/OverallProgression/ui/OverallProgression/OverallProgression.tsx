@@ -19,6 +19,8 @@ export const OverallProgression = () => {
     ? Math.min(100, ((totalInputSeconds - minSeconds) / (maxSeconds - minSeconds)) * 100)
     : 0;
 
+  const hoursToNextLevel = secondsToHours(maxSeconds - (totalInputSeconds ?? 0));
+
   return (
     <div className={"bg-secondary-background rounded-xl"}>
       <div className={"flex flex-col p-7 gap-5"}>
@@ -43,6 +45,13 @@ export const OverallProgression = () => {
             <p>{secondsToHours(minSeconds)} hrs</p>
             <p>{secondsToHours(maxSeconds)} hrs</p>
           </div>
+        </div>
+      </div>
+      <Separator />
+      <div className={"flex p-7 justify-center items-center"}>
+        <div className={"flex bg-blue-100 p-3 rounded-xl w-full justify-between text-blue-400 "}>
+          <p>Hours to level {level === 7 ? 7 : level + 1}</p>
+          <p className={"font-bold"}>{hoursToNextLevel} hrs</p>
         </div>
       </div>
     </div>
