@@ -1,18 +1,19 @@
 import { Progress } from "@/shared/ui/progress";
-import { useUserWatchedTime } from "@/entities/User";
 import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
+import { useTodayWatchTime } from "../../api/useTodayWatchTime";
 
 interface DailyGoalProgressProps {
   dailyGoal: number;
-  userId: string;
 }
 
 export const DailyGoalProgress = (props: DailyGoalProgressProps) => {
-  const { dailyGoal, userId } = props;
-  const date = new Date().toISOString().split("T")[0];
-  const { data: progressData } = useUserWatchedTime(date);
+  const { dailyGoal } = props;
 
-  const normalizedData = progressData?.[0] || { watchedSeconds: 0 };
+  const { data: todayWatchedTime } = useTodayWatchTime();
+
+  const normalizedData = {
+    watchedSeconds: todayWatchedTime?.watchedSeconds ?? 0,
+  };
 
   return (
     <>

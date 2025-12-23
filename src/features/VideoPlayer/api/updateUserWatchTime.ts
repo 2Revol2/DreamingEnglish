@@ -2,10 +2,10 @@ import { api } from "@/shared/api/api";
 
 export const updateUserWatchTime = (props: { watchedSeconds: number }) => {
   const { watchedSeconds } = props;
-  const date = new Date().toISOString().split("T")[0];
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  return api("/watch", {
+  return api("/watch-time/daily", {
     method: "POST",
-    body: JSON.stringify({ date, watchedSeconds }),
+    body: JSON.stringify({ timeZone, watchedSeconds }),
   });
 };

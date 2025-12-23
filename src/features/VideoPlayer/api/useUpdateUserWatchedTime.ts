@@ -9,8 +9,9 @@ export const useUpdateUserWatchedTime = () => {
       return updateUserWatchTime({ watchedSeconds });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["watchedTime"] });
+      queryClient.invalidateQueries({ queryKey: ["watched-time"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["watch-time-today"] });
     },
   });
 };

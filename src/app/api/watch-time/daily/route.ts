@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/prisma/prismaClient";
+import { formatInTimeZone } from "date-fns-tz";
 import { withAuth } from "@/shared/lib/api/withAuth";
+import { prisma } from "@/prisma/prismaClient";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -10,26 +11,18 @@ export async function GET(req: NextRequest) {
     if (error) {
       return error;
     }
-
     const { searchParams } = new URL(req.url);
-    const date = searchParams.get("date");
+    const timeZone = searchParams.get("timeZone");
 
-    if (date) {
-      const userDailyWatchTime = await prisma.userDailyWatch.findFirst({
-        where: {
-          date: date,
-          userId: userId,
-        },
-        select: {
-          watchedSeconds: true,
-          date: true,
-        },
-      });
-
-      return NextResponse.json([userDailyWatchTime]);
+    if (!timeZone) {
+      return NextResponse.json({ error: "Error fetching user daily watch time" }, { status: 500 });
     }
-    const records = await prisma.userDailyWatch.findMany({
+
+    const todayDate = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
+
+    const userDailyWatchTime = await prisma.userDailyWatch.findFirst({
       where: {
+        date: todayDate,
         userId: userId,
       },
       select: {
@@ -38,10 +31,10 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(records);
+    return NextResponse.json(userDailyWatchTime);
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ error: "Error fetching user watch time" }, { status: 500 });
+    return NextResponse.json({ error: "Error fetching user daily watch time" }, { status: 500 });
   }
 }
 
@@ -53,20 +46,22 @@ export async function POST(req: NextRequest) {
       return error;
     }
 
-    const body: { date: string; watchedSeconds: number } = await req.json();
-    const { date, watchedSeconds } = body;
+    const body: { timeZone: string; watchedSeconds: number } = await req.json();
+    const { timeZone, watchedSeconds } = body;
+
+    const todayDate = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
 
     await prisma.$transaction([
       prisma.userDailyWatch.upsert({
         where: {
           userId_date: {
             userId: userId,
-            date,
+            date: todayDate,
           },
         },
         create: {
           userId: userId,
-          date,
+          date: todayDate,
           watchedSeconds: watchedSeconds,
         },
         update: {
@@ -88,6 +83,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ error: "Error updating daily watch time" }, { status: 500 });
+    return NextResponse.json({ error: "Error updating daily watch-time time" }, { status: 500 });
   }
 }
