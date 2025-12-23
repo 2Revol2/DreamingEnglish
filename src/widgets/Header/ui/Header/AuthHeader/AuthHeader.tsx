@@ -7,9 +7,9 @@ import { Skeleton } from "@/shared/ui/skeleton";
 import { AvatarDropdown } from "../../AvatarDropdown/AvatarDropdown";
 
 export const AuthHeader = () => {
-  const { data: userData } = useUserData((user) => ({ userId: user.id, userDailyGoal: user.dailyGoal }));
+  const { data: dailyGoal } = useUserData((user) => user.dailyGoal);
 
-  const dailyGoal = userData?.userDailyGoal ? userData.userDailyGoal / 60 : 15;
+  const dailyGoalNormalized = dailyGoal ? dailyGoal / 60 : 15;
 
   return (
     <header
@@ -18,10 +18,10 @@ export const AuthHeader = () => {
       }
     >
       <div className={"flex-1 bg-background p-1 rounded flex items-center justify-between gap-1.5"}>
-        {userData ? (
+        {dailyGoal ? (
           <>
-            <DailyGoalProgress dailyGoal={dailyGoal} userId={userData.userId} />
-            <SetDailyGoal dailyGoal={dailyGoal} />
+            <DailyGoalProgress dailyGoal={dailyGoalNormalized} />
+            <SetDailyGoal dailyGoal={dailyGoalNormalized} />
           </>
         ) : (
           <Skeleton className={"w-full h-[20px]"} />
