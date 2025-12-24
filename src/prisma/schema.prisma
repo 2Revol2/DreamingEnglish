@@ -37,6 +37,7 @@ model User {
   dailyGoal  Int          @default(900) // second
   totalInput Int          @default(0) // second
   level      EnglishLevel @default(A0)
+  dayStreak  Int          @default(0)
 
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt

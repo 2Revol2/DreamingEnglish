@@ -49,7 +49,11 @@ export const OverallProgression = () => {
       </div>
       <Separator />
       <div className={"flex p-7 justify-center items-center"}>
-        <div className={"flex bg-blue-100 p-3 rounded-xl w-full justify-between text-blue-400 "}>
+        <div
+          className={
+            "flex bg-blue-100 dark:bg-blue-300 p-3 rounded-xl w-full justify-between text-blue-400 dark:text-blue-700"
+          }
+        >
           <p>Hours to level {level === 7 ? 7 : level + 1}</p>
           <p className={"font-bold"}>{hoursToNextLevel} hrs</p>
         </div>
