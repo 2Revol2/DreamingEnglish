@@ -16,19 +16,22 @@ export const LevelModal = (props: LevelModalProps) => {
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className={"sm:max-w-3xl max-w-full h-[600px] bg-secondary-background sm:h-auto overflow-y-auto"}>
+      <DialogContent className="sm:max-w-3xl max-w-full max-h-[80vh] bg-secondary-background overflow-y-auto">
         <DialogHeader>
-          <div className={"flex gap-10"}>
-            <div className={"w-25 h-25 rounded-lg"} style={{ backgroundColor: level.color }}>
-              <Image src={level.icon} alt={level.title} />
+          <div className={"flex sm:flex-row flex-col gap-2 sm:gap-10"}>
+            <div
+              className={"sm:w-25 w-full h-25 rounded-lg flex justify-center items-center"}
+              style={{ backgroundColor: level.color }}
+            >
+              <Image className={"w-20 h-20"} src={level.icon} alt={level.title} />
             </div>
             <div className={"flex flex-col items-start"}>
               <DialogTitle className={"text-4xl font-bold"} style={{ color: level.color }}>
                 {level.title}
               </DialogTitle>
-              <div className={"flex flex-col items-start"}>
+              <div className={"flex flex-col gap-1 items-start"}>
                 <p>{level.subtitle}</p>
-                <div className={"flex gap-3 w-full text-sm"}>
+                <div className={"flex gap-3 w-full text-sm "}>
                   <p className={"flex gap-1"}>
                     <MdOutlineAccessTimeFilled style={{ color: level.color }} /> Hours of input{" "}
                     {level.stats.hoursOfInput}

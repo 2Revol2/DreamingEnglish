@@ -10,7 +10,7 @@ export interface Level {
 
   stats: {
     hoursOfInput: number;
-    knownWords: number;
+    knownWords: number | string;
   };
 
   details: {

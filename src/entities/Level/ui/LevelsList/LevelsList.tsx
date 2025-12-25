@@ -9,7 +9,7 @@ export const LevelsList = () => {
   const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
 
   return (
-    <div className={"flex flex-col p-7 bg-secondary-background rounded-xl gap-4"}>
+    <div className={"flex flex-col  gap-4"}>
       {Levels.map((level) => (
         <LevelCard key={level.id} level={level} onClick={() => setSelectedLevel(level)} />
       ))}
