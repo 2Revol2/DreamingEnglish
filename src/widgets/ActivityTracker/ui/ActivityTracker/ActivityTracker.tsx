@@ -6,11 +6,15 @@ import { secondsToHours } from "@/shared/lib/secondsToHours/secondsToHours";
 import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
-import { HoursThisMonth } from "@/shared/assets/HoursThisMonth";
+import { HoursThisMonthIcon } from "@/shared/assets/HoursThisMonthIcon";
+import { DayStreakIcon } from "@/shared/assets/DayStreakIcon";
+import { WeeksInRowIcon } from "@/shared/assets/WeeksInRowIcon";
+import { useUserStats } from "../../api/useUserStats";
 
 export const ActivityTracker = () => {
   const { data } = useUserWatchedTime();
 
+  const { data: stats } = useUserStats();
   const dates = useMemo(() => {
     if (!data) return {};
 
@@ -22,30 +26,38 @@ export const ActivityTracker = () => {
       {} as Record<string, number>,
     );
   }, [data]);
-
-  const hoursThisMonth = useMemo(() => {
-    if (!data) return 0;
-    const currentMonth = new Date().getMonth() + 1;
-
-    return secondsToHours(
-      data
-        .filter((item) => new Date(item.date).getMonth() + 1 === currentMonth)
-        .reduce((acc, item) => acc + item.watchedSeconds, 0),
-    );
-  }, [data]);
+  console.log(stats);
 
   return (
     <div className={"bg-secondary-background rounded-xl p-7 flex lg:flex-row flex-col"}>
       <div className={"flex-1"}>
         <h5 className={"font-bold text-2xl mb-3"}>Your activity</h5>
+
         <div className={"p-3 bg-background rounded-xl flex justify-between items-center"}>
           <div className={"flex gap-2 items-center"}>
-            <HoursThisMonth width={40} />
+            <DayStreakIcon width={40} />
+            <p>Current streak</p>
+          </div>
+          <span className={"font-bold"}>{stats?.streak}</span>
+        </div>
+
+        <div className={"p-3 bg-background rounded-xl flex justify-between items-center"}>
+          <div className={"flex gap-2 items-center"}>
+            <WeeksInRowIcon width={40} />
+            <p>Weeks in a row</p>
+          </div>
+          <span className={"font-bold"}>{stats?.weekInRow}</span>
+        </div>
+
+        <div className={"p-3 bg-background rounded-xl flex justify-between items-center"}>
+          <div className={"flex gap-2 items-center"}>
+            <HoursThisMonthIcon width={40} />
             <p>Hours this month</p>
           </div>
-          <span className={"font-bold"}>{hoursThisMonth}</span>
+          <span className={"font-bold"}>{stats?.hoursThisMonth}</span>
         </div>
       </div>
+
       <div className={"flex-1 flex justify-center"}>
         <Calendar
           showOutsideDays={false}

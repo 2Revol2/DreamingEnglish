@@ -4,7 +4,7 @@ interface HoursThisMonthProps extends SVGProps<SVGSVGElement> {
   className?: string;
 }
 
-export const HoursThisMonth = (props: HoursThisMonthProps) => {
+export const HoursThisMonthIcon = (props: HoursThisMonthProps) => {
   const { className, ...otherProps } = props;
   return (
     <svg
