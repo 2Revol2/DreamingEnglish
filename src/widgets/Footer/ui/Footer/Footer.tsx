@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { Container } from "@/shared/ui/container";
-import Logo from "@/shared/assets/logo.png";
 import { mainNavLinks, NavLink } from "@/entities/NavLink";
 
 export const Footer = () => {
@@ -11,7 +10,7 @@ export const Footer = () => {
       <div className="absolute top-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-40"></div>
       <Container className="grid grid-cols-1 sm:grid-cols-3 items-center justify-between gap-4 text-sm md:text-base py-6">
         <div className={"flex justify-center items-center gap-2 text-primary text-2xl font-bold"}>
-          <Image src={Logo} alt="Logo" className={"w-15 h-15"} />
+          <Image src={"/logo.png"} alt="Logo" className={"w-15 h-15"} width={50} height={50} />
           Dreaming English
         </div>
         <ul className="flex justify-center gap-6 font-medium">

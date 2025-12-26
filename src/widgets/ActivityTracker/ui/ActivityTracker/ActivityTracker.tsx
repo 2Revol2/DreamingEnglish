@@ -78,7 +78,7 @@ export const ActivityTracker = () => {
                   variant={"ghost"}
                 >
                   <span>{normalizedDay}</span>
-                  {!isFuture && watchedSeconds && (
+                  {!isFuture && watchedSeconds > 0 && (
                     <span className={"text-[10px] text-primary"}>
                       {hours}h {minutes}m
                     </span>

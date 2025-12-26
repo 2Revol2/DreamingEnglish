@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { TanstackProvider } from "./providers/TanstackProvider";
 import { AuthProvider } from "./providers/AuthProvider";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 const poppins = Poppins({
@@ -10,6 +11,12 @@ const poppins = Poppins({
   weight: ["400", "500", "600"],
   subsets: ["latin"],
 });
+
+export const metadata: Metadata = {
+  icons: {
+    icon: "/logo.png",
+  },
+};
 
 const RootLayout = ({
   children,

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "@/shared/assets/logo.png";
 import { RoutePath } from "@/shared/constants/router";
 import { SidebarItem } from "../SidebarItem/SidebarItem";
 import { SidebarItems } from "../../model/constants/consts";
@@ -16,7 +15,7 @@ export const Sidebar = () => {
         href={RoutePath.browse}
         className={"h-40 border-b hidden border-borderColor lg:flex items-center justify-center"}
       >
-        <Image src={Logo} alt="Logo" className={"w-30 h-30"} />
+        <Image src={"/logo.png"} alt="Logo" className={"w-30 h-30"} width={120} height={120} />
         <div className={"font-medium text-lg"}>
           <h1>
             Dreaming
