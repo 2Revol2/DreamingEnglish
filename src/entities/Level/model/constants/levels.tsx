@@ -10,7 +10,7 @@ import type { Level } from "../types/types";
 export const Levels: Level[] = [
   {
     id: 1,
-    title: "Level 1",
+    level: 1,
     icon: Level1Icon,
     subtitle: "Starting from zero.",
     color: "#ff8279",
@@ -61,7 +61,7 @@ export const Levels: Level[] = [
   },
   {
     id: 2,
-    title: "Level 2",
+    level: 2,
     icon: Level2Icon,
     subtitle: "You know some common words.",
     color: "#f69ace",
@@ -106,7 +106,7 @@ export const Levels: Level[] = [
   },
   {
     id: 3,
-    title: "Level 3",
+    level: 3,
     icon: Level3Icon,
     subtitle: "You can follow topics that are adapted for learners.",
     color: "#c692e2",
@@ -159,7 +159,7 @@ export const Levels: Level[] = [
   },
   {
     id: 4,
-    title: "Level 4",
+    level: 4,
     icon: Level4Icon,
     subtitle: "You can understand a person speaking to you patiently.",
     color: "#7e87e1",
@@ -225,7 +225,7 @@ export const Levels: Level[] = [
   },
   {
     id: 5,
-    title: "Level 5",
+    level: 5,
     icon: Level5Icon,
     subtitle: "You can understand native speakers speaking to you normally.",
     color: "#8fd1e1",
@@ -289,7 +289,7 @@ export const Levels: Level[] = [
   },
   {
     id: 6,
-    title: "Level 6",
+    level: 6,
     icon: Level6Icon,
     subtitle: "You are comfortable with daily conversation.",
     color: "#58cb8f",
@@ -322,15 +322,15 @@ export const Levels: Level[] = [
         text: (
           <p>
             <span style={{ color: "#58cb8f" }}>Listen and read A LOT</span>. It&apos;s also a good idea to get{" "}
-            <span style={{ color: "#58cb8f" }}>massive input</span>
-            in authentic media, be it <span style={{ color: "#58cb8f" }}>TV</span>,{" "}
-            <span style={{ color: "#58cb8f" }}>podcasts</span>, radio, movies, etc. If you can&apos;t find a lot of easy
-            media in the target language, you may find that videos and audios for learners are still more efficient for
-            acquiring new vocabulary until you get a bit better. If your target language has many common words with a
-            language you already know you may be able to understand quite well things like TED talks and university
-            lectures. <span style={{ color: "#58cb8f" }}>Lots of reading</span> is also recommended if you want to be
-            literate and if you care about reading. You&apos;ll still want to read books that are targeted at elementary
-            school children, although maybe you don&apos;t need to stick to the lower grades.{" "}
+            <span style={{ color: "#58cb8f" }}>massive input</span> in authentic media, be it{" "}
+            <span style={{ color: "#58cb8f" }}>TV</span>, <span style={{ color: "#58cb8f" }}>podcasts</span>, radio,
+            movies, etc. If you can&apos;t find a lot of easy media in the target language, you may find that videos and
+            audios for learners are still more efficient for acquiring new vocabulary until you get a bit better. If
+            your target language has many common words with a language you already know you may be able to understand
+            quite well things like TED talks and university lectures.{" "}
+            <span style={{ color: "#58cb8f" }}>Lots of reading</span> is also recommended if you want to be literate and
+            if you care about reading. You&apos;ll still want to read books that are targeted at elementary school
+            children, although maybe you don&apos;t need to stick to the lower grades.{" "}
             <span style={{ color: "#58cb8f" }}>Nonfiction will often be much easier</span> to understand than fiction.
             By this point, speaking and reading are completely unrestricted, and it&apos;s really encouraged to{" "}
             <span style={{ color: "#58cb8f" }}>make friends in the language</span>. If you live in the country, join as
@@ -362,7 +362,7 @@ export const Levels: Level[] = [
   },
   {
     id: 7,
-    title: "Level 7",
+    level: 7,
     icon: Level7Icon,
     subtitle: "You can use the language effectively for all practical purposes.",
     color: "#ff552d",

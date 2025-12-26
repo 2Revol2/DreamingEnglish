@@ -1,6 +1,6 @@
 import { OverallProgression } from "@/widgets/OverallProgression";
 import { ActivityTracker } from "@/widgets/ActivityTracker";
-import { LevelsList } from "@/entities/Level";
+import { LearningLevelsList } from "@/widgets/LearningLevelsList";
 
 const Progress = () => {
   return (
@@ -10,9 +10,7 @@ const Progress = () => {
       </div>
       <div className={"flex-1 flex flex-col gap-5"}>
         <ActivityTracker />
-        <div className={"p-7 bg-secondary-background rounded-xl"}>
-          <LevelsList />
-        </div>
+        <LearningLevelsList />
       </div>
     </div>
   );

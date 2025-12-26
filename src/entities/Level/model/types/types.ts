@@ -3,7 +3,7 @@ import type { StaticImageData } from "next/image";
 
 export interface Level {
   id: number;
-  title: string;
+  level: number;
   subtitle: string;
   icon: string | StaticImageData;
   color: string;

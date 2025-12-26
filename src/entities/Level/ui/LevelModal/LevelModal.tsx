@@ -23,11 +23,11 @@ export const LevelModal = (props: LevelModalProps) => {
               className={"sm:w-25 w-full h-25 rounded-lg flex justify-center items-center"}
               style={{ backgroundColor: level.color }}
             >
-              <Image className={"w-20 h-20"} src={level.icon} alt={level.title} />
+              <Image className={"w-20 h-20"} src={level.icon} alt={level.subtitle} />
             </div>
             <div className={"flex flex-col items-start"}>
               <DialogTitle className={"text-4xl font-bold"} style={{ color: level.color }}>
-                {level.title}
+                Level {level.level}
               </DialogTitle>
               <div className={"flex flex-col gap-1 items-start"}>
                 <p>{level.subtitle}</p>
