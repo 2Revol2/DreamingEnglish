@@ -76,7 +76,7 @@ const eslintConfig = defineConfig([
   },
   // Override default ignores of eslint-config-next.
   {
-    files: ["app/**/*.{ts,tsx}"],
+    files: ["app/**/*.{ts,tsx}", "proxy.ts"],
     rules: {
       "revol/path-checker": "off",
       "revol/layer-imports": "off",
