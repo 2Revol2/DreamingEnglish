@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { formatInTimeZone } from "date-fns-tz";
 import { subDays } from "date-fns";
-import { prisma } from "@/prisma/prismaClient";
+import { prisma } from "@/shared/lib/prisma/prismaClient";
 import { withAuth } from "@/shared/lib/api/withAuth";
 import { secondsToHours } from "@/shared/lib/secondsToHours/secondsToHours";
 import type { NextRequest } from "next/server";

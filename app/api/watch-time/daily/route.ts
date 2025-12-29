@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { formatInTimeZone } from "date-fns-tz";
 import { withAuth } from "@/shared/lib/api/withAuth";
-import { prisma } from "@/prisma/prismaClient";
+import { prisma } from "@/shared/lib/prisma/prismaClient";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {

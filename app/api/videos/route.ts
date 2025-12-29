@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/prisma/prismaClient";
+import { prisma } from "@/shared/lib/prisma/prismaClient";
 import type { NextRequest } from "next/server";
 import type { VideoLevel } from "@prisma/client";
 
