@@ -9,10 +9,10 @@ import { VideoList } from "@/entities/Video";
 
 export const VideosInfiniteList = () => {
   const { getParam } = useQueryParams();
-  const search = getParam("search") ?? undefined;
-  const sortBy = getParam("sort") ?? undefined;
-  const duration = getParam("duration") ?? undefined;
-  const levelsParam = getParam("levels");
+  const search = getParam("search", undefined);
+  const sortBy = getParam("sort", "new");
+  const duration = getParam("duration", undefined);
+  const levelsParam = getParam("levels", "");
   const levels = levelsParam ? levelsParam.split(",") : [];
   const { ref, inView, entry } = useInView();
 
