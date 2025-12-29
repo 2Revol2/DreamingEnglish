@@ -7,7 +7,7 @@ import { useQueryParams } from "@/shared/hooks/useQueryParams";
 
 export const Sort = memo(() => {
   const { getParam, setParam } = useQueryParams();
-  const sortedBy = getParam("sort") ?? "new";
+  const sortedBy = getParam("sort", "new");
 
   return (
     <Select defaultValue={sortedBy} onValueChange={(value) => setParam("sort", value)}>

@@ -22,7 +22,10 @@ export const useQueryParams = () => {
     [pathname, router, searchParams],
   );
 
-  const getParam = useCallback((key: string) => searchParams.get(key), [searchParams]);
+  const getParam = useCallback(
+    (key: string, defaultValue?: string) => searchParams?.get(key) ?? defaultValue,
+    [searchParams],
+  );
 
   return useMemo(() => ({ getParam, setParam }), [getParam, setParam]);
 };
