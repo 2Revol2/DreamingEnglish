@@ -1,11 +1,9 @@
 import { subDays } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
+import type { WatchedTime } from "@/shared/types/watchedTime";
 
 interface CalculateUserStreakProps {
-  records: Array<{
-    watchedSeconds: number;
-    date: string;
-  }>;
+  records: WatchedTime[];
   todayStr: string;
   timeZone: string;
 }
