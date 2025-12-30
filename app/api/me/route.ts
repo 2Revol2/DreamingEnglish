@@ -40,13 +40,15 @@ export async function PUT(req: NextRequest) {
   try {
     const body: UserData = await req.json();
 
-    if (!body.email) {
-      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    const { error, userId } = await withAuth();
+
+    if (error) {
+      return error;
     }
 
     await prisma.user.update({
       where: {
-        email: body.email,
+        id: userId,
       },
       data: body,
     });
