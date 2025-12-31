@@ -15,6 +15,7 @@ export const RadioOptionCard = memo((props: RadioOptionCardProps) => {
   const { option, value, onChange } = props;
   return (
     <Label
+      data-testid={"radio-option-card"}
       htmlFor={option.id}
       className={
         "flex gap-5 border border-borderColor p-5 rounded-2xl hover:border-primary hover:bg-[#fff5e7]  dark:hover:bg-[#312618]"
