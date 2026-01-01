@@ -1,31 +1,63 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import path from "path";
 import { defineConfig } from "vitest/config";
-import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
+import svgr from "vite-plugin-svgr";
+import react from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
 
-const dirname = typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
-
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  plugins: [
+    react(),
+    svgr({
+      svgrOptions: {
+        icon: true,
+      },
+    }),
+  ],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
   test: {
+    exclude: ["node_modules/**"],
     projects: [
+      // ui
       {
         extends: true,
-        plugins: [
-          // The plugin will run tests for the stories defined in your Storybook config
-          // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
-          storybookTest({ configDir: path.join(dirname, ".storybook") }),
-        ],
         test: {
-          name: "storybook",
+          include: ["**/*.visual.test.tsx"],
+          name: "ui",
+          setupFiles: "./test/vitest-setup.ts",
           browser: {
             enabled: true,
-            headless: true,
-            provider: playwright({}),
-            instances: [{ browser: "chromium" }],
+            provider: playwright(),
+            instances: [
+              {
+                browser: "chromium",
+                viewport: { width: 1280, height: 720 },
+              },
+            ],
+            expect: {
+              toMatchScreenshot: {
+                comparatorName: "pixelmatch",
+                comparatorOptions: {
+                  // 0-1, how different can colors be?
+                  threshold: 0,
+                  // 1% of pixels can differ
+                  allowedMismatchedPixelRatio: 0,
+                },
+              },
+            },
+            screenshotDirectory: "./test/__screenshots__",
           },
-          setupFiles: [".storybook/vitest.setup.ts"],
+        },
+      },
+      // unit
+      {
+        extends: true,
+        test: {
+          name: "unit",
+          exclude: ["**/*.visual.test.tsx"],
         },
       },
     ],
