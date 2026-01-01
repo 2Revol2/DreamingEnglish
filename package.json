@@ -11,7 +11,8 @@
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev",
     "prepare": "husky",
-    "test:ui": "vitest --project ui",
+    "test:ui": "vitest --project ui --ui",
+    "test:ui:ci": "vitest --project ui",
     "test:unit": "vitest --project unit"
   },
   "dependencies": {
