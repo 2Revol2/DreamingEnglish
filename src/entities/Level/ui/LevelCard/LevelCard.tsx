@@ -17,6 +17,7 @@ export const LevelCard = (props: LevelCardProps) => {
 
   return (
     <div
+      data-testid={"level-card"}
       onClick={onClick}
       className={cn(
         "p-3 border rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800",

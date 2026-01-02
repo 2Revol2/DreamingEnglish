@@ -28,12 +28,12 @@ export default defineConfig({
           clearMocks: true,
           include: ["**/*.visual.test.tsx"],
           name: "ui",
-          setupFiles: "./test/vitest-setup.ts",
+          setupFiles: "./test/vitest-setup.tsx",
           browser: {
             enabled: true,
             provider: playwright({
               launchOptions: {
-                args: ["--force-device-scale-factor=4"],
+                args: ["--force-device-scale-factor=2"],
               },
             }),
             instances: [
@@ -47,9 +47,7 @@ export default defineConfig({
               toMatchScreenshot: {
                 comparatorName: "pixelmatch",
                 comparatorOptions: {
-                  // 0-1, how different can colors be?
                   threshold: 0,
-                  // 1% of pixels can differ
                   allowedMismatchedPixelRatio: 0,
                 },
               },
