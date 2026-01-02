@@ -25,16 +25,22 @@ export default defineConfig({
       {
         extends: true,
         test: {
+          clearMocks: true,
           include: ["**/*.visual.test.tsx"],
           name: "ui",
           setupFiles: "./test/vitest-setup.ts",
           browser: {
             enabled: true,
-            provider: playwright(),
+            provider: playwright({
+              launchOptions: {
+                args: ["--force-device-scale-factor=4"],
+              },
+            }),
             instances: [
               {
                 browser: "chromium",
                 viewport: { width: 1280, height: 720 },
+                headless: true,
               },
             ],
             expect: {
@@ -48,7 +54,6 @@ export default defineConfig({
                 },
               },
             },
-            screenshotDirectory: "./test/__screenshots__",
           },
         },
       },

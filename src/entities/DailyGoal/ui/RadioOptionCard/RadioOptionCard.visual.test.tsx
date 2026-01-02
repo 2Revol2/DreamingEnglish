@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it } from "vitest";
-import { cleanup, render } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { render } from "@testing-library/react";
 import { page } from "vitest/browser";
 import { RadioGroup } from "@/shared/ui/radio-group";
 import { RadioOptionCard } from "./RadioOptionCard";
@@ -11,10 +11,6 @@ const mockOption: DailyGoalType = {
   header: "Casual",
   description: "Keeping your skills fresh",
 };
-
-afterEach(() => {
-  cleanup();
-});
 
 describe("RadioOptionCard", () => {
   it("RadioOptionCard looks correct", async () => {

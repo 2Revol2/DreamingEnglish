@@ -5,7 +5,6 @@ import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import prettierPlugin from "eslint-plugin-prettier";
 import eslintConfigPrettier from "eslint-config-prettier";
-import typescriptPlugin from "@typescript-eslint/eslint-plugin";
 import reactHooks from "eslint-plugin-react-hooks";
 import importPlugin from "eslint-plugin-import";
 import reactRefresh from "eslint-plugin-react-refresh";
@@ -19,7 +18,6 @@ const eslintConfig = defineConfig([
   {
     plugins: {
       prettier: prettierPlugin,
-      "@typescript-eslint": typescriptPlugin,
       import: importPlugin,
       "react-refresh": reactRefresh,
       "unused-imports": unusedImports,
