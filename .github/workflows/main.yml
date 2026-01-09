@@ -1,0 +1,32 @@
+name: linting, testing, building
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Staring Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install modules
+        run: npm ci
+
+      - name: linting
+        run: npm run lint
+
+        if: always()
+      - name: unit testing
+        run: npm run test:unit
+
+        if: always()
+      - name: build production project
+        run: npm run build
