@@ -3,12 +3,12 @@ import { useMemo } from "react";
 import { useUserWatchedTime } from "@/entities/User";
 import { Calendar } from "@/shared/ui/calendar";
 import { secondsToHours } from "@/shared/lib/secondsToHours/secondsToHours";
-import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
 import { HoursThisMonthIcon } from "@/shared/assets/HoursThisMonthIcon";
 import { DayStreakIcon } from "@/shared/assets/DayStreakIcon";
 import { WeeksInRowIcon } from "@/shared/assets/WeeksInRowIcon";
+import { getMinutesFromSeconds } from "@/shared/lib/getMinutesFromSeconds/getMinutesFromSeconds";
 import { StatItem } from "../StatItem/StatItem";
 import { useUserStats } from "../../api/useUserStats";
 
@@ -62,13 +62,13 @@ export const ActivityTracker = () => {
           components={{
             DayButton: (props) => {
               const { day, ...buttonProps } = props;
-              if (day.outside) return <div className={"h-10 w-10"} />;
+              if (day.outside) return <div className={"lg:h-14 lg:w-14 h-10 w-10"} />;
 
               const normalizedDay = day.isoDate.split("-")[2];
               const watchedSeconds = dates[day.isoDate];
 
               const hours = secondsToHours(watchedSeconds);
-              const minutes = secondsToMinutes(watchedSeconds);
+              const minutes = getMinutesFromSeconds(watchedSeconds);
 
               const today = new Date();
               const currentDay = new Date(day.isoDate);

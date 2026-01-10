@@ -5,7 +5,7 @@ import { useUserData } from "@/entities/User";
 import { getUserLevel } from "@/shared/lib/getUserLevel/getUserLevel";
 import { Progress } from "@/shared/ui/progress";
 import { secondsToHours } from "@/shared/lib/secondsToHours/secondsToHours";
-import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
+import { getMinutesFromSeconds } from "@/shared/lib/getMinutesFromSeconds/getMinutesFromSeconds";
 
 export const OverallProgression = () => {
   const { data: totalInputSeconds } = useUserData((state) => state.totalInput);
@@ -13,7 +13,7 @@ export const OverallProgression = () => {
   const { level, maxSeconds, minSeconds } = getUserLevel(totalInputSeconds ?? 0);
 
   const hours = secondsToHours(totalInputSeconds ?? 0);
-  const minutes = secondsToMinutes(totalInputSeconds ?? 0);
+  const minutes = getMinutesFromSeconds(totalInputSeconds ?? 0);
 
   const progressPercent = totalInputSeconds
     ? Math.min(100, ((totalInputSeconds - minSeconds) / (maxSeconds - minSeconds)) * 100)
