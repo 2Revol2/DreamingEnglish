@@ -12,7 +12,7 @@ export const calculateUserStreak = (props: CalculateUserStreakProps) => {
   const { records, todayStr, timeZone } = props;
 
   const activeDates = new Set(records.filter((r) => r.watchedSeconds > 0).map((r) => r.date));
-  const today = new Date(todayStr + "T00:00:00");
+  const today = formatInTimeZone(todayStr + "T00:00:00", timeZone, "yyyy-MM-dd");
 
   let streak = 0;
   let checkDate = today;
@@ -20,10 +20,9 @@ export const calculateUserStreak = (props: CalculateUserStreakProps) => {
   if (activeDates.has(todayStr)) {
     streak = 1;
   } else {
-    const yesterday = subDays(today, 1);
-    const yesterdayStr = formatInTimeZone(yesterday, timeZone, "yyyy-MM-dd");
+    const yesterday = formatInTimeZone(subDays(new Date(today), 1), timeZone, "yyyy-MM-dd");
 
-    if (!activeDates.has(yesterdayStr)) {
+    if (!activeDates.has(yesterday)) {
       streak = 0;
     } else {
       streak = 1;
@@ -32,11 +31,10 @@ export const calculateUserStreak = (props: CalculateUserStreakProps) => {
   }
 
   while (true) {
-    checkDate = subDays(checkDate, 1);
-    const dateStr = formatInTimeZone(checkDate, timeZone, "yyyy-MM-dd");
-
-    if (activeDates.has(dateStr)) {
+    const prevDate = formatInTimeZone(subDays(new Date(checkDate), 1), timeZone, "yyyy-MM-dd");
+    if (activeDates.has(prevDate)) {
       streak++;
+      checkDate = prevDate;
     } else {
       break;
     }
