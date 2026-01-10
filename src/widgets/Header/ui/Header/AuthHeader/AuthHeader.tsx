@@ -4,12 +4,13 @@ import { SetDailyGoal } from "@/features/SetDailyGoal";
 import { useUserData } from "@/entities/User";
 import { DailyGoalProgress } from "@/features/DailyGoalProgress";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
 import { AvatarDropdown } from "../../AvatarDropdown/AvatarDropdown";
 
 export const AuthHeader = () => {
   const { data: dailyGoal } = useUserData((user) => user.dailyGoal);
 
-  const dailyGoalNormalized = dailyGoal ? dailyGoal / 60 : 15;
+  const dailyGoalNormalized = dailyGoal ? secondsToMinutes(dailyGoal) : 15;
 
   return (
     <header
