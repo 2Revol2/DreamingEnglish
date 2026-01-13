@@ -1,3 +1,4 @@
+import Markdown from "react-markdown";
 import { cn } from "@/shared/lib/utils";
 import type { ChatMessage } from "../../model/types/types";
 
@@ -12,7 +13,7 @@ export const Message = (props: MessageProps) => {
   return (
     <div className={cn("flex", isUser ? "justify-end" : "justify-center")}>
       <div className={cn("p-2 break-all ", isUser ? "bg-secondary rounded-lg lg:max-w-[60%] max-w-[90%]" : "w-full")}>
-        {message.content}
+        <Markdown>{message.content}</Markdown>
       </div>
     </div>
   );
