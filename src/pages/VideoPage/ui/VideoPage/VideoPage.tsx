@@ -2,6 +2,7 @@ import { getVideoById } from "@/shared/api/videos/getVideoById";
 import { updateUserVideosHistory } from "@/shared/api/history/updateUserVideosHistory";
 import { VideoPlayer } from "@/features/VideoPlayer";
 import { VideoLevel } from "@/shared/ui/video-level";
+import { ChatWindow } from "@/widgets/ChatWindow";
 
 export const VideoPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -18,7 +19,7 @@ export const VideoPage = async ({ params }: { params: Promise<{ id: string }> })
           </div>
         </div>
       </div>
-      <div className={"w-full bg-secondary-background rounded-lg"}>Chat with AI</div>
+      <ChatWindow />
     </div>
   );
 };
