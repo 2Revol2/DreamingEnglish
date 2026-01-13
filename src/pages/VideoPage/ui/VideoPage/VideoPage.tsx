@@ -8,6 +8,7 @@ export const VideoPage = async ({ params }: { params: Promise<{ id: string }> })
   const { id } = await params;
 
   const [video] = await Promise.all([getVideoById(id), updateUserVideosHistory({ videoId: id })]);
+
   return (
     <div className={"flex flex-col gap-8"}>
       <div className={"w-full bg-secondary-background pb-2.5 rounded-lg"}>
@@ -19,7 +20,7 @@ export const VideoPage = async ({ params }: { params: Promise<{ id: string }> })
           </div>
         </div>
       </div>
-      <ChatWindow />
+      <ChatWindow videoId={video.id} />
     </div>
   );
 };

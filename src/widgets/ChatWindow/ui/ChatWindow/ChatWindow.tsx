@@ -5,7 +5,13 @@ import { MessageList } from "@/entities/Message";
 import { sendMessageToAI } from "../../api/sendMessageToAI";
 import type { ChatMessage } from "@/entities/Message";
 
-export const ChatWindow = () => {
+interface ChatWindowProps {
+  videoId: string;
+}
+
+export const ChatWindow = (props: ChatWindowProps) => {
+  const { videoId } = props;
+
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -14,7 +20,7 @@ export const ChatWindow = () => {
     setMessages(updatedMessages);
     setLoading(true);
     try {
-      const aiRespond = await sendMessageToAI(updatedMessages);
+      const aiRespond = await sendMessageToAI(updatedMessages, videoId);
       setMessages([...updatedMessages, aiRespond]);
     } catch (e) {
       console.log(e);

@@ -10,9 +10,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       where: {
         id,
       },
-      include: {
-        transcript: true,
-      },
     });
 
     if (!video) {
