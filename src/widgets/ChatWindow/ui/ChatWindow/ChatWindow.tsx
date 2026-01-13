@@ -2,20 +2,35 @@
 import { useState } from "react";
 import { SendMessage } from "@/features/SendMessage";
 import { MessageList } from "@/entities/Message";
+import { sendMessageToAI } from "../../api/sendMessageToAI";
 import type { ChatMessage } from "@/entities/Message";
 
 export const ChatWindow = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const onSend = (message: ChatMessage) => {
-    setMessages((prev) => [...prev, message]);
+  const onSend = async (message: ChatMessage) => {
+    const updatedMessages = [...messages, message];
+    setMessages(updatedMessages);
+    setLoading(true);
+    try {
+      const aiRespond = await sendMessageToAI(updatedMessages);
+      setMessages([...updatedMessages, aiRespond]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={"w-full h-[500px] bg-secondary-background rounded-lg overflow-hidden flex flex-col"}>
       <div className={"flex-1 p-4 overflow-y-auto "}>
         {messages.length > 0 ? (
-          <MessageList messages={messages} />
+          <>
+            <MessageList messages={messages} />
+            {loading && <div className="text-sm text-muted-foreground mt-2">AI is typing...</div>}
+          </>
         ) : (
           <div className="h-full flex flex-col items-center justify-center text-center gap-3 text-muted-foreground">
             <div className="text-3xl">🤖</div>
