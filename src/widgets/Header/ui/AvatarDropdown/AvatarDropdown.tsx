@@ -1,7 +1,8 @@
 "use client";
 import { signOut } from "next-auth/react";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { RiLogoutCircleLine } from "react-icons/ri";
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,13 +19,15 @@ import { useUserData } from "@/entities/User";
 
 export const AvatarDropdown = memo(() => {
   const { data: image } = useUserData((user) => user?.image);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DropdownMenu modal={false}>
-      <DropdownMenuTrigger>
+    <DropdownMenu modal={false} open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenuTrigger className={"flex gap-0.5"}>
         <Avatar>
           <AvatarImage src={image || "https://github.com/shadcn.png"} />
         </Avatar>
+        {isOpen ? <MdOutlineKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup className={"p-1"}>
