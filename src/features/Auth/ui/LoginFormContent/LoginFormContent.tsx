@@ -19,12 +19,24 @@ export const LoginFormContent = () => {
           Github
         </Button>
         <Button
-          className=" bg-white text-black border border-gray-300 hover:bg-gray-50"
+          className="bg-white text-black border border-gray-300 hover:bg-gray-50"
           onClick={() => signIn("google", { callbackUrl: RoutePath.browse })}
         >
           <FcGoogle size={20} />
           Google
         </Button>
+        <div className={"w-full flex flex-col gap-1 items-center border border-borderColor rounded-lg"}>
+          <Button
+            className={"w-full"}
+            variant={"secondary"}
+            onClick={() => signIn("credentials", { callbackUrl: RoutePath.browse })}
+          >
+            Explore as guest
+          </Button>
+          <p className="text-center text-sm text-gray-500">
+            Use a shared account to explore the project—no signup required
+          </p>
+        </div>
       </div>
     </div>
   );
