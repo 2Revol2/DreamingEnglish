@@ -22,7 +22,7 @@ export const SendMessage = (props: SendMessageProps) => {
 
   return (
     <div className={"flex gap-2"}>
-      <Input placeholder={"Ask something"} value={content} onChange={(e) => setContent(e.target.value)} />
+      <Input placeholder={"Type your question here…"} value={content} onChange={(e) => setContent(e.target.value)} />
       <Button onClick={onSendHandle}>Send</Button>
     </div>
   );

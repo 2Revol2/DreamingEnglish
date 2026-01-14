@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { SendMessage } from "@/features/SendMessage";
 import { MessageList } from "@/entities/Message";
+import { Button } from "@/shared/ui/button";
 import { sendMessageToAI } from "../../api/sendMessageToAI";
 import type { ChatMessage } from "@/entities/Message";
 
@@ -29,8 +30,29 @@ export const ChatWindow = (props: ChatWindowProps) => {
     }
   };
 
+  const sendExample = async (text: string) => {
+    await onSend({
+      role: "user",
+      content: text,
+    });
+  };
+
   return (
     <div className={"w-full h-[500px] bg-secondary-background rounded-lg overflow-hidden flex flex-col"}>
+      {!messages.length && (
+        <div className="p-4 border-b border-border flex flex-col gap-2">
+          <h3 className="text-lg font-bold">Interact with the video using AI</h3>
+          <p className="text-sm text-muted-foreground">Ask anything: summarize, explain or check your comprehension</p>
+          <div className="flex gap-2 mt-2 lg:flex-row flex-col">
+            {["Summarize", "Explain", "Main idea?", "Check my comprehension"].map((text) => (
+              <Button variant={"secondary"} onClick={() => sendExample(text)} key={text}>
+                {text}
+              </Button>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className={"flex-1 p-4 overflow-y-auto "}>
         {messages.length > 0 ? (
           <>
@@ -41,12 +63,6 @@ export const ChatWindow = (props: ChatWindowProps) => {
           <div className="h-full flex flex-col items-center justify-center text-center gap-3 text-muted-foreground">
             <div className="text-3xl">🤖</div>
             <p className="text-sm">Ask AI anything about this video</p>
-
-            <div className="text-xs space-y-1">
-              <p>• Summarize the video</p>
-              <p>• Explain this moment</p>
-              <p>• What is the main idea?</p>
-            </div>
           </div>
         )}
       </div>
