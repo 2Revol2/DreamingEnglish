@@ -14,6 +14,9 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Dreaming English – Learn English with Content for All Levels",
+  icons: {
+    icon: "/logo.png",
+  },
   description:
     "Master English with interesting videos and podcasts tailored for all levels. Achieve fluency through immersion.",
   openGraph: {
