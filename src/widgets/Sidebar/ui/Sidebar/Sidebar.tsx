@@ -17,11 +17,11 @@ export const Sidebar = () => {
       >
         <Image src={"/logo.png"} alt="Logo" className={"w-30 h-30"} width={120} height={120} />
         <div className={"font-medium text-lg"}>
-          <h1>
+          <h2>
             Dreaming
             <br />
             English
-          </h1>
+          </h2>
         </div>
       </Link>
       <nav className={"w-full"}>

@@ -13,7 +13,7 @@ const RootLayout = ({
   return (
     <div className={"flex flex-col min-h-screen"}>
       <MainHeader />
-      <main className={"flex-1"}>
+      <main className={"flex-1 min-h-[calc(100vh-80px)]"}>
         <Container>{children}</Container>
         {modal}
       </main>
