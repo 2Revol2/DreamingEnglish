@@ -1,10 +1,12 @@
 import { HeroSection } from "@/widgets/HeroSection";
+import { HowItWorksSection } from "@/widgets/HowItWorksSection";
 
 export const HomePage = () => {
   return (
-    <div>
+    <>
       <HeroSection />
-      <section className={"lg:pt-20 pt-10"}></section>
-    </div>
+      <HowItWorksSection />
+      <section>Why it works</section>
+    </>
   );
 };

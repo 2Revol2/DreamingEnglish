@@ -1,5 +1,4 @@
 import { MainHeader } from "@/widgets/Header";
-import { Container } from "@/shared/ui/container";
 import { Footer } from "@/widgets/Footer";
 import type { ReactNode } from "react";
 
@@ -14,7 +13,7 @@ const RootLayout = ({
     <div className={"flex flex-col min-h-screen"}>
       <MainHeader />
       <main className={"flex-1 min-h-[calc(100vh-80px)]"}>
-        <Container>{children}</Container>
+        {children}
         {modal}
       </main>
       <Footer />
