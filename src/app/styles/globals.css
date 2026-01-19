@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
 @custom-variant dark (&:is(.dark *));
 
 body {
@@ -98,20 +97,19 @@ button {
     --sidebar-ring: oklch(0.556 0 0);
 }
 
-@theme {
+
+@theme inline {
     --color-background: var(--background);
     --color-secondary-background: var(--secondary-background);
     --color-borderColor: var(--border);
     --color-textColor: var(--text);
     --color-hoverColor: var(--hover);
-}
 
-@theme inline {
+
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
-    --color-background: var(--background);
     --color-foreground: var(--foreground);
     --color-card: var(--card);
     --color-card-foreground: var(--card-foreground);

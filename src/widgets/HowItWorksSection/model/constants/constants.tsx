@@ -1,16 +1,18 @@
 import { FaSeedling } from "react-icons/fa";
 import { GiFlowerPot, GiSprout } from "react-icons/gi";
-import type { LearningStage } from "../types/types";
+import type { InfoSteps } from "@/shared/types/InfoSteps";
 
-export const LEARNING_STAGES: LearningStage[] = [
+export const LEARNING_STAGES: InfoSteps[] = [
   {
+    id: "1",
     title: "Beginner",
     description:
-      "Start with super simple videos designed to ease you in. Even if you don’t catch every word, you’ll follow the story — and your brain will start absorbing the language naturally.",
+      "Start with super simple videos designed to ease you in. Even if you don’t catch every word, you’ll follow the story - and your brain will start absorbing the language naturally.",
     color: "bg-green-600",
     icon: <FaSeedling size={72} />,
   },
   {
+    id: "2",
     title: "Intermediate",
     description:
       "Move on to conversations, vlogs, and documentaries in simplified language. You’ll follow along with ease, pick up new words in context, and feel your confidence grow.",
@@ -18,9 +20,10 @@ export const LEARNING_STAGES: LearningStage[] = [
     icon: <GiSprout size={72} />,
   },
   {
+    id: "3",
     title: "Advanced",
     description:
-      "Now tackle content just a step below native media. You’ll explore every kind of topic, understand at full speed, and start thinking in the language — fluency is within reach!",
+      "Now tackle content just a step below native media. You’ll explore every kind of topic, understand at full speed, and start thinking in the language - fluency is within reach!",
     color: "bg-purple-800",
     icon: <GiFlowerPot size={72} />,
   },

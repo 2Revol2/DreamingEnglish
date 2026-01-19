@@ -1,8 +1,8 @@
 import { cn } from "@/shared/lib/utils";
-import type { LearningStage } from "../../model/types/types";
+import type { InfoSteps } from "@/shared/types/InfoSteps";
 
 interface HowItWorksCardProps {
-  stage: LearningStage;
+  stage: InfoSteps;
 }
 
 export const HowItWorksCard = (props: HowItWorksCardProps) => {
