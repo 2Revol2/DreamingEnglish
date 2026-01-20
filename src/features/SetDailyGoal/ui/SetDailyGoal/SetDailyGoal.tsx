@@ -6,6 +6,7 @@ import { RadioGroup } from "@/shared/ui/radio-group";
 import { GOAL_CUSTOM_OPTION, GOAL_DEFAULT_OPTIONS, RadioOptionCard } from "@/entities/DailyGoal";
 import { useUpdateUserData } from "@/entities/User";
 import { Button } from "@/shared/ui/button";
+import { SetDailyGoalSchema } from "../../model/schemas/setDailyGoalSchema";
 
 interface SetDailyGoalProps {
   dailyGoal: number;
@@ -18,6 +19,8 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
   const isCustom = !GOAL_DEFAULT_OPTIONS.some((option) => Number(option.value) === dailyGoal);
   const defaultValue = isCustom ? "Own Goal" : String(dailyGoal);
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState("");
+
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const [customValue, setCustomValue] = useState(isCustom ? String(dailyGoal) : "15");
 
@@ -26,6 +29,15 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
   }, []);
 
   const onSave = useCallback(() => {
+    const result = SetDailyGoalSchema.safeParse({ dailyGoal: customValue });
+
+    if (!result.success) {
+      const errorMessage = result.error.issues[0].message;
+      setError(errorMessage);
+
+      return;
+    }
+
     if (selectedOption === "Own Goal") {
       const minutesToSeconds = Number(customValue) * 60;
       mutate({ dailyGoal: minutesToSeconds });
@@ -34,9 +46,10 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
       mutate({ dailyGoal: minutesToSeconds });
     }
     setIsOpen(false);
+    setError("");
   }, [customValue, mutate, selectedOption]);
 
-  const handleChange = useCallback((v: string) => {
+  const onChangeCustomGoalHandler = useCallback((v: string) => {
     setCustomValue(v);
   }, []);
 
@@ -54,7 +67,8 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
             {defaultOptions.map((option) => (
               <RadioOptionCard key={option.id} option={option} />
             ))}
-            <RadioOptionCard option={GOAL_CUSTOM_OPTION} value={customValue} onChange={handleChange} />
+            <RadioOptionCard option={GOAL_CUSTOM_OPTION} value={customValue} onChange={onChangeCustomGoalHandler} />
+            {error && <p className={"text-red-500 text-sm"}>{error}</p>}
           </RadioGroup>
           <Button onClick={onSave} className={"w-full mt-2.5 h-12"}>
             Save
