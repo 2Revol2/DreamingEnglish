@@ -80,13 +80,13 @@ export const ActivityTracker = () => {
                   {...buttonProps}
                   className={cn(
                     "flex flex-col lg:h-14 lg:w-14 w-10 h-10 items-center rounded-md px-1 pointer-events-none",
-                    watchedSeconds && "bg-orange-100 dark:bg-orange-300",
+                    hours + minutes > 0 && "bg-orange-100 dark:bg-orange-300",
                     isFuture && "text-gray-400",
                   )}
                   variant={"ghost"}
                 >
                   <span>{normalizedDay}</span>
-                  {!isFuture && watchedSeconds > 0 && (
+                  {!isFuture && hours + minutes > 0 && (
                     <span className={"text-[10px] text-primary"}>
                       {hours}h {minutes}m
                     </span>
