@@ -6,9 +6,10 @@ import { useEffect } from "react";
 import { useQueryParams } from "@/shared/hooks/useQueryParams";
 import { getVideos } from "@/shared/api/videos/getVideos";
 import { VideoList } from "@/entities/Video";
+import { Button } from "@/shared/ui/button";
 
 export const VideosInfiniteList = () => {
-  const { getParam } = useQueryParams();
+  const { getParam, clearParams } = useQueryParams();
   const search = getParam("search", undefined);
   const sortBy = getParam("sort", "new");
   const duration = getParam("duration", undefined);
@@ -47,6 +48,15 @@ export const VideosInfiniteList = () => {
     <div>
       <VideoList videos={videos} isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} />
       {hasNextPage && <div ref={ref} />}
+      {!videos.length && (
+        <div className={"flex justify-center flex-col items-center gap-2 mt-5"}>
+          <p className={"text-lg text-muted-foreground text-center"}>No videos found matching your filters</p>
+
+          <Button variant={"ghost"} onClick={clearParams}>
+            Clear filters
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

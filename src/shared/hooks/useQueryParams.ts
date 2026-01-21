@@ -5,11 +5,12 @@ export const useQueryParams = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const params = useMemo(() => {
+    return new URLSearchParams(searchParams?.toString());
+  }, [searchParams]);
 
   const setParam = useCallback(
     (key: string, value?: string) => {
-      const params = new URLSearchParams(searchParams?.toString());
-
       if (value === undefined || value === "") {
         params.delete(key);
       } else {
@@ -19,7 +20,7 @@ export const useQueryParams = () => {
 
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     },
-    [pathname, router, searchParams],
+    [params, pathname, router],
   );
 
   const getParam = useCallback(
@@ -27,5 +28,10 @@ export const useQueryParams = () => {
     [searchParams],
   );
 
-  return useMemo(() => ({ getParam, setParam }), [getParam, setParam]);
+  const clearParams = useCallback(() => {
+    params.forEach((_, key) => params.delete(key));
+    router.replace(`${pathname}`, { scroll: false });
+  }, [params, pathname, router]);
+
+  return useMemo(() => ({ getParam, setParam, clearParams }), [clearParams, getParam, setParam]);
 };

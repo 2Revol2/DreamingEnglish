@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { VideoFilters } from "@/widgets/VideoFilters";
-import { VideosInfiniteList } from "@/features/VideoInfiniteList";
+import { VideosInfiniteList } from "../VideosInfiniteList/VideosInfiniteList";
 
 export const BrowsePage = async () => {
   return (
