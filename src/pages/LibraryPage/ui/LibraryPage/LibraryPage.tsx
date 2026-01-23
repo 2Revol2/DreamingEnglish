@@ -17,7 +17,8 @@ export const LibraryPage = async () => {
             View all {">"}
           </Link>
         </div>
-        <VideoList videos={videos} view={"list"} />
+        {videos.length > 0 && <VideoList videos={videos} view={"list"} />}
+        {!videos.length && <p className={"py-2 text-muted-foreground"}>No videos watched yet</p>}
       </section>
       <section>
         <div className={"flex items-center gap-2"}>
