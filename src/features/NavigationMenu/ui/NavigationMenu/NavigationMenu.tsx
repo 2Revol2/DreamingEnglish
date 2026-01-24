@@ -1,5 +1,5 @@
 "use client";
-import useIsMobile from "@/shared/hooks/useIsMobile";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { MobileMenu } from "../MobileMenu/MobileMenu";
 import { DesktopMenu } from "../DesktopMenu/DesktopMenu";
 

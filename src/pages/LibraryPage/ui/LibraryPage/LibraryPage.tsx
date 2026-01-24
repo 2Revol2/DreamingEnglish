@@ -5,10 +5,10 @@ import { VideoList } from "@/entities/Video";
 import { RoutePath } from "@/shared/constants/router";
 
 export const LibraryPage = async () => {
-  const videos = await getUserVideosHistory(3);
+  const videos = await getUserVideosHistory(4);
 
   return (
-    <div className={"pb-2"}>
+    <div className={"p-5"}>
       <section>
         <div className={"flex items-center gap-2"}>
           <MdOutlineHistory size={30} />
@@ -17,7 +17,7 @@ export const LibraryPage = async () => {
             View all {">"}
           </Link>
         </div>
-        {videos.length > 0 && <VideoList videos={videos} view={"list"} />}
+        {videos.length > 0 && <VideoList videos={videos} view={"grid"} />}
         {!videos.length && <p className={"py-2 text-muted-foreground"}>No videos watched yet</p>}
       </section>
       <section>

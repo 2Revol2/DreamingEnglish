@@ -3,6 +3,7 @@ import { updateUserVideosHistory } from "@/shared/api/history/updateUserVideosHi
 import { VideoPlayer } from "@/features/VideoPlayer";
 import { VideoLevel } from "@/shared/ui/video-level";
 import { ChatWindow } from "@/widgets/ChatWindow";
+import { Container } from "@/shared/ui/container";
 
 export const VideoPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -10,7 +11,7 @@ export const VideoPage = async ({ params }: { params: Promise<{ id: string }> })
   const [video] = await Promise.all([getVideoById(id), updateUserVideosHistory({ videoId: id })]);
 
   return (
-    <div className={"flex flex-col gap-8"}>
+    <Container className={"flex flex-col gap-8 lg:pt-8 pt-0"}>
       <div className={"w-full bg-secondary-background pb-2.5 rounded-lg"}>
         <VideoPlayer url={video.url} />
         <div className={"p-5 flex flex-col gap-3"}>
@@ -21,6 +22,6 @@ export const VideoPage = async ({ params }: { params: Promise<{ id: string }> })
         </div>
       </div>
       <ChatWindow videoId={video.id} />
-    </div>
+    </Container>
   );
 };

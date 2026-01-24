@@ -1,6 +1,5 @@
 import { AuthHeader } from "@/widgets/Header";
 import { Sidebar } from "@/widgets/Sidebar";
-import { Container } from "@/shared/ui/container";
 import type { ReactNode } from "react";
 
 const RootLayout = ({
@@ -13,8 +12,8 @@ const RootLayout = ({
       <Sidebar />
       <div className={"flex-1 flex flex-col"}>
         <AuthHeader />
-        <main id={"main"} className={"lg:pt-8 pt-0 flex-1 pb-20 lg:pb-3 overflow-y-auto"}>
-          <Container>{children}</Container>
+        <main id={"main"} className={"flex-1 pb-20 lg:pb-3 overflow-y-auto"}>
+          {children}
         </main>
       </div>
     </div>

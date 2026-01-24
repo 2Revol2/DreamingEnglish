@@ -1,10 +1,15 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { RoutePath } from "@/shared/constants/router";
+import { AvatarDropdown } from "@/features/AvatarDropdown";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { SidebarItem } from "../SidebarItem/SidebarItem";
 import { SidebarItems } from "../../model/constants/consts";
 
 export const Sidebar = () => {
+  const { isMobile } = useIsMobile();
+
   return (
     <aside
       className={
@@ -31,6 +36,12 @@ export const Sidebar = () => {
               <SidebarItem item={item} />
             </li>
           ))}
+          {isMobile && (
+            <li className={"flex gap-1 flex-col items-center justify-center"}>
+              <AvatarDropdown />
+              <span className={"lg:text-[20px] text-xs font-medium"}>Profile</span>
+            </li>
+          )}
         </ul>
       </nav>
     </aside>

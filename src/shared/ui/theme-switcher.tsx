@@ -1,7 +1,7 @@
 import { IoMdMoon } from "react-icons/io";
-import { Switch } from "@/shared/ui/switch";
-import { Label } from "@/shared/ui/label";
 import { useThemeStore } from "@/shared/store/useThemeStore";
+import { Switch } from "./switch";
+import { Label } from "./label";
 
 export const ThemeSwitcher = () => {
   const { isDark, setDark } = useThemeStore();

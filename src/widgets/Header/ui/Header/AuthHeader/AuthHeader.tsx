@@ -5,11 +5,13 @@ import { useUserData } from "@/entities/User";
 import { DailyGoalProgress } from "@/features/DailyGoalProgress";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
-import { AvatarDropdown } from "../../AvatarDropdown/AvatarDropdown";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import { AvatarDropdown } from "@/features/AvatarDropdown";
 
 export const AuthHeader = () => {
-  const { data: dailyGoal } = useUserData((user) => user.dailyGoal);
+  const { isMobile } = useIsMobile();
 
+  const { data: dailyGoal } = useUserData((user) => user.dailyGoal);
   const dailyGoalNormalized = dailyGoal ? secondsToMinutes(dailyGoal) : 15;
 
   return (
@@ -28,8 +30,12 @@ export const AuthHeader = () => {
           <Skeleton className={"w-full h-[20px]"} />
         )}
       </div>
-      <Separator orientation={"vertical"} className={"mx-5"} />
-      <AvatarDropdown />
+      {!isMobile && (
+        <>
+          <Separator orientation={"vertical"} className={"mx-5"} />
+          <AvatarDropdown />
+        </>
+      )}
     </header>
   );
 };

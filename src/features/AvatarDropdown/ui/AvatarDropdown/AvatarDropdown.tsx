@@ -12,14 +12,16 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@/shared/ui/avatar";
-import { ThemeSwitcher } from "@/features/ThemeSwitcher";
 import { Button } from "@/shared/ui/button";
 import { RoutePath } from "@/shared/constants/router";
 import { useUserData } from "@/entities/User";
+import { ThemeSwitcher } from "@/shared/ui/theme-switcher";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 
 export const AvatarDropdown = memo(() => {
   const { data: image } = useUserData((user) => user?.image);
   const [isOpen, setIsOpen] = useState(false);
+  const { isMobile } = useIsMobile();
 
   return (
     <DropdownMenu modal={false} open={isOpen} onOpenChange={setIsOpen}>
@@ -27,7 +29,7 @@ export const AvatarDropdown = memo(() => {
         <Avatar>
           <AvatarImage src={image || "https://github.com/shadcn.png"} />
         </Avatar>
-        {isOpen ? <MdOutlineKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
+        {!isMobile ? isOpen ? <MdOutlineKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown /> : null}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup className={"p-1"}>
