@@ -10,17 +10,19 @@ import type { Video } from "@prisma/client";
 interface VideoItemProps {
   video: Video;
   view?: VideoView;
+  className?: string;
 }
 
 export const VideoItem = memo((props: VideoItemProps) => {
-  const { video, view = "grid" } = props;
+  const { video, view = "grid", className } = props;
 
   return (
     <Link
       href={RoutePath.watch + video.id}
       className={cn(
-        "hover:shadow-md bg-secondary-background rounded overflow-hidden cursor-pointer",
+        "hover:shadow-md bg-secondary-background block rounded overflow-hidden cursor-pointer",
         view === "list" ? "flex w-full" : "lg:max-w-[308px] sm:max-w-[250px] md:max-w-[280px] w-full",
+        className,
       )}
     >
       <div
