@@ -1,9 +1,9 @@
-import { getVideoById } from "@/shared/api/videos/getVideoById";
-import { updateUserVideosHistory } from "@/shared/api/history/updateUserVideosHistory";
 import { VideoPlayer } from "@/features/VideoPlayer";
 import { VideoLevel } from "@/shared/ui/video-level";
 import { ChatWindow } from "@/widgets/ChatWindow";
 import { Container } from "@/shared/ui/container";
+import { updateUserVideosHistory } from "../../api/updateUserVideosHistory";
+import { getVideoById } from "./getVideoById";
 
 export const VideoPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;

@@ -1,4 +1,4 @@
-import { serverApi } from "../serverApi";
+import { serverApi } from "@/shared/api/serverApi";
 
 interface updateUserVideosHistoryProps {
   videoId: string;

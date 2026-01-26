@@ -4,9 +4,9 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { useQueryParams } from "@/shared/hooks/useQueryParams";
-import { getVideos } from "@/shared/api/videos/getVideos";
 import { VideoList } from "@/entities/Video";
 import { Button } from "@/shared/ui/button";
+import { getVideos } from "../../api/getVideos";
 
 export const VideosInfiniteList = () => {
   const { getParam, clearParams } = useQueryParams();
