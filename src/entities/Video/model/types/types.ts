@@ -1,4 +1,4 @@
-import type { VideoLevel } from "@prisma/client";
+import type { Prisma, VideoLevel } from "@prisma/client";
 
 export const LEVEL_ORDER: Record<VideoLevel, number> = {
   SUPER_BEGINNER: 1,
@@ -16,3 +16,7 @@ export interface GetVideoParams {
   page?: number;
   limit?: number;
 }
+
+export type VideoHistory = Prisma.UserVideoHistoryGetPayload<{
+  include: { video: true };
+}>;

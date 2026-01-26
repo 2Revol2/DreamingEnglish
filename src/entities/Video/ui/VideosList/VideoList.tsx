@@ -4,26 +4,22 @@ import { memo, useMemo } from "react";
 import { useResponsiveGrid } from "../../lib/useResponsiveGrid";
 import { VideoItem } from "../VideoItem/VideoItem";
 import { VideoItemSkeleton } from "../VideoItem/VideoItemSkeleton";
-import type { VideoView } from "../../model/constants/constants";
 import type { Video } from "@prisma/client";
 
 interface VideoListProps {
   videos: Video[];
   isLoading?: boolean;
   isFetchingNextPage?: boolean;
-  view?: VideoView;
 }
 
-const getSkeleton = (view: VideoView) => {
-  return new Array(view === "list" ? 5 : 12)
-    .fill(0)
-    .map((_, index) => <VideoItemSkeleton view={view} key={`skeleton-${index}`} />);
+const getSkeleton = () => {
+  return new Array(12).fill(0).map((_, index) => <VideoItemSkeleton key={`skeleton-${index}`} />);
 };
 
 export const VideoList = memo((props: VideoListProps) => {
-  const { videos, isLoading, isFetchingNextPage, view = "grid" } = props;
+  const { videos, isLoading, isFetchingNextPage } = props;
 
-  const { columns, rowHeight } = useResponsiveGrid(view);
+  const { columns, rowHeight } = useResponsiveGrid();
 
   const rowsData: Video[][] = useMemo(() => {
     const result: Video[][] = [];
@@ -35,7 +31,7 @@ export const VideoList = memo((props: VideoListProps) => {
 
   const rows = rowsData.length;
 
-  const skeletons = useMemo(() => getSkeleton(view), [view]);
+  const skeletons = useMemo(() => getSkeleton(), []);
 
   const rowVirtualizer = useVirtualizer({
     count: rows,
@@ -72,7 +68,7 @@ export const VideoList = memo((props: VideoListProps) => {
               }}
             >
               {rowsData[row.index].map((item) => (
-                <VideoItem key={item.id} video={item} view={view} />
+                <VideoItem key={item.id} video={item} />
               ))}
             </div>
           );

@@ -28,9 +28,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    const videos = historyData.map((data) => data.video);
-
-    return NextResponse.json(videos);
+    return NextResponse.json(historyData);
   } catch (error) {
     console.error("Error fetching video:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
