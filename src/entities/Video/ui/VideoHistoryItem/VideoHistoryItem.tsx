@@ -12,8 +12,6 @@ export const VideoHistoryItem = (props: VideoHistoryItemProps) => {
   const { historyItem } = props;
   const { video, viewedAt } = historyItem;
 
-  const normalizedDate = String(viewedAt).slice(0, 19).replace("T", ", ");
-
   return (
     <Link href={RoutePath.watch + video.id} className={"bg-secondary-background flex rounded overflow-hidden"}>
       <div className={"shrink-0 w-[186px] h-[106px] lg:w-[308px] lg:h-[186px]"}>
@@ -23,7 +21,7 @@ export const VideoHistoryItem = (props: VideoHistoryItemProps) => {
         <VideoLevel level={video.level} className={"mb-2"} />
         <h6 className={"text-sm lg:text-xl font-bold lg:truncate line-clamp-2 mb-2"}>{video.title}</h6>
         <p className={"text-sm hidden lg:flex gap-4"}>
-          <FaCalendar /> Watched on: {normalizedDate}
+          <FaCalendar /> Watched on: {viewedAt}
         </p>
       </div>
     </Link>

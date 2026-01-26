@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { formatInTimeZone } from "date-fns-tz";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
 import { withAuth } from "@/shared/lib/api/withAuth";
 import type { NextRequest } from "next/server";
@@ -43,9 +44,11 @@ export async function POST(req: NextRequest) {
       return error;
     }
 
-    const body: { videoId: string } = await req.json();
+    const body: { videoId: string; timeZone: string } = await req.json();
 
-    const { videoId } = body;
+    const { videoId, timeZone } = body;
+
+    const todayDate = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd, HH:mm:ss");
 
     await prisma.userVideoHistory.upsert({
       where: {
@@ -55,11 +58,12 @@ export async function POST(req: NextRequest) {
         },
       },
       update: {
-        viewedAt: new Date(),
+        viewedAt: todayDate,
       },
       create: {
         userId: userId,
         videoId,
+        viewedAt: todayDate,
       },
     });
 

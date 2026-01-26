@@ -6,9 +6,10 @@ interface updateUserVideosHistoryProps {
 
 export const updateUserVideosHistory = async (props: updateUserVideosHistoryProps) => {
   const { videoId } = props;
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   return await serverApi("/history", {
     method: "POST",
-    body: JSON.stringify({ videoId }),
+    body: JSON.stringify({ videoId, timeZone }),
   });
 };
