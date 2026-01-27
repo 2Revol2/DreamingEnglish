@@ -4,32 +4,25 @@ import { RoutePath } from "@/shared/constants/router";
 import { VideoLevel } from "@/shared/ui/video-level";
 import { cn } from "@/shared/lib/utils";
 import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
-import type { VideoView } from "../../model/constants/constants";
 import type { Video } from "@prisma/client";
 
 interface VideoItemProps {
   video: Video;
-  view?: VideoView;
   className?: string;
 }
 
 export const VideoItem = memo((props: VideoItemProps) => {
-  const { video, view = "grid", className } = props;
+  const { video, className } = props;
 
   return (
     <Link
       href={RoutePath.watch + video.id}
       className={cn(
-        "hover:shadow-md bg-secondary-background block rounded overflow-hidden cursor-pointer",
-        view === "list" ? "flex w-full" : "lg:max-w-[308px] sm:max-w-[250px] md:max-w-[280px] w-full",
+        "hover:shadow-md bg-secondary-background block rounded overflow-hidden cursor-pointer lg:max-w-[308px] sm:max-w-[250px] md:max-w-[280px] w-full",
         className,
       )}
     >
-      <div
-        className={cn(
-          view === "list" ? "flex-shrink-0 w-[186px] h-[106px] lg:w-[308px] lg:h-[186px]" : "w-full aspect-video",
-        )}
-      >
+      <div className={cn("w-full aspect-video")}>
         <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover" />
       </div>
 

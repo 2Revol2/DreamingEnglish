@@ -1,51 +1,49 @@
 "use client";
+import { useMemo } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { memo, useMemo } from "react";
-import { useResponsiveGrid } from "../../lib/useResponsiveGrid";
-import { VideoItem } from "../VideoItem/VideoItem";
-import { VideoItemSkeleton } from "../VideoItem/VideoItemSkeleton";
-import type { Video } from "@prisma/client";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import { VideoHistoryItemSkeleton } from "../VideoHistoryItem/VideoHistoryItemSkeleton";
+import { VideoHistoryItem } from "../VideoHistoryItem/VideoHistoryItem";
+import type { VideoHistory } from "../../model/types/types";
 
-interface VideoListProps {
-  videos: Video[];
+interface VideoHistoryListProps {
+  historyList: VideoHistory[];
   isLoading?: boolean;
   isFetchingNextPage?: boolean;
 }
 
 const getSkeleton = () => {
-  return new Array(12).fill(0).map((_, index) => <VideoItemSkeleton key={`skeleton-${index}`} />);
+  return new Array(5).fill(0).map((_, index) => <VideoHistoryItemSkeleton key={`skeleton-${index}`} />);
 };
 
-export const VideoList = memo((props: VideoListProps) => {
-  const { videos, isLoading, isFetchingNextPage } = props;
+export const VideoHistoryList = (props: VideoHistoryListProps) => {
+  const { historyList, isLoading, isFetchingNextPage } = props;
+  const { isMobile } = useIsMobile();
 
-  const { columns, rowHeight } = useResponsiveGrid();
-
-  const rowsData: Video[][] = useMemo(() => {
-    const result: Video[][] = [];
-    for (let i = 0; i < videos.length; i += columns) {
-      result.push(videos.slice(i, i + columns));
+  const rowsData: VideoHistory[][] = useMemo(() => {
+    const result: VideoHistory[][] = [];
+    for (let i = 0; i < historyList.length; i += 1) {
+      result.push(historyList.slice(i, i + 1));
     }
     return result;
-  }, [videos, columns]);
+  }, [historyList]);
 
-  const rows = rowsData.length;
+  const height = isMobile ? 120 : 200;
 
   const skeletons = useMemo(() => getSkeleton(), []);
-
   const rowVirtualizer = useVirtualizer({
-    count: rows,
+    count: historyList.length,
     getScrollElement: () => document.getElementById("main"),
-    estimateSize: () => rowHeight,
+    estimateSize: () => height,
     overscan: 3,
   });
 
   if (isLoading) {
-    return <div className={"w-full flex flex-wrap justify-center gap-4"}>{skeletons}</div>;
+    return <div className={"flex flex-col gap-4"}>{skeletons}</div>;
   }
 
   return (
-    <div className={"w-full flex justify-center gap-4"}>
+    <div className={"flex flex-col gap-4"}>
       <div
         style={{
           height: `${rowVirtualizer.getTotalSize()}px`,
@@ -68,13 +66,14 @@ export const VideoList = memo((props: VideoListProps) => {
               }}
             >
               {rowsData[row.index].map((item) => (
-                <VideoItem key={item.id} video={item} />
+                <VideoHistoryItem key={item.id} historyItem={item} />
               ))}
             </div>
           );
         })}
       </div>
+
       {isFetchingNextPage && skeletons}
     </div>
   );
-});
+};

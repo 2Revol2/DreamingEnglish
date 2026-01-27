@@ -88,10 +88,10 @@ model UserDailyWatch {
 }
 
 model UserVideoHistory {
-  id       String   @id @default(cuid())
+  id       String @id @default(cuid())
   userId   String
   videoId  String
-  viewedAt DateTime @default(now())
+  viewedAt String
 
   user  User  @relation(fields: [userId], references: [id])
   video Video @relation(fields: [videoId], references: [id])

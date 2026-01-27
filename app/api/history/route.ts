@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { formatInTimeZone } from "date-fns-tz";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
 import { withAuth } from "@/shared/lib/api/withAuth";
 import type { NextRequest } from "next/server";
@@ -12,11 +13,13 @@ export async function GET(req: NextRequest) {
     }
 
     const { searchParams } = new URL(req.url);
-    const limitParams = searchParams.get("limit");
-    const limit = limitParams && limitParams !== "undefined" ? Number(limitParams) : undefined;
+
+    const limit = Number(searchParams.get("limit")) || 12;
+    const page = Number(searchParams.get("page")) || 1;
+
+    const skip = (page - 1) * limit;
 
     const historyData = await prisma.userVideoHistory.findMany({
-      take: limit,
       where: {
         userId: userId,
       },
@@ -26,11 +29,11 @@ export async function GET(req: NextRequest) {
       orderBy: {
         viewedAt: "desc",
       },
+      take: limit,
+      skip: skip,
     });
 
-    const videos = historyData.map((data) => data.video);
-
-    return NextResponse.json(videos);
+    return NextResponse.json(historyData);
   } catch (error) {
     console.error("Error fetching video:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
@@ -45,9 +48,11 @@ export async function POST(req: NextRequest) {
       return error;
     }
 
-    const body: { videoId: string } = await req.json();
+    const body: { videoId: string; timeZone: string } = await req.json();
 
-    const { videoId } = body;
+    const { videoId, timeZone } = body;
+
+    const todayDate = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd, HH:mm:ss");
 
     await prisma.userVideoHistory.upsert({
       where: {
@@ -57,11 +62,12 @@ export async function POST(req: NextRequest) {
         },
       },
       update: {
-        viewedAt: new Date(),
+        viewedAt: todayDate,
       },
       create: {
         userId: userId,
         videoId,
+        viewedAt: todayDate,
       },
     });
 

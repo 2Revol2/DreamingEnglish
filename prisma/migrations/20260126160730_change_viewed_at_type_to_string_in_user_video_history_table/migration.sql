@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "UserVideoHistory" ALTER COLUMN "viewedAt" DROP DEFAULT,
+ALTER COLUMN "viewedAt" SET DATA TYPE TEXT;

@@ -1,4 +1,4 @@
-import { api } from "../api";
+import { api } from "@/shared/api/api";
 import type { Video } from "@prisma/client";
 
 interface getVideosProps {
