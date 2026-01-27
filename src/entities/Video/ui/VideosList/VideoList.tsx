@@ -45,7 +45,7 @@ export const VideoList = memo((props: VideoListProps) => {
   }
 
   return (
-    <div className={"w-full flex justify-center gap-4"}>
+    <div className={"w-full flex flex-wrap justify-center gap-4"}>
       <div
         style={{
           height: `${rowVirtualizer.getTotalSize()}px`,
