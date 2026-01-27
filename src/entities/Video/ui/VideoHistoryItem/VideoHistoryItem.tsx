@@ -13,7 +13,10 @@ export const VideoHistoryItem = (props: VideoHistoryItemProps) => {
   const { video, viewedAt } = historyItem;
 
   return (
-    <Link href={RoutePath.watch + video.id} className={"bg-secondary-background flex rounded overflow-hidden"}>
+    <Link
+      href={RoutePath.watch + video.id}
+      className={"bg-secondary-background flex rounded overflow-hidden w-full block"}
+    >
       <div className={"shrink-0 w-[186px] h-[106px] lg:w-[308px] lg:h-[186px]"}>
         <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover" />
       </div>
