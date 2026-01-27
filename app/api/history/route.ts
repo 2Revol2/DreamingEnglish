@@ -13,11 +13,13 @@ export async function GET(req: NextRequest) {
     }
 
     const { searchParams } = new URL(req.url);
-    const limitParams = searchParams.get("limit");
-    const limit = limitParams && limitParams !== "undefined" ? Number(limitParams) : undefined;
+
+    const limit = Number(searchParams.get("limit")) || 12;
+    const page = Number(searchParams.get("page")) || 1;
+
+    const skip = (page - 1) * limit;
 
     const historyData = await prisma.userVideoHistory.findMany({
-      take: limit,
       where: {
         userId: userId,
       },
@@ -27,6 +29,8 @@ export async function GET(req: NextRequest) {
       orderBy: {
         viewedAt: "desc",
       },
+      take: limit,
+      skip: skip,
     });
 
     return NextResponse.json(historyData);

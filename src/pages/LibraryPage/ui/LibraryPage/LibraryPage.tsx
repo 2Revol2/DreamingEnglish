@@ -4,7 +4,7 @@ import { RoutePath } from "@/shared/constants/router";
 import { VideoCarousel } from "../VideoCarousel/VideoCarousel";
 
 export const LibraryPage = async () => {
-  const historyData = await getUserVideosHistory(7);
+  const historyData = await getUserVideosHistory({ limit: 7 });
   const videos = historyData?.map((item) => item.video);
 
   return (

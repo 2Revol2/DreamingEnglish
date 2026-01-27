@@ -1,5 +1,4 @@
-import { getUserVideosHistory, VideoHistoryList } from "@/entities/Video";
-import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
+import { getUserVideosHistory } from "@/entities/Video";
 import { Container } from "@/shared/ui/container";
 import {
   Breadcrumb,
@@ -10,9 +9,10 @@ import {
   BreadcrumbSeparator,
 } from "@/shared/ui/breadcrumb";
 import { RoutePath } from "@/shared/constants/router";
+import { VideoHistoryInfiniteList } from "../VideoHistoryInfiniteList/VideoHistoryInfiniteList";
 
 export const HistoryPage = async () => {
-  const historyData = await getUserVideosHistory();
+  const historyData = await getUserVideosHistory({ limit: 5, page: 1 });
 
   return (
     <Container className={"lg:pt-8 pt-4"}>
@@ -27,14 +27,7 @@ export const HistoryPage = async () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      {historyData.length > 0 ? (
-        <VideoHistoryList historyList={historyData} />
-      ) : (
-        <div className={"flex flex-col items-center pt-10"}>
-          <NoResultsIcon width={128} height={128} />
-          <p className={"text-xl text-muted-foreground"}>No videos watched yet</p>
-        </div>
-      )}
+      <VideoHistoryInfiniteList />
     </Container>
   );
 };
