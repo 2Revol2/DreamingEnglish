@@ -1,4 +1,5 @@
 import "@/app/styles/globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Poppins } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { AuthProvider } from "@/app/providers/AuthProvider";
@@ -50,6 +51,7 @@ const RootLayout = ({
         <AuthProvider>
           <TanstackProvider>{children}</TanstackProvider>
         </AuthProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
