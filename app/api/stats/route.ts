@@ -5,13 +5,16 @@ import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    const url = new URL(req.url);
+
     const { error, userId } = await withAuth();
 
     if (error) {
       return error;
     }
 
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = url;
+
     const timeZone = searchParams.get("timeZone");
 
     if (!timeZone) {

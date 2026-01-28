@@ -28,6 +28,8 @@ export const LevelCard = (props: LevelCardProps) => {
         <Image
           src={level.icon}
           alt={level.subtitle}
+          width={80}
+          height={80}
           className={cn("w-20 h-20 transition-all", isDisabled && "grayscale")}
         />
         <div className={"flex flex-col gap-1.5"}>

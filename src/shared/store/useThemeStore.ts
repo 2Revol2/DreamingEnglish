@@ -12,7 +12,9 @@ export const useThemeStore = create<ThemeState>()(
     (set) => ({
       isDark: false,
       setDark: (value) => {
-        document.documentElement.classList.toggle("dark", value);
+        if (typeof document !== "undefined") {
+          document.documentElement.classList.toggle("dark", value);
+        }
         set({ isDark: value });
       },
     }),
@@ -20,7 +22,7 @@ export const useThemeStore = create<ThemeState>()(
       name: THEME_LOCAL_STORAGE_KEY,
       storage: createJSONStorage(() => localStorage),
       onRehydrateStorage: () => (state) => {
-        if (state?.isDark && typeof window !== "undefined") {
+        if (state?.isDark && typeof document !== "undefined") {
           document.documentElement.classList.add("dark");
         }
       },

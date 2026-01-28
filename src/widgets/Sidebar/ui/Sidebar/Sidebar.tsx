@@ -36,12 +36,12 @@ export const Sidebar = () => {
               <SidebarItem item={item} />
             </li>
           ))}
-          {isMobile && (
+          {isMobile ? (
             <li className={"flex gap-1 flex-col items-center justify-center"}>
               <AvatarDropdown />
               <span className={"lg:text-[20px] text-xs font-medium"}>Profile</span>
             </li>
-          )}
+          ) : null}
         </ul>
       </nav>
     </aside>

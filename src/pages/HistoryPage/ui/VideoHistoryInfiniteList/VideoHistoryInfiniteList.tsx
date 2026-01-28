@@ -35,14 +35,14 @@ export const VideoHistoryInfiniteList = () => {
   return (
     <div>
       <VideoHistoryList historyList={historyData} isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} />
-      {hasNextPage && <div ref={ref} />}
+      {hasNextPage ? <div ref={ref} /> : null}
 
-      {!historyData.length && (
+      {!historyData.length ? (
         <div className={"flex flex-col items-center pt-10"}>
           <NoResultsIcon width={128} height={128} />
           <p className={"text-xl text-muted-foreground"}>No videos watched yet</p>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

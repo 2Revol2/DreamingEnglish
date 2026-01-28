@@ -18,7 +18,7 @@ export const LevelsList = (props: LevelsListProps) => {
       {Levels.map((level) => (
         <LevelCard key={level.id} level={level} onClick={() => setSelectedLevel(level)} currentLevel={currentLevel} />
       ))}
-      {selectedLevel && <LevelModal level={selectedLevel} onClose={() => setSelectedLevel(null)} />}
+      {selectedLevel ? <LevelModal level={selectedLevel} onClose={() => setSelectedLevel(null)} /> : null}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Plus } from "lucide-react";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from "@/shared/ui/dialog";
 import { Button } from "@/shared/ui/button";
@@ -15,13 +15,12 @@ export const AddOutsideTime = () => {
 
   const { mutate } = useAddOutsideTime();
 
-  const onSave = () => {
+  const onSave = useCallback(() => {
     const result = OutsideTimeSchema.safeParse({ hours, minutes });
 
     if (!result.success) {
-      const errorMessage = result.error.issues[0].message;
+      const errorMessage = result.error.issues?.[0]?.message || "Validation failed";
       setError(errorMessage);
-
       return;
     }
 
@@ -34,7 +33,7 @@ export const AddOutsideTime = () => {
     setHours("");
     setError("");
     setOpen(false);
-  };
+  }, [hours, minutes, mutate]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -63,7 +62,7 @@ export const AddOutsideTime = () => {
               onChange={(e) => setMinutes(e.target.value)}
             />
           </div>
-          {error && <p className={"text-red-500 text-sm"}>{error}</p>}
+          {error ? <p className={"text-red-500 text-sm"}>{error}</p> : null}
         </div>
         <DialogFooter>
           <DialogClose asChild>

@@ -38,13 +38,14 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const body: UserData = await req.json();
-
+    const bodyPromise = req.json();
     const { error, userId } = await withAuth();
 
     if (error) {
       return error;
     }
+
+    const body: UserData = await bodyPromise;
 
     await prisma.user.update({
       where: {

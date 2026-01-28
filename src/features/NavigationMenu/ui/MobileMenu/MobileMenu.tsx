@@ -22,7 +22,7 @@ export const MobileMenu = () => {
           <RxHamburgerMenu size={30} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className={"w-[100vw] mt-4"}>
+      <DropdownMenuContent className={"w-screen mt-4"}>
         <DropdownMenuGroup className={"flex flex-col gap-2 items-center"}>
           {mainNavLinks.map((item) => (
             <DropdownMenuItem key={item.path} onClick={() => setIsOpen(false)}>

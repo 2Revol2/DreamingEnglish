@@ -6,12 +6,14 @@ import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    const url = new URL(req.url);
+
     const { error, userId } = await withAuth();
 
     if (error) {
       return error;
     }
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = url;
     const timeZone = searchParams.get("timeZone");
 
     if (!timeZone) {
@@ -40,13 +42,14 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const bodyPromise = req.json();
     const { error, userId } = await withAuth();
 
     if (error) {
       return error;
     }
 
-    const body: { timeZone: string; watchedSeconds: number } = await req.json();
+    const body: { timeZone: string; watchedSeconds: number } = await bodyPromise;
     const { timeZone, watchedSeconds } = body;
 
     const todayDate = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");

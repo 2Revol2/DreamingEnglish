@@ -6,13 +6,19 @@ import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    const url = new URL(req.url);
+
     const { error, userId } = await withAuth();
 
     if (error) {
       return error;
     }
 
-    const { searchParams } = new URL(req.url);
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { searchParams } = url;
 
     const limit = Number(searchParams.get("limit")) || 12;
     const page = Number(searchParams.get("page")) || 1;
@@ -42,13 +48,14 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const bodyPromise = req.json();
     const { error, userId } = await withAuth();
 
     if (error) {
       return error;
     }
 
-    const body: { videoId: string; timeZone: string } = await req.json();
+    const body = await bodyPromise;
 
     const { videoId, timeZone } = body;
 
