@@ -10,9 +10,14 @@ export async function GET(req: NextRequest) {
 
     const { error, userId } = await withAuth();
 
-    if (error || !userId) {
+    if (error) {
       return error;
     }
+
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { searchParams } = url;
 
     const limit = Number(searchParams.get("limit")) || 12;
