@@ -45,7 +45,7 @@ export const VideoCarousel = (props: VideoCarouselProps) => {
               <VideoItem video={video} />
             </CarouselItem>
           ))}
-          {videos.length > 5 && (
+          {videos.length > 5 ? (
             <CarouselItem className="basis-1/2 sm:basis-1/3 lg:basis-1/5">
               <Link
                 href={link}
@@ -54,7 +54,7 @@ export const VideoCarousel = (props: VideoCarouselProps) => {
                 View all <MdKeyboardArrowRight />
               </Link>
             </CarouselItem>
-          )}
+          ) : null}
         </CarouselContent>
       ) : (
         <p className={"py-2 text-muted-foreground"}>{emptyMessage}</p>

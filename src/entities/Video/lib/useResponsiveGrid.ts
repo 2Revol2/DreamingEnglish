@@ -17,12 +17,14 @@ export const useResponsiveGrid = () => {
   const [height, setHeight] = useState(290);
 
   const debounced = useDebouncedCallback(() => {
+    if (typeof window === "undefined") return;
     const width = window.innerWidth;
     setHeight(estimateRowHeight(width));
     setColumns(getColumn(width));
   }, 500);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     debounced();
     window.addEventListener("resize", debounced);
     return () => window.removeEventListener("resize", debounced);

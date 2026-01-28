@@ -86,11 +86,11 @@ export const ActivityTracker = () => {
                   variant={"ghost"}
                 >
                   <span>{normalizedDay}</span>
-                  {!isFuture && hours + minutes > 0 && (
+                  {!isFuture && hours + minutes > 0 ? (
                     <span className={"text-[10px] text-primary"}>
                       {hours}h {minutes}m
                     </span>
-                  )}
+                  ) : null}
                 </Button>
               );
             },

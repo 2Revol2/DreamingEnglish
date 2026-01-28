@@ -1,13 +1,20 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
 import { basePromptForAI } from "@/shared/constants/basePromptForAI";
-import type { NextRequest } from "next/server";
+import { withAuth } from "@/shared/lib/api/withAuth";
 import type { ChatMessage } from "@/entities/Message";
+import type { NextRequest } from "next/server";
 
 const apiKey = process.env.AI_API_KEY;
 
 export async function POST(req: NextRequest) {
   try {
+    const { error } = await withAuth();
+
+    if (error) {
+      return error;
+    }
+
     const body: { messages: ChatMessage[]; videoId: string } = await req.json();
     const { messages, videoId } = body;
 
@@ -39,7 +46,14 @@ export async function POST(req: NextRequest) {
       }),
     });
 
+    if (!response.ok) {
+      throw new Error(`API error: ${response.statusText}`);
+    }
+
     const data = await response.json();
+    if (!data?.message) {
+      throw new Error("Invalid response format");
+    }
     return NextResponse.json(data.message as ChatMessage);
   } catch (error) {
     console.log(error);

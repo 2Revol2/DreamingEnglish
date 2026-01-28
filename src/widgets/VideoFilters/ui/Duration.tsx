@@ -10,7 +10,7 @@ export const Duration = memo(() => {
   const { getParam, setParam } = useQueryParams();
 
   const durationParam = getParam("duration");
-  const initialRange = durationParam ? durationParam.split("to").map(Number) : [0, 100];
+  const initialRange = durationParam ? durationParam.split("to").map((v) => Number(v) || 0) : [0, 100];
 
   const [value, setValue] = useState(initialRange);
   const [from, to] = value;

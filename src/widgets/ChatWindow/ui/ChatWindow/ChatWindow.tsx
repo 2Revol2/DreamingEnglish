@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { SendMessage } from "@/features/SendMessage";
 import { MessageList } from "@/entities/Message";
 import { Button } from "@/shared/ui/button";
@@ -14,24 +14,21 @@ export const ChatWindow = (props: ChatWindowProps) => {
   const { videoId } = props;
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [loading, setLoading] = useState(false);
 
-  const onSend = async (message: ChatMessage) => {
+  const [isPending, startTransition] = useTransition();
+
+  const onSend = (message: ChatMessage) => {
     const updatedMessages = [...messages, message];
     setMessages(updatedMessages);
-    setLoading(true);
-    try {
+
+    startTransition(async () => {
       const aiRespond = await sendMessageToAI(updatedMessages, videoId);
       setMessages([...updatedMessages, aiRespond]);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
-  const sendExample = async (text: string) => {
-    await onSend({
+  const sendExample = (text: string) => {
+    onSend({
       role: "user",
       content: text,
     });
@@ -39,7 +36,7 @@ export const ChatWindow = (props: ChatWindowProps) => {
 
   return (
     <div className={"w-full h-[500px] bg-secondary-background rounded-lg overflow-hidden flex flex-col"}>
-      {!messages.length && (
+      {!messages.length ? (
         <div className="p-4 border-b border-border flex flex-col gap-2">
           <h3 className="text-lg font-bold">Interact with the video using AI</h3>
           <p className="text-sm text-muted-foreground">Ask anything: summarize, explain or check your comprehension</p>
@@ -51,13 +48,13 @@ export const ChatWindow = (props: ChatWindowProps) => {
             ))}
           </div>
         </div>
-      )}
+      ) : null}
 
       <div className={"flex-1 p-4 overflow-y-auto "}>
         {messages.length > 0 ? (
           <>
             <MessageList messages={messages} />
-            {loading && <div className="text-sm text-muted-foreground mt-2">AI is typing...</div>}
+            {isPending ? <div className="text-sm text-muted-foreground mt-2">AI is typing...</div> : null}
           </>
         ) : (
           <div className="h-full flex flex-col items-center justify-center text-center gap-3 text-muted-foreground">

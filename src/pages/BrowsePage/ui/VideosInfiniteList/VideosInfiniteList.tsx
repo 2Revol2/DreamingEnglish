@@ -47,8 +47,8 @@ export const VideosInfiniteList = () => {
   return (
     <div>
       <VideoList videos={videos} isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} />
-      {hasNextPage && <div ref={ref} />}
-      {!videos.length && (
+      {hasNextPage ? <div ref={ref} /> : null}
+      {!videos.length ? (
         <div className={"flex justify-center flex-col items-center gap-2 mt-5"}>
           <p className={"text-lg text-muted-foreground text-center"}>No videos found matching your filters</p>
 
@@ -56,7 +56,7 @@ export const VideosInfiniteList = () => {
             Clear filters
           </Button>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

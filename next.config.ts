@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     "/api/**/*": ["./node_modules/.prisma/client/**/*"],
     "/*": ["./node_modules/.prisma/client/**/*"],
   },
+  experimental: {
+    optimizePackageImports: ["lucide-react", "react-icons"],
+  },
 };
 
 export default withSentryConfig(nextConfig, {

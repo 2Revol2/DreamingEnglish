@@ -68,7 +68,7 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
               <RadioOptionCard key={option.id} option={option} />
             ))}
             <RadioOptionCard option={GOAL_CUSTOM_OPTION} value={customValue} onChange={onChangeCustomGoalHandler} />
-            {error && <p className={"text-red-500 text-sm"}>{error}</p>}
+            {error ? <p className={"text-red-500 text-sm"}>{error}</p> : null}
           </RadioGroup>
           <Button onClick={onSave} className={"w-full mt-2.5 h-12"}>
             Save

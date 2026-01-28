@@ -1,8 +1,9 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { cache } from "react";
 import { authOptions } from "@/shared/constants/authOptions";
 
-export const withAuth = async () => {
+export const withAuth = cache(async () => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -10,4 +11,4 @@ export const withAuth = async () => {
   }
 
   return { userId: session.user.id, error: null };
-};
+});

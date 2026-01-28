@@ -30,12 +30,12 @@ export const AuthHeader = () => {
           <Skeleton className={"w-full h-[20px]"} />
         )}
       </div>
-      {!isMobile && (
+      {!isMobile ? (
         <>
           <Separator orientation={"vertical"} className={"mx-5"} />
           <AvatarDropdown />
         </>
-      )}
+      ) : null}
     </header>
   );
 };

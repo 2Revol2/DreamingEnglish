@@ -1,27 +1,38 @@
 import { NextResponse } from "next/server";
 import { getVideoServices } from "@/entities/Video";
+import { withAuth } from "@/shared/lib/api/withAuth";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
+  try {
+    const { error } = await withAuth();
 
-  const levelsParam = searchParams.get("levels");
+    if (error) {
+      return error;
+    }
 
-  const durationParam = searchParams.get("duration") ?? "";
+    const { searchParams } = new URL(req.url);
+    const levelsParam = searchParams.get("levels");
 
-  const [minStr, maxStr] = durationParam ? durationParam.split("to") : [];
-  const min = minStr ? Number(minStr) * 60 : undefined;
-  const max = maxStr ? Number(maxStr) * 60 : undefined;
+    const durationParam = searchParams.get("duration") ?? "";
 
-  const videos = await getVideoServices({
-    levels: levelsParam ? levelsParam.split(",") : [],
-    sort: searchParams.get("sort") ?? "new",
-    search: searchParams.get("search") ?? "",
-    page: Number(searchParams.get("page") ?? 1),
-    limit: Number(searchParams.get("limit") ?? 12),
-    minDuration: min,
-    maxDuration: max,
-  });
+    const [minStr, maxStr] = durationParam ? durationParam.split("to") : [];
+    const min = minStr ? Number(minStr) * 60 : undefined;
+    const max = maxStr ? Number(maxStr) * 60 : undefined;
 
-  return NextResponse.json(videos);
+    const videos = await getVideoServices({
+      levels: levelsParam ? levelsParam.split(",") : [],
+      sort: searchParams.get("sort") ?? "new",
+      search: searchParams.get("search") ?? "",
+      page: Number(searchParams.get("page") ?? 1),
+      limit: Number(searchParams.get("limit") ?? 12),
+      minDuration: min,
+      maxDuration: max,
+    });
+
+    return NextResponse.json(videos);
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+    return NextResponse.json({ error: "Error fetching videos" }, { status: 500 });
+  }
 }
