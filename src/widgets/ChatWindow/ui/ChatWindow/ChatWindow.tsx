@@ -18,12 +18,12 @@ export const ChatWindow = (props: ChatWindowProps) => {
   const [isPending, startTransition] = useTransition();
 
   const onSend = (message: ChatMessage) => {
-    const updatedMessages = [...messages, message];
-    setMessages(updatedMessages);
+    setMessages((prev) => [...prev, message]);
 
     startTransition(async () => {
-      const aiRespond = await sendMessageToAI(updatedMessages, videoId);
-      setMessages([...updatedMessages, aiRespond]);
+      const currentMessages = [...messages, message];
+      const aiRespond = await sendMessageToAI(currentMessages, videoId);
+      setMessages((prev) => [...prev, aiRespond]);
     });
   };
 

@@ -5,13 +5,14 @@ import type { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
+    const bodyPromise = req.json();
     const { error, userId } = await withAuth();
 
     if (error) {
       return error;
     }
 
-    const body: { outsideTime: number } = await req.json();
+    const body: { outsideTime: number } = await bodyPromise;
     const { outsideTime } = body;
 
     await prisma.user.update({

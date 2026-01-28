@@ -1,9 +1,11 @@
+import dynamic from "next/dynamic";
 import { VideoPlayer } from "@/features/VideoPlayer";
 import { VideoLevel } from "@/shared/ui/video-level";
-import { ChatWindow } from "@/widgets/ChatWindow";
 import { Container } from "@/shared/ui/container";
 import { updateUserVideosHistory } from "../../api/updateUserVideosHistory";
 import { getVideoById } from "./getVideoById";
+
+const ChatWindow = dynamic(() => import("@/widgets/ChatWindow").then((m) => m.ChatWindow));
 
 export const VideoPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;

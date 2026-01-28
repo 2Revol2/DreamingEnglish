@@ -5,13 +5,16 @@ import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    const url = new URL(req.url);
+
     const { error } = await withAuth();
 
     if (error) {
       return error;
     }
 
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = url;
+
     const levelsParam = searchParams.get("levels");
 
     const durationParam = searchParams.get("duration") ?? "";
