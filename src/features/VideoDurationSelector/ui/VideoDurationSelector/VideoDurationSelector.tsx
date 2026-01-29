@@ -1,24 +1,25 @@
 "use client";
-import { memo, useState } from "react";
-import { ChevronDownIcon } from "lucide-react";
 import { GoClockFill } from "react-icons/go";
+import { ChevronDownIcon } from "lucide-react";
+import { memo, useEffect, useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger } from "@/shared/ui/dropdown-menu";
 import { Slider } from "@/shared/ui/slider-14";
-import { useQueryParams } from "@/shared/hooks/useQueryParams";
+import type { Duration } from "@/entities/Video";
 
-export const Duration = memo(() => {
-  const { getParam, setParam } = useQueryParams();
+interface VideoDurationSelectorProps {
+  initialRange: Duration;
+  onValueCommit: (value: Duration) => void;
+}
 
-  const durationParam = getParam("duration");
-  const initialRange = durationParam ? durationParam.split("to").map((v) => Number(v) || 0) : [0, 100];
+export const VideoDurationSelector = memo((props: VideoDurationSelectorProps) => {
+  const { initialRange, onValueCommit } = props;
 
   const [value, setValue] = useState(initialRange);
   const [from, to] = value;
 
-  const handleCommit = (newValue: [number, number]) => {
-    const [newFrom, newTo] = newValue;
-    setParam("duration", `${newFrom}to${newTo}`);
-  };
+  useEffect(() => {
+    setValue(initialRange);
+  }, [initialRange]);
 
   return (
     <DropdownMenu>
@@ -29,7 +30,13 @@ export const Duration = memo(() => {
         <DropdownMenuGroup>
           <div className="w-full max-w-sm mx-auto mt-2">
             <div className="w-full flex items-center justify-between gap-2">
-              <Slider value={[from, to]} max={100} step={5} onValueChange={setValue} onValueCommit={handleCommit} />
+              <Slider
+                value={[from, to]}
+                max={100}
+                step={5}
+                onValueChange={(v) => setValue(v as Duration)}
+                onValueCommit={(v) => onValueCommit(v as Duration)}
+              />
             </div>
             <p className="mt-2 text-center text-sm text-muted-foreground">
               {from} - {to} min{to === 100 ? "+" : ""}

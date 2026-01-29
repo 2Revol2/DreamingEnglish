@@ -1,8 +1,6 @@
-"use client";
-import { ChevronDownIcon } from "lucide-react";
-import { memo, useCallback, useMemo } from "react";
 import { IoIosStats } from "react-icons/io";
-import { Checkbox } from "@/shared/ui/checkbox";
+import { ChevronDownIcon } from "lucide-react";
+import { memo, useMemo } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,29 +8,31 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { Checkbox } from "@/shared/ui/checkbox";
 import { Label } from "@/shared/ui/label";
-import { levels } from "@/shared/constants/levels";
-import { useQueryParams } from "@/shared/hooks/useQueryParams";
+import type { Levels } from "@/entities/Video";
 
-export const Levels = memo(() => {
-  const { getParam, setParam } = useQueryParams();
+interface VideoLevelSelectorProps {
+  selectedLevels: Levels[];
+  onChangeLevels: (newLevel: Levels) => void;
+}
 
-  const selectedLevels = useMemo(() => getParam("levels")?.split(",") || [], [getParam]);
+const LEVELS_LABELS: Record<Levels, string> = {
+  SUPER_BEGINNER: "Superbeginner",
+  BEGINNER: "Beginner",
+  INTERMEDIATE: "Intermediate",
+  ADVANCED: "Advanced",
+};
 
-  const handleLevelChange = useCallback(
-    (level: string) => {
-      let newLevels = [...selectedLevels];
+export const VideoLevelSelector = memo((props: VideoLevelSelectorProps) => {
+  const { selectedLevels, onChangeLevels } = props;
 
-      if (newLevels.includes(level)) {
-        newLevels = newLevels.filter((l) => l !== level);
-      } else {
-        newLevels.push(level);
-      }
-
-      setParam("levels", newLevels.length ? newLevels.join(",") : undefined);
-    },
-    [selectedLevels, setParam],
-  );
+  const levels = useMemo(() => {
+    return Object.entries(LEVELS_LABELS).map(([value, text]) => ({
+      value: value as Levels,
+      text,
+    }));
+  }, []);
 
   return (
     <DropdownMenu>
@@ -49,7 +49,7 @@ export const Levels = memo(() => {
                 <Checkbox
                   checked={selectedLevels.includes(item.value)}
                   id={item.value}
-                  onCheckedChange={() => handleLevelChange(item.value)}
+                  onCheckedChange={() => onChangeLevels(item.value)}
                 />
                 <Label htmlFor={item.value}>{item.text}</Label>
               </div>
