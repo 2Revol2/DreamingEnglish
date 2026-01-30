@@ -6,7 +6,6 @@ import { CiSearch } from "react-icons/ci";
 import { GoClockFill } from "react-icons/go";
 import { Button } from "@/shared/ui/button";
 import { useFiltersState } from "../../model/store/useFiltersStore";
-import type { Levels } from "@/entities/Video";
 
 export const ActiveFilters = () => {
   const sortBy = useFiltersState((state) => state.sortBy);
@@ -24,13 +23,6 @@ export const ActiveFilters = () => {
   const hasCustomDuration = duration[0] !== 0 || duration[1] !== 100;
 
   const hasActiveFilters = hasLevels || hasSearchQuery || hasCustomDuration;
-
-  const LEVELS_LABELS: Record<Levels, string> = {
-    SUPER_BEGINNER: "Superbeginner",
-    BEGINNER: "Beginner",
-    INTERMEDIATE: "Intermediate",
-    ADVANCED: "Advanced",
-  };
 
   const onClearFilters = () => {
     if (hasLevels) clearLevels();
@@ -57,7 +49,7 @@ export const ActiveFilters = () => {
           {hasLevels ? (
             <Button variant={"accent"} className={"rounded-3xl h-7 px-2! gap-1!"} onClick={clearLevels}>
               <IoIosStats />
-              {levels.length === 1 ? LEVELS_LABELS[levels[0]] : `Multiple (${levels.length})`}
+              {levels.length === 1 ? levels[0] : `Multiple (${levels.length})`}
               <IoClose />
             </Button>
           ) : null}

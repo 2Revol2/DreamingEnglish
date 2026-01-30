@@ -1,15 +1,31 @@
 import { prisma } from "@/shared/lib/prisma/prismaClient";
-import { LEVEL_ORDER } from "../model/types/types";
-import type { GetVideoParams } from "../model/types/types";
-import type { VideoLevel } from "@prisma/client";
+import { type Duration, type SortBy } from "../model/types/types";
+import type { Prisma, VideoLevel } from "@prisma/client";
+
+interface GetVideoParams {
+  levels?: VideoLevel[];
+  sortBy?: SortBy;
+  duration?: Duration;
+  search?: string;
+  page?: number;
+  limit?: number;
+}
 
 export const getVideoServices = async (params: GetVideoParams) => {
-  const { levels = [], minDuration, maxDuration, search = "", sort = "new", page = 1, limit = 12 } = params;
-
-  const sortByTime = sort === "new" ? "desc" : "asc";
+  const { levels = [], duration = [0, 100], search = "", sortBy = "new", page = 1, limit = 12 } = params;
+  const [minDuration, maxDuration] = duration;
   const skip = (page - 1) * limit;
 
-  const videos = await prisma.video.findMany({
+  const sortMap: Record<SortBy, Prisma.VideoOrderByWithRelationInput[]> = {
+    new: [{ createdAt: "desc" }],
+    old: [{ createdAt: "asc" }],
+    hard: [{ level: "desc" }],
+    easy: [{ level: "asc" }],
+  };
+
+  const orderByCondition = sortMap[sortBy] || sortMap.new;
+
+  return prisma.video.findMany({
     where: {
       level:
         levels.length > 0
@@ -24,22 +40,8 @@ export const getVideoServices = async (params: GetVideoParams) => {
         mode: "insensitive",
       },
     },
-    orderBy: [{ createdAt: sortByTime }],
+    orderBy: orderByCondition,
     skip,
     take: limit,
   });
-
-  if (sort === "hard" || sort === "easy") {
-    videos.sort((a, b) => {
-      const orderA = LEVEL_ORDER[a.level];
-      const orderB = LEVEL_ORDER[b.level];
-      if (sort === "hard") {
-        return orderB - orderA;
-      } else {
-        return orderA - orderB;
-      }
-    });
-  }
-
-  return videos;
 };

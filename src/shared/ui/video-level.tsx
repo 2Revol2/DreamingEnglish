@@ -7,28 +7,22 @@ interface VideoLevelProps {
   level: VideoLevelType;
   className?: string;
 }
-const levelMap = {
-  SUPER_BEGINNER: "Superbeginner",
-  BEGINNER: "Beginner",
-  INTERMEDIATE: "Intermediate",
-  ADVANCED: "Advanced",
-};
 
 export const VideoLevel = (props: VideoLevelProps) => {
   const { level, className } = props;
 
   const styles = {
-    SUPER_BEGINNER: "bg-blue-500",
-    BEGINNER: "bg-green-600 ",
-    INTERMEDIATE: "bg-orange-500",
-    ADVANCED: "bg-purple-800",
+    Superbeginner: "bg-blue-500",
+    Beginner: "bg-green-600 ",
+    Intermediate: "bg-orange-500",
+    Advanced: "bg-purple-800",
   }[level];
 
   const icon = {
-    SUPER_BEGINNER: <FaFeather />,
-    BEGINNER: <FaSeedling />,
-    INTERMEDIATE: <FaMountainSun />,
-    ADVANCED: <FaCrown />,
+    Superbeginner: <FaFeather />,
+    Beginner: <FaSeedling />,
+    Intermediate: <FaMountainSun />,
+    Advanced: <FaCrown />,
   }[level];
 
   return (
@@ -39,7 +33,7 @@ export const VideoLevel = (props: VideoLevelProps) => {
         className,
       )}
     >
-      {icon} {levelMap[level]}
+      {icon} {level}
     </span>
   );
 };

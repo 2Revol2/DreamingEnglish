@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { VideoList } from "@/entities/Video";
-import { Button } from "@/shared/ui/button";
+import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
 import { useFiltersState } from "../../model/store/useFiltersStore";
 import { getVideos } from "../../api/getVideos";
 
@@ -49,12 +49,9 @@ export const VideosInfiniteList = () => {
       <VideoList videos={videos} isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} />
       {hasNextPage ? <div ref={ref} /> : null}
       {!videos.length ? (
-        <div className={"flex justify-center flex-col items-center gap-2 mt-5"}>
-          <p className={"text-lg text-muted-foreground text-center"}>No videos found matching your filters</p>
-
-          <Button variant={"ghost"} onClick={clearFilters}>
-            Clear filters
-          </Button>
+        <div className={"flex flex-col items-center pt-10"}>
+          <NoResultsIcon width={128} height={128} />
+          <p className={"text-xl text-muted-foreground"}>We couldn&#39;t find any results that match the filters</p>
         </div>
       ) : null}
     </div>

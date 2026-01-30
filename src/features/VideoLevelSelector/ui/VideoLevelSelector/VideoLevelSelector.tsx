@@ -1,6 +1,6 @@
 import { IoIosStats } from "react-icons/io";
 import { ChevronDownIcon } from "lucide-react";
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,29 +10,16 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Checkbox } from "@/shared/ui/checkbox";
 import { Label } from "@/shared/ui/label";
-import type { Levels } from "@/entities/Video";
+import { VIDEO_LEVELS } from "@/shared/constants/levels";
+import type { VideoLevel } from "@prisma/client";
 
 interface VideoLevelSelectorProps {
-  selectedLevels: Levels[];
-  onChangeLevels: (newLevel: Levels) => void;
+  selectedLevels: VideoLevel[];
+  onChangeLevels: (newLevel: VideoLevel) => void;
 }
-
-const LEVELS_LABELS: Record<Levels, string> = {
-  SUPER_BEGINNER: "Superbeginner",
-  BEGINNER: "Beginner",
-  INTERMEDIATE: "Intermediate",
-  ADVANCED: "Advanced",
-};
 
 export const VideoLevelSelector = memo((props: VideoLevelSelectorProps) => {
   const { selectedLevels, onChangeLevels } = props;
-
-  const levels = useMemo(() => {
-    return Object.entries(LEVELS_LABELS).map(([value, text]) => ({
-      value: value as Levels,
-      text,
-    }));
-  }, []);
 
   return (
     <DropdownMenu>
@@ -43,7 +30,7 @@ export const VideoLevelSelector = memo((props: VideoLevelSelectorProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
-          {levels.map((item) => (
+          {VIDEO_LEVELS.map((item) => (
             <DropdownMenuItem key={item.value} onSelect={(event) => event.preventDefault()}>
               <div className="flex items-center gap-3">
                 <Checkbox

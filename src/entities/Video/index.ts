@@ -1,4 +1,4 @@
-export type { Levels, SortBy, Duration } from "./model/constants/constants";
+export type { SortBy, Duration } from "./model/types/types";
 export { VideoHistoryList } from "./ui/VideoHistoryList/VideoHistoryList";
 export { getUserVideosHistory } from "./api/getUserVideosHistory";
 export { VideoItem } from "./ui/VideoItem/VideoItem";

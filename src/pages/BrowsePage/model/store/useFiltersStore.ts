@@ -1,15 +1,17 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { Duration, Levels, SortBy } from "@/entities/Video";
+import { FILTERS_LOCAL_STORAGE_KEY } from "@/shared/constants/localstorage";
+import type { VideoLevel } from "@prisma/client";
+import type { Duration, SortBy } from "@/entities/Video";
 
 interface FiltersState {
   sortBy: SortBy;
   searchQuery: string;
-  levels: Levels[];
+  levels: VideoLevel[];
   duration: Duration;
   setSortBy: (value: SortBy) => void;
   setSearchQuery: (value: string) => void;
-  setLevels: (value: Levels) => void;
+  setLevels: (value: VideoLevel) => void;
   setDuration: (value: Duration) => void;
   clearFilters: () => void;
   clearLevels: () => void;
@@ -39,7 +41,7 @@ export const useFiltersState = create<FiltersState>()(
       clearLevels: () => set({ levels: [] }),
     }),
     {
-      name: "filters",
+      name: FILTERS_LOCAL_STORAGE_KEY,
       storage: createJSONStorage(() => localStorage),
     },
   ),

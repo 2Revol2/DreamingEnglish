@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getVideoServices } from "@/entities/Video";
+import { VideoLevel } from "@prisma/client";
+import { getVideoServices, SortBy } from "@/entities/Video";
 import { withAuth } from "@/shared/lib/api/withAuth";
 import type { NextRequest } from "next/server";
 
@@ -16,21 +17,25 @@ export async function GET(req: NextRequest) {
     const { searchParams } = url;
 
     const levelsParam = searchParams.get("levels");
-
     const durationParam = searchParams.get("duration") ?? "";
 
     const [minStr, maxStr] = durationParam ? durationParam.split("to") : [];
-    const min = minStr ? Number(minStr) * 60 : undefined;
-    const max = maxStr ? Number(maxStr) * 60 : undefined;
+    const min = minStr ? Number(minStr) * 60 : 0;
+    const max = maxStr ? Number(maxStr) * 60 : 100;
+
+    const levels = levelsParam
+      ? levelsParam
+          .split(",")
+          .filter((level): level is VideoLevel => Object.values(VideoLevel).includes(level as VideoLevel))
+      : [];
 
     const videos = await getVideoServices({
-      levels: levelsParam ? levelsParam.split(",") : [],
-      sort: searchParams.get("sort") ?? "new",
+      levels,
+      sortBy: (searchParams.get("sort") as SortBy) ?? "new",
       search: searchParams.get("search") ?? "",
       page: Number(searchParams.get("page") ?? 1),
       limit: Number(searchParams.get("limit") ?? 12),
-      minDuration: min,
-      maxDuration: max,
+      duration: [min, max],
     });
 
     return NextResponse.json(videos);

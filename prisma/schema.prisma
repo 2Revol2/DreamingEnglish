@@ -8,6 +8,83 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id               String              @id @default(cuid())
+  email            String?             @unique
+  password         String?
+  dailyGoal        Int                 @default(900)
+  totalInput       Int                 @default(0)
+  level            EnglishLevel        @default(A0)
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  image            String?
+  emailVerified    DateTime?
+  name             String?
+  dayStreak        Int                 @default(0)
+  dailyWatch       UserDailyWatch[]
+  UserVideoHistory UserVideoHistory[]
+  videoProgress    UserVideoProgress[]
+}
+
+model Video {
+  id               String              @id @default(cuid())
+  title            String
+  duration         Int
+  url              String
+  thumbnail        String
+  level            VideoLevel
+  createdAt        DateTime            @default(now())
+  UserVideoHistory UserVideoHistory[]
+  progress         UserVideoProgress[]
+  transcript       VideoTranscript?
+}
+
+model UserVideoProgress {
+  id             String  @id @default(cuid())
+  userId         String
+  videoId        String
+  watchedSeconds Int     @default(0)
+  completed      Boolean @default(false)
+  user           User    @relation(fields: [userId], references: [id])
+  video          Video   @relation(fields: [videoId], references: [id])
+
+  @@unique([userId, videoId])
+}
+
+model UserDailyWatch {
+  id             String @id @default(cuid())
+  userId         String
+  watchedSeconds Int    @default(0)
+  date           String
+  user           User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
+}
+
+model UserVideoHistory {
+  id       String @id @default(cuid())
+  userId   String
+  videoId  String
+  viewedAt String
+  user     User   @relation(fields: [userId], references: [id])
+  video    Video  @relation(fields: [videoId], references: [id])
+
+  @@unique([userId, videoId])
+}
+
+model VideoTranscript {
+  id      String @id @default(cuid())
+  videoId String @unique
+  content String
+  video   Video  @relation(fields: [videoId], references: [id])
+}
+
+model playing_with_neon {
+  id    Int    @id @default(autoincrement())
+  name  String
+  value Float? @db.Real
+}
+
 enum EnglishLevel {
   A0
   A1
@@ -19,90 +96,8 @@ enum EnglishLevel {
 }
 
 enum VideoLevel {
-  SUPER_BEGINNER
-  BEGINNER
-  INTERMEDIATE
-  ADVANCED
-}
-
-model User {
-  id String @id @default(cuid())
-
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-
-  dailyGoal  Int          @default(900) // second
-  totalInput Int          @default(0) // second
-  level      EnglishLevel @default(A0)
-  dayStreak  Int          @default(0)
-
-  createdAt        DateTime            @default(now())
-  updatedAt        DateTime            @updatedAt
-  videoProgress    UserVideoProgress[]
-  dailyWatch       UserDailyWatch[]
-  UserVideoHistory UserVideoHistory[]
-}
-
-model Video {
-  id    String @id @default(cuid())
-  title String
-
-  level VideoLevel
-
-  duration  Int // second
-  url       String
-  thumbnail String
-
-  progress   UserVideoProgress[]
-  transcript VideoTranscript?
-
-  createdAt        DateTime           @default(now())
-  UserVideoHistory UserVideoHistory[]
-}
-
-model UserVideoProgress {
-  id             String  @id @default(cuid())
-  userId         String
-  videoId        String
-  watchedSeconds Int     @default(0)
-  completed      Boolean @default(false)
-
-  user  User  @relation(fields: [userId], references: [id])
-  video Video @relation(fields: [videoId], references: [id])
-
-  @@unique([userId, videoId])
-}
-
-model UserDailyWatch {
-  id             String @id @default(cuid())
-  userId         String
-  watchedSeconds Int    @default(0)
-  date           String
-
-  user User @relation(fields: [userId], references: [id])
-
-  @@unique([userId, date])
-}
-
-model UserVideoHistory {
-  id       String @id @default(cuid())
-  userId   String
-  videoId  String
-  viewedAt String
-
-  user  User  @relation(fields: [userId], references: [id])
-  video Video @relation(fields: [videoId], references: [id])
-
-  @@unique([userId, videoId])
-}
-
-model VideoTranscript {
-  id      String @id @default(cuid())
-  videoId String @unique
-  content String
-
-  video Video @relation(fields: [videoId], references: [id])
+  Superbeginner @map("SUPER_BEGINNER")
+  Beginner      @map("BEGINNER")
+  Intermediate  @map("INTERMEDIATE")
+  Advanced      @map("ADVANCED")
 }
