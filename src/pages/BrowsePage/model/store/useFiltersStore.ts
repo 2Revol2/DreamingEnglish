@@ -12,6 +12,7 @@ interface FiltersState {
   setLevels: (value: Levels) => void;
   setDuration: (value: Duration) => void;
   clearFilters: () => void;
+  clearLevels: () => void;
 }
 
 export const useFiltersState = create<FiltersState>()(
@@ -35,6 +36,7 @@ export const useFiltersState = create<FiltersState>()(
         }),
       setDuration: (value) => set({ duration: value }),
       clearFilters: () => set({ sortBy: "new", searchQuery: "", levels: [], duration: [0, 100] }),
+      clearLevels: () => set({ levels: [] }),
     }),
     {
       name: "filters",

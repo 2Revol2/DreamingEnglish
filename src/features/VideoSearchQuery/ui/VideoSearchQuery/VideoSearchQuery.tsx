@@ -1,5 +1,4 @@
-import { memo, useEffect, useState } from "react";
-import { useDebounce } from "use-debounce";
+import { memo } from "react";
 import { Input } from "@/shared/ui/input";
 
 interface VideoSearchQueryProps {
@@ -10,17 +9,7 @@ interface VideoSearchQueryProps {
 export const VideoSearchQuery = memo((props: VideoSearchQueryProps) => {
   const { searchQuery, onChange } = props;
 
-  const [value, setValue] = useState(searchQuery);
-
-  const [debouncedValue] = useDebounce(value, 500);
-
-  useEffect(() => {
-    onChange(debouncedValue);
-  }, [debouncedValue, onChange]);
-
-  useEffect(() => {
-    setValue(searchQuery);
-  }, [searchQuery]);
-
-  return <Input value={value} onChange={(e) => setValue(e.target.value)} className={"w-full"} placeholder={"Search"} />;
+  return (
+    <Input value={searchQuery} onChange={(e) => onChange(e.target.value)} className={"w-full"} placeholder={"Search"} />
+  );
 });
