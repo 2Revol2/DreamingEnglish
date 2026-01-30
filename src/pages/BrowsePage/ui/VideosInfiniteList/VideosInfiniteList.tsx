@@ -3,18 +3,18 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import { useQueryParams } from "@/shared/hooks/useQueryParams";
 import { VideoList } from "@/entities/Video";
 import { Button } from "@/shared/ui/button";
+import { useFiltersState } from "../../model/store/useFiltersStore";
 import { getVideos } from "../../api/getVideos";
 
 export const VideosInfiniteList = () => {
-  const { getParam, clearParams } = useQueryParams();
-  const search = getParam("search", undefined);
-  const sortBy = getParam("sort", "new");
-  const duration = getParam("duration", undefined);
-  const levelsParam = getParam("levels", "");
-  const levels = levelsParam ? levelsParam.split(",") : [];
+  const sortBy = useFiltersState((state) => state.sortBy);
+  const search = useFiltersState((state) => state.searchQuery);
+  const levels = useFiltersState((state) => state.levels);
+  const duration = useFiltersState((state) => state.duration);
+  const clearFilters = useFiltersState((state) => state.clearFilters);
+
   const { ref, inView, entry } = useInView();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
@@ -52,7 +52,7 @@ export const VideosInfiniteList = () => {
         <div className={"flex justify-center flex-col items-center gap-2 mt-5"}>
           <p className={"text-lg text-muted-foreground text-center"}>No videos found matching your filters</p>
 
-          <Button variant={"ghost"} onClick={clearParams}>
+          <Button variant={"ghost"} onClick={clearFilters}>
             Clear filters
           </Button>
         </div>

@@ -14,3 +14,7 @@ export const ROW_HEIGHT_BREAKPOINTS = [
   { maxWidth: 550, height: 420 },
   { maxWidth: 640, height: 470 },
 ];
+
+export type Levels = "SUPER_BEGINNER" | "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+export type Duration = [number, number];
+export type SortBy = "new" | "old" | "easy" | "hard";
