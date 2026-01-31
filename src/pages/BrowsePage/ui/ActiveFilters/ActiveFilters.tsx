@@ -1,13 +1,14 @@
 "use client";
 import { FaSort } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
 import { IoIosStats } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { GoClockFill } from "react-icons/go";
+import { memo } from "react";
 import { Button } from "@/shared/ui/button";
+import { FilterBadge } from "@/shared/ui/filter-badge";
 import { useFiltersState } from "../../model/store/useFiltersStore";
 
-export const ActiveFilters = () => {
+export const ActiveFilters = memo(() => {
   const sortBy = useFiltersState((state) => state.sortBy);
   const searchQuery = useFiltersState((state) => state.searchQuery);
   const levels = useFiltersState((state) => state.levels);
@@ -35,11 +36,9 @@ export const ActiveFilters = () => {
       {sortBy !== "new" ? (
         <div className={"flex gap-2 items-center"}>
           <span>Sorted by:</span>
-          <Button variant={"accent"} className={"rounded-3xl h-7 px-2!"} onClick={() => onChangeSort("new")}>
-            <FaSort />
+          <FilterBadge icon={<FaSort />} onRemove={() => onChangeSort("new")}>
             {sortBy}
-            <IoClose />
-          </Button>
+          </FilterBadge>
         </div>
       ) : null}
 
@@ -47,35 +46,21 @@ export const ActiveFilters = () => {
         <div className={"flex gap-2 items-center flex-wrap"}>
           <span>Include:</span>
           {hasLevels ? (
-            <Button variant={"accent"} className={"rounded-3xl h-7 px-2! gap-1!"} onClick={clearLevels}>
-              <IoIosStats />
+            <FilterBadge icon={<IoIosStats />} onRemove={clearLevels}>
               {levels.length === 1 ? levels[0] : `Multiple (${levels.length})`}
-              <IoClose />
-            </Button>
-          ) : null}
-
-          {hasSearchQuery ? (
-            <Button
-              variant={"accent"}
-              className={"rounded-3xl h-7 px-2! gap-1!"}
-              onClick={() => onChangeSearchQuery("")}
-            >
-              <CiSearch />
-              {searchQuery}
-              <IoClose />
-            </Button>
+            </FilterBadge>
           ) : null}
 
           {hasCustomDuration ? (
-            <Button
-              variant={"accent"}
-              className={"rounded-3xl h-7 px-2! gap-1!"}
-              onClick={() => onChangeDuration([0, 100])}
-            >
-              <GoClockFill />
+            <FilterBadge icon={<GoClockFill />} onRemove={() => onChangeDuration([0, 100])}>
               {duration[0]} - {duration[1]} min
-              <IoClose />
-            </Button>
+            </FilterBadge>
+          ) : null}
+
+          {hasSearchQuery ? (
+            <FilterBadge icon={<CiSearch />} onRemove={() => onChangeSearchQuery("")}>
+              {searchQuery}
+            </FilterBadge>
           ) : null}
 
           <Button
@@ -89,4 +74,4 @@ export const ActiveFilters = () => {
       ) : null}
     </div>
   );
-};
+});

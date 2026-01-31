@@ -13,7 +13,6 @@ export const VideosInfiniteList = () => {
   const search = useFiltersState((state) => state.searchQuery);
   const levels = useFiltersState((state) => state.levels);
   const duration = useFiltersState((state) => state.duration);
-  const clearFilters = useFiltersState((state) => state.clearFilters);
 
   const { ref, inView, entry } = useInView();
 

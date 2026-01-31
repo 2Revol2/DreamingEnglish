@@ -17,8 +17,8 @@ export const VideoFilters = () => {
   const onChangeDuration = useFiltersState((state) => state.setDuration);
 
   return (
-    <div className={"flex gap-4 flex-wrap p-2 bg-secondary-background w-full rounded"}>
-      <div className={"flex gap-2"}>
+    <div className={"flex flex-col sm:flex-row gap-4 p-2 bg-secondary-background rounded"}>
+      <div className={"flex flex-wrap justify-center items-center gap-2"}>
         <VideoSortSelector sort={sortBy} onChangeSort={onChangeSort} />
         <VideoLevelSelector selectedLevels={levels} onChangeLevels={onChangeLevel} />
         <VideoDurationSelector initialRange={duration} onValueCommit={onChangeDuration} />
