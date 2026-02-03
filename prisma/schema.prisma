@@ -17,6 +17,7 @@ model User {
   level            EnglishLevel        @default(A0)
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt
+  role             UserRole            @default(USER)
   image            String?
   emailVerified    DateTime?
   name             String?
@@ -100,4 +101,9 @@ enum VideoLevel {
   Beginner      @map("BEGINNER")
   Intermediate  @map("INTERMEDIATE")
   Advanced      @map("ADVANCED")
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }
