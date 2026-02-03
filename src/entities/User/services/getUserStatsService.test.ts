@@ -20,10 +20,11 @@ describe("getUserStatsService", () => {
   const timeZone = "UTC";
 
   it("should calculate monthly hours, streaks, and weeks correctly", async () => {
+    const now = new Date();
     const records = [
-      { date: new Date("2024-01-10"), watchedSeconds: 3600 },
-      { date: new Date("2024-01-12"), watchedSeconds: 7200 },
-      { date: new Date("2023-12-25"), watchedSeconds: 3600 },
+      { date: new Date(now.getFullYear(), now.getMonth(), 10), watchedSeconds: 3600 },
+      { date: new Date(now.getFullYear(), now.getMonth(), 12), watchedSeconds: 7200 },
+      { date: new Date(now.getFullYear(), now.getMonth() - 1, 25), watchedSeconds: 3600 },
     ];
 
     vi.mocked(prisma.userDailyWatch.findMany).mockResolvedValue(records as any);
