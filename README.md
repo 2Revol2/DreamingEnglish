@@ -29,9 +29,7 @@ npm install
 2. Configure environment:
 ```bash
 cp .env.example .env
-# Edit .env with your database URL and auth secrets
 ```
-
 3. Setup database:
 ```bash
 npm run prisma:generate
@@ -78,7 +76,7 @@ src/
 │   └── Message/
 │   └── ...
 │
-├── features/     # User-facing features (Auth, VideoPlayer, Chat)
+├── features/     # Features (Auth, VideoPlayer, SendMessage)
 │   ├── Auth/
 │   ├── VideoPlayer/
 │   ├── SendMessage/
