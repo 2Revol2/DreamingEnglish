@@ -5,7 +5,7 @@ import { RoutePath } from "@/shared/constants/router";
 import { AvatarDropdown } from "@/features/AvatarDropdown";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { SidebarItem } from "../SidebarItem/SidebarItem";
-import { SidebarItems } from "../../model/constants/consts";
+import { SIDEBAR_LINKS } from "../../model/constants/consts";
 
 export const Sidebar = () => {
   const { isMobile } = useIsMobile();
@@ -31,8 +31,8 @@ export const Sidebar = () => {
       </Link>
       <nav className={"w-full"}>
         <ul className={"flex h-full w-full lg:flex-col justify-around gap-7 items-center lg:mt-8"}>
-          {SidebarItems.map((item) => (
-            <li key={item.path}>
+          {SIDEBAR_LINKS.map((item) => (
+            <li className={"w-full h-full"} key={item.path}>
               <SidebarItem item={item} />
             </li>
           ))}

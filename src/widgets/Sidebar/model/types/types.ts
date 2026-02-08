@@ -1,7 +1,9 @@
-import type { JSX } from "react";
+import type { ComponentType } from "react";
+import type { IconBaseProps } from "react-icons";
 
 export interface SidebarItemType {
   path: string;
   text: string;
-  Icon?: JSX.Element;
+  Icon: ComponentType<IconBaseProps>;
+  color: string;
 }

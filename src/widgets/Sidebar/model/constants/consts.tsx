@@ -4,20 +4,23 @@ import { GiProgression } from "react-icons/gi";
 import { RoutePath } from "@/shared/constants/router";
 import type { SidebarItemType } from "../types/types";
 
-export const SidebarItems: SidebarItemType[] = [
+export const SIDEBAR_LINKS: SidebarItemType[] = [
   {
     text: "Watch",
     path: RoutePath.browse,
-    Icon: <FaRegCirclePlay className={"text-[#e83e8c] lg:text-[30px] text-[24px]"} />,
+    Icon: FaRegCirclePlay,
+    color: "#e83e8c",
   },
   {
     text: "Progress",
     path: RoutePath.progress,
-    Icon: <GiProgression className={"text-[#6f42c1] lg:text-[30px] text-[24px]"} />,
+    Icon: GiProgression,
+    color: "#6f42c1",
   },
   {
     text: "Library",
     path: RoutePath.library,
-    Icon: <BsFillCollectionPlayFill className={"text-[#20c997] lg:text-[30px] text-[24px]"} />,
+    Icon: BsFillCollectionPlayFill,
+    color: "#20c997",
   },
 ];
