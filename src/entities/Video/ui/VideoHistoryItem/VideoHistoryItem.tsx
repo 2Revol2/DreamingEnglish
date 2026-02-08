@@ -6,10 +6,11 @@ import type { VideoHistory } from "../../model/types/types";
 
 interface VideoHistoryItemProps {
   historyItem: VideoHistory;
+  showLevelText?: boolean;
 }
 
 export const VideoHistoryItem = (props: VideoHistoryItemProps) => {
-  const { historyItem } = props;
+  const { historyItem, showLevelText } = props;
   const { video, viewedAt } = historyItem;
 
   return (
@@ -21,7 +22,7 @@ export const VideoHistoryItem = (props: VideoHistoryItemProps) => {
         <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover" />
       </div>
       <div className={"p-2 lg:p-10 min-w-0"}>
-        <VideoLevel level={video.level} className={"mb-2"} />
+        <VideoLevel level={video.level} className={"mb-2"} showText={showLevelText} />
         <h6 className={"text-sm lg:text-xl font-bold lg:truncate line-clamp-2 mb-2"}>{video.title}</h6>
         <p className={"text-sm hidden lg:flex gap-4"}>
           <FaCalendar /> Watched on: {viewedAt}

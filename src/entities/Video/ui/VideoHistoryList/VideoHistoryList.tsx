@@ -19,6 +19,7 @@ const getSkeleton = () => {
 export const VideoHistoryList = (props: VideoHistoryListProps) => {
   const { historyList, isLoading, isFetchingNextPage } = props;
   const { isMobile } = useIsMobile();
+  const showLevelText = !isMobile;
 
   const rowsData: VideoHistory[][] = useMemo(() => {
     const result: VideoHistory[][] = [];
@@ -66,7 +67,7 @@ export const VideoHistoryList = (props: VideoHistoryListProps) => {
               }}
             >
               {rowsData[row.index].map((item) => (
-                <VideoHistoryItem key={item.id} historyItem={item} />
+                <VideoHistoryItem key={item.id} historyItem={item} showLevelText={showLevelText} />
               ))}
             </div>
           );

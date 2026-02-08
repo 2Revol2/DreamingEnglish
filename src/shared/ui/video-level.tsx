@@ -6,10 +6,11 @@ import type { VideoLevel as VideoLevelType } from "@prisma/client";
 interface VideoLevelProps {
   level: VideoLevelType;
   className?: string;
+  showText?: boolean;
 }
 
 export const VideoLevel = (props: VideoLevelProps) => {
-  const { level, className } = props;
+  const { level, className, showText = true } = props;
 
   const styles = {
     Superbeginner: "bg-blue-500",
@@ -33,7 +34,7 @@ export const VideoLevel = (props: VideoLevelProps) => {
         className,
       )}
     >
-      {icon} {level}
+      {icon} {showText ? level : null}
     </span>
   );
 };

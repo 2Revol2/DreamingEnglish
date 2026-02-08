@@ -42,7 +42,7 @@ export const VideoCarousel = (props: VideoCarouselProps) => {
         <CarouselContent>
           {videos.map((video) => (
             <CarouselItem key={video.id} className="basis-1/2 sm:basis-1/3 lg:basis-1/5">
-              <VideoItem video={video} />
+              <VideoItem video={video} showLevelText={false} />
             </CarouselItem>
           ))}
           {videos.length > 5 ? (

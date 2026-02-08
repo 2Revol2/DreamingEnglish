@@ -9,10 +9,11 @@ import type { Video } from "@prisma/client";
 interface VideoItemProps {
   video: Video;
   className?: string;
+  showLevelText?: boolean;
 }
 
 export const VideoItem = memo((props: VideoItemProps) => {
-  const { video, className } = props;
+  const { video, className, showLevelText } = props;
 
   return (
     <Link
@@ -29,7 +30,7 @@ export const VideoItem = memo((props: VideoItemProps) => {
       <div className="p-3 flex flex-col gap-1">
         <h5 className="text-base font-semibold line-clamp-2">{video.title}</h5>
         <div className="flex items-center justify-between ">
-          <VideoLevel level={video.level} />
+          <VideoLevel level={video.level} showText={showLevelText} />
           <span className={"text-sm text-gray-500 dark:text-gray-400"}>{secondsToMinutes(video.duration)} min</span>
         </div>
       </div>
