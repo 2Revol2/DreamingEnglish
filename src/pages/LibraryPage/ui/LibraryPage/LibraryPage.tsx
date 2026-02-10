@@ -5,13 +5,12 @@ import { VideoCarousel } from "../VideoCarousel/VideoCarousel";
 
 export const LibraryPage = async () => {
   const historyData = await getUserVideosHistory({ limit: 7 });
-  const videos = historyData?.map((item) => item.video);
 
   return (
     <div className={"p-5"}>
       <section>
         <VideoCarousel
-          videos={videos}
+          videos={historyData}
           link={RoutePath.history}
           title={"History"}
           icon={<MdOutlineHistory size={30} />}

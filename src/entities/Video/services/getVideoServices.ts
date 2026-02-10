@@ -9,10 +9,11 @@ interface GetVideoParams {
   search?: string;
   page?: number;
   limit?: number;
+  userId?: string;
 }
 
 export const getVideoServices = async (params: GetVideoParams) => {
-  const { levels = [], duration = [0, 100], search = "", sortBy = "new", page = 1, limit = 12 } = params;
+  const { levels = [], duration = [0, 100], search = "", sortBy = "new", page = 1, limit = 12, userId } = params;
   const [minDuration, maxDuration] = duration;
   const skip = (page - 1) * limit;
 
@@ -25,7 +26,7 @@ export const getVideoServices = async (params: GetVideoParams) => {
 
   const orderByCondition = sortMap[sortBy] || sortMap.new;
 
-  return prisma.video.findMany({
+  const videos = await prisma.video.findMany({
     where: {
       level:
         levels.length > 0
@@ -40,8 +41,26 @@ export const getVideoServices = async (params: GetVideoParams) => {
         mode: "insensitive",
       },
     },
+    include: {
+      UserWatchLater: userId
+        ? {
+            where: {
+              userId: userId,
+            },
+            select: {
+              videoId: true,
+            },
+          }
+        : false,
+    },
     orderBy: orderByCondition,
     skip,
     take: limit,
   });
+
+  return videos.map((video) => ({
+    ...video,
+    isWatchLater: video.UserWatchLater.length > 0,
+    userWatchLater: undefined,
+  }));
 };

@@ -2,8 +2,8 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import Link from "next/link";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/shared/ui/carousel";
 import { VideoItem } from "@/entities/Video";
+import type { Video } from "@/entities/Video";
 import type { ReactNode } from "react";
-import type { Video } from "@prisma/client";
 
 interface VideoCarouselProps {
   title: string;

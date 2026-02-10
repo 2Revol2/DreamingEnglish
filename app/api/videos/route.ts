@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
 
-    const { error } = await withAuth();
+    const { error, userId } = await withAuth();
 
     if (error) {
       return error;
@@ -39,6 +39,7 @@ export async function GET(req: NextRequest) {
       page: Number(searchParams.get("page") ?? 1),
       limit: Number(searchParams.get("limit") ?? 12),
       duration: [min, max],
+      userId: userId,
     });
 
     return NextResponse.json(videos);

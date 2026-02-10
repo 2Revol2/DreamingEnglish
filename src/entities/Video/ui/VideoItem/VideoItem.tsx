@@ -4,7 +4,7 @@ import { RoutePath } from "@/shared/constants/router";
 import { VideoLevel } from "@/shared/ui/video-level";
 import { cn } from "@/shared/lib/utils";
 import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes";
-import type { Video } from "@prisma/client";
+import type { Video } from "../../model/types/types";
 
 interface VideoItemProps {
   video: Video;
