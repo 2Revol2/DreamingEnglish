@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { VideoList } from "@/entities/Video";
 import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
+import { VideoActions } from "@/features/VideoActions";
 import { useFiltersState } from "../../model/store/useFiltersStore";
 import { getVideos } from "../../api/getVideos";
 
@@ -45,7 +46,12 @@ export const VideosInfiniteList = () => {
 
   return (
     <div>
-      <VideoList videos={videos} isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} />
+      <VideoList
+        videos={videos}
+        isLoading={isLoading}
+        isFetchingNextPage={isFetchingNextPage}
+        renderActions={(video) => <VideoActions videoId={video.id} isWatchLater={video.isWatchLater} />}
+      />
       {hasNextPage ? <div ref={ref} /> : null}
       {!videos.length ? (
         <div className={"flex flex-col items-center pt-10"}>

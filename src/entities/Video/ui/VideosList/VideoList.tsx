@@ -4,6 +4,7 @@ import { memo, useMemo } from "react";
 import { useResponsiveGrid } from "../../lib/useResponsiveGrid";
 import { VideoItem } from "../VideoItem/VideoItem";
 import { VideoItemSkeleton } from "../VideoItem/VideoItemSkeleton";
+import type { ReactNode } from "react";
 import type { Video } from "../../model/types/types";
 
 interface VideoListProps {
@@ -11,6 +12,7 @@ interface VideoListProps {
   isLoading?: boolean;
   isFetchingNextPage?: boolean;
   showLevelText?: boolean;
+  renderActions?: (video: Video) => ReactNode;
 }
 
 const getSkeleton = () => {
@@ -18,7 +20,7 @@ const getSkeleton = () => {
 };
 
 export const VideoList = memo((props: VideoListProps) => {
-  const { videos, isLoading, isFetchingNextPage, showLevelText } = props;
+  const { videos, isLoading, isFetchingNextPage, showLevelText, renderActions } = props;
 
   const { columns, rowHeight } = useResponsiveGrid();
 
@@ -69,7 +71,7 @@ export const VideoList = memo((props: VideoListProps) => {
               }}
             >
               {rowsData[row.index].map((item) => (
-                <VideoItem key={item.id} video={item} showLevelText={showLevelText} />
+                <VideoItem key={item.id} video={item} showLevelText={showLevelText} actions={renderActions?.(item)} />
               ))}
             </div>
           );

@@ -3,7 +3,7 @@ import { VideoPlayer } from "@/features/VideoPlayer";
 import { VideoLevel } from "@/shared/ui/video-level";
 import { Container } from "@/shared/ui/container";
 import { updateUserVideosHistory } from "../../api/updateUserVideosHistory";
-import { getVideoById } from "./getVideoById";
+import { getVideoById } from "../../api/getVideoById";
 
 const ChatWindow = dynamic(() => import("@/widgets/ChatWindow").then((m) => m.ChatWindow));
 
