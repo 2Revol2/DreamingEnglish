@@ -35,7 +35,12 @@ export async function GET(req: NextRequest) {
       skip: skip,
     });
 
-    return NextResponse.json(watchLaterData);
+    const formattedWatchLaterData = watchLaterData.map((item) => ({
+      ...item.video,
+      isWatchLater: true,
+    }));
+
+    return NextResponse.json(formattedWatchLaterData);
   } catch (error) {
     console.error("Error fetching video:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

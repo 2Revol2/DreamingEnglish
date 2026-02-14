@@ -1,3 +1,5 @@
+export { useUserWatchLater } from "./api/useUserWatchLater";
+export { getUserWatchLater } from "./api/getUserWatchLater";
 export type { Video } from "./model/types/types";
 export type { SortBy, Duration } from "./model/types/types";
 export { VideoHistoryList } from "./ui/VideoHistoryList/VideoHistoryList";

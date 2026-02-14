@@ -8,6 +8,7 @@ export const useAddVideoToWatchLater = () => {
     mutationFn: (videoId: string) => addVideoToWatchLater(videoId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["videos"] });
+      queryClient.invalidateQueries({ queryKey: ["watch-later"] });
     },
   });
 };

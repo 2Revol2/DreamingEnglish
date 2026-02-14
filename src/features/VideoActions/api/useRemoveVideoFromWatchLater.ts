@@ -8,6 +8,7 @@ export const useRemoveVideoFromWatchLater = () => {
     mutationFn: (videoId: string) => removeVideoFromWatchLater(videoId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["videos"] });
+      queryClient.invalidateQueries({ queryKey: ["watch-later"] });
     },
   });
 };
