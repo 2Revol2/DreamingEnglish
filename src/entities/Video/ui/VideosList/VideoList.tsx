@@ -4,12 +4,15 @@ import { memo, useMemo } from "react";
 import { useResponsiveGrid } from "../../lib/useResponsiveGrid";
 import { VideoItem } from "../VideoItem/VideoItem";
 import { VideoItemSkeleton } from "../VideoItem/VideoItemSkeleton";
-import type { Video } from "@prisma/client";
+import type { ReactNode } from "react";
+import type { Video } from "../../model/types/types";
 
 interface VideoListProps {
   videos: Video[];
   isLoading?: boolean;
   isFetchingNextPage?: boolean;
+  showLevelText?: boolean;
+  renderActions?: (video: Video) => ReactNode;
 }
 
 const getSkeleton = () => {
@@ -17,7 +20,7 @@ const getSkeleton = () => {
 };
 
 export const VideoList = memo((props: VideoListProps) => {
-  const { videos, isLoading, isFetchingNextPage } = props;
+  const { videos, isLoading, isFetchingNextPage, showLevelText, renderActions } = props;
 
   const { columns, rowHeight } = useResponsiveGrid();
 
@@ -68,7 +71,7 @@ export const VideoList = memo((props: VideoListProps) => {
               }}
             >
               {rowsData[row.index].map((item) => (
-                <VideoItem key={item.id} video={item} />
+                <VideoItem key={item.id} video={item} showLevelText={showLevelText} actions={renderActions?.(item)} />
               ))}
             </div>
           );

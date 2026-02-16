@@ -3,29 +3,19 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import { VideoList } from "@/entities/Video";
+import { TbDotsVertical } from "react-icons/tb";
+import { getUserWatchLater, VideoList } from "@/entities/Video";
 import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
 import { VideoActions } from "@/features/VideoActions";
-import { useFiltersState } from "../../model/store/useFiltersStore";
-import { getVideos } from "../../api/getVideos";
 
-export const VideosInfiniteList = () => {
-  const sortBy = useFiltersState((state) => state.sortBy);
-  const search = useFiltersState((state) => state.searchQuery);
-  const levels = useFiltersState((state) => state.levels);
-  const duration = useFiltersState((state) => state.duration);
-
+export const WatchLaterInfiniteList = () => {
   const { ref, inView, entry } = useInView();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
-    queryKey: ["videos", search, sortBy, duration, levels],
+    queryKey: ["watch-later", "infinite"],
     queryFn: async ({ pageParam = 1 }) => {
-      return await getVideos({
+      return await getUserWatchLater({
         page: pageParam,
-        search,
-        sortBy,
-        duration,
-        levels,
       });
     },
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -42,7 +32,7 @@ export const VideosInfiniteList = () => {
     }
   }, [entry, fetchNextPage, inView]);
 
-  const videos = data?.pages.flatMap((page) => page) ?? [];
+  const videos = data?.pages?.flatMap((page) => page ?? []) ?? [];
 
   return (
     <div>
@@ -53,10 +43,19 @@ export const VideosInfiniteList = () => {
         renderActions={(video) => <VideoActions videoId={video.id} isWatchLater={video.isWatchLater} />}
       />
       {hasNextPage ? <div ref={ref} /> : null}
-      {!videos.length ? (
+      {videos.length === 0 ? (
         <div className={"flex flex-col items-center pt-10"}>
           <NoResultsIcon width={128} height={128} />
-          <p className={"text-xl text-muted-foreground"}>We couldn&#39;t find any results that match the filters</p>
+          <div className={"text-xl flex flex-col items-center"}>
+            <p>Empty list.</p>
+            <p className="text-center px-4">
+              Use the &#34;Add to my watch later&#34; option in the{" "}
+              <span className="inline-flex">
+                <TbDotsVertical size={16} />
+              </span>{" "}
+              menu on a video to add it to your playlist.
+            </p>
+          </div>
         </div>
       ) : null}
     </div>

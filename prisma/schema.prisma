@@ -24,7 +24,8 @@ model User {
   dayStreak        Int                 @default(0)
   dailyWatch       UserDailyWatch[]
   UserVideoHistory UserVideoHistory[]
-  videoProgress    UserVideoProgress[]
+  VideoProgress    UserVideoProgress[]
+  WatchLater       UserWatchLater[]
 }
 
 model Video {
@@ -38,6 +39,7 @@ model Video {
   UserVideoHistory UserVideoHistory[]
   progress         UserVideoProgress[]
   transcript       VideoTranscript?
+  UserWatchLater   UserWatchLater[]
 }
 
 model UserVideoProgress {
@@ -69,6 +71,17 @@ model UserVideoHistory {
   viewedAt String
   user     User   @relation(fields: [userId], references: [id])
   video    Video  @relation(fields: [videoId], references: [id])
+
+  @@unique([userId, videoId])
+}
+
+model UserWatchLater {
+  id      String @id @default(cuid())
+  userId  String
+  videoId String
+
+  user  User  @relation(fields: [userId], references: [id])
+  video Video @relation(fields: [videoId], references: [id])
 
   @@unique([userId, videoId])
 }

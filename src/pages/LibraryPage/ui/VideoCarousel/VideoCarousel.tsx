@@ -2,8 +2,8 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import Link from "next/link";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/shared/ui/carousel";
 import { VideoItem } from "@/entities/Video";
+import type { Video } from "@/entities/Video";
 import type { ReactNode } from "react";
-import type { Video } from "@prisma/client";
 
 interface VideoCarouselProps {
   title: string;
@@ -11,17 +11,18 @@ interface VideoCarouselProps {
   link: string;
   videos: Video[];
   emptyMessage: string;
+  renderActions?: (video: Video) => ReactNode;
 }
 
 export const VideoCarousel = (props: VideoCarouselProps) => {
-  const { title, link, videos, emptyMessage, icon } = props;
+  const { title, link, videos, emptyMessage, icon, renderActions } = props;
 
   return (
-    <Carousel>
-      <div className={"flex items-center justify-between"}>
+    <Carousel className={"mb-2"}>
+      <div className={"flex items-center justify-between mb-2"}>
         <div className={"flex items-center gap-2"}>
           {icon}
-          <h3 className={"text-3xl font-bold"}>{title}</h3>
+          <h3 className={"text-2xl font-bold"}>{title}</h3>
           <Link className={"text-primary"} href={link}>
             View all {">"}
           </Link>
@@ -42,7 +43,7 @@ export const VideoCarousel = (props: VideoCarouselProps) => {
         <CarouselContent>
           {videos.map((video) => (
             <CarouselItem key={video.id} className="basis-1/2 sm:basis-1/3 lg:basis-1/5">
-              <VideoItem video={video} showLevelText={false} />
+              <VideoItem video={video} showLevelText={false} actions={renderActions?.(video)} />
             </CarouselItem>
           ))}
           {videos.length > 5 ? (

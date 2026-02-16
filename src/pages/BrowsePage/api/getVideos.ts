@@ -1,6 +1,6 @@
 import { api } from "@/shared/api/api";
-import type { Duration, SortBy } from "@/entities/Video";
-import type { Video, VideoLevel } from "@prisma/client";
+import type { Duration, SortBy, Video } from "@/entities/Video";
+import type { VideoLevel } from "@prisma/client";
 
 interface getVideosProps {
   levels?: VideoLevel[];

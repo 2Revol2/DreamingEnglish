@@ -30,7 +30,18 @@ export async function GET(req: NextRequest) {
         userId: userId,
       },
       include: {
-        video: true,
+        video: {
+          include: {
+            UserWatchLater: {
+              where: {
+                userId: userId,
+              },
+              select: {
+                videoId: true,
+              },
+            },
+          },
+        },
       },
       orderBy: {
         viewedAt: "desc",
@@ -39,7 +50,13 @@ export async function GET(req: NextRequest) {
       skip: skip,
     });
 
-    return NextResponse.json(historyData);
+    const formattedHistoryData = historyData.map((item) => ({
+      isWatchLater: item.video.UserWatchLater.length > 0,
+      viewedAt: item.viewedAt,
+      ...item.video,
+    }));
+
+    return NextResponse.json(formattedHistoryData);
   } catch (error) {
     console.error("Error fetching video:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

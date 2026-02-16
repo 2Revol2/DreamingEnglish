@@ -1,8 +1,10 @@
-import type { Prisma } from "@prisma/client";
+import type { Video as VideoBase } from "@prisma/client";
 
 export type Duration = [number, number];
 export type SortBy = "new" | "old" | "easy" | "hard";
 
-export type VideoHistory = Prisma.UserVideoHistoryGetPayload<{
-  include: { video: true };
-}>;
+export type Video = VideoBase & {
+  isWatchLater: boolean;
+};
+
+export type VideoHistory = Video & { viewedAt: string };
