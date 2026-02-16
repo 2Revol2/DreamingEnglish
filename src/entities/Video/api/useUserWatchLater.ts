@@ -12,7 +12,7 @@ export const useUserWatchLater = (props: useUserWatchLater) => {
   const { page, limit, initialData } = props;
 
   return useQuery({
-    queryKey: ["watch-later"],
+    queryKey: ["watch-later", "list"],
     queryFn: () => getUserWatchLater({ page, limit }),
     structuralSharing: true,
     staleTime: 1000 * 60 * 5,
