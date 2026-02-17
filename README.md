@@ -1,8 +1,10 @@
 # Dreaming English
 
-Learn English with interesting videos and podcasts tailored for all levels. Master fluency through immersion.
+Learn English with interesting videos tailored for all levels. Master fluency through immersion.
 
 **[Live Demo](https://dreamingenglish.vercel.app/)**
+
+![](public/preview.png)
 
 ## What is Dreaming English?
 
@@ -11,52 +13,42 @@ Dreaming English is a platform inspired by DreamingSpanish that helps learners m
 - Progress tracking with daily goals and streak counting
 - AI-powered chat interactions for practice
 
-## Quick Start
+## Problem & Motivation
 
-### Prerequisites
-- Node.js 18+
-- PostgreSQL database
+Most learning platforms track content completion - a lesson is either finished or not.
 
-### Installation
+However, immersion learning depends on time spent with understandable input rather than completed units.
+Users may watch the same video partially, repeatedly, or across multiple sessions.
 
-1. Clone and install:
-```bash
-git clone https://github.com/2Revol2/DreamingEnglish
-cd DreamingEnglish
-npm install
-```
+This means progress cannot be modeled as discrete actions.
+It must behave like a continuous activity similar to exercise or habit tracking.
 
-2. Configure environment:
-```bash
-cp .env.example .env
-```
-3. Setup database:
-```bash
-npm run prisma:generate
-npm run prisma:migrate
-```
+The main challenge is designing progress tracking that reflects real learning behavior instead of UI interactions.
 
-4. Start development:
-```bash
-npm run dev
-```
+## System Overview
 
-Open [http://localhost:3000](http://localhost:3000)
+The platform models learning as accumulated activity rather than completed tasks.
 
-## How It Works
+Progress is derived from watch time events instead of explicit user actions.
+The client periodically reports activity, and the server calculates learning statistics from it.
 
-### For Learners
-1. **Sign up** with email 
-2. **Set daily goal** (default 900 seconds per day)
-3. **Browse videos**
-4. **Watch and track** progress automatically
-5. **Chat with AI** to practice and get feedback
-6. **View progress**
+The UI does not compute progress - it renders server-derived state.
 
-### For Developers
+This approach keeps behavior consistent across sessions and devices while keeping the system predictable.
 
+## Product Overview
+
+1. Sign up with Google/GitHub account or as a quest
+2. Set daily goal (default - 15 minutes)
+3. Browse videos
+4. Watch videos progress updates automatically
+5. Practice using AI chat
+6. View progress
+
+The platform focuses on building a consistent learning habit rather than completing lessons.
+
+## Project Structure
 The app follows **Feature-Sliced Design (FSD)** architecture for scalability and maintainability:
-
 ```
 src/
 ├── app/          # Everything that makes the app run e.g. global styles, providers.
@@ -102,49 +94,30 @@ src/
 - **Scalability**: Easy to add new features without affecting existing code
 - **Testability**: Clear boundaries make testing straightforward
 
-**Getting Started with Development:**
-- New feature? Create a folder in `features/` with its own logic and UI
-- Need a reusable component? Add it to `shared/ui/`
-- Working with data? Use entities and shared API utilities
-- Building a page? Combine widgets and features
-- Each layer can be tested independently
 
 ## Core Features
 
 ### Authentication
-- Login with Google/GitHub or as a quest
+- Login with Google/GitHub or as a guest
 
 ### Learning Management
 - Track watch time per video
 - Daily statistics and streaks
 - Progress by proficiency level
 - Video history
+- AI conversation practice
 
 ### Content
 - Videos at 4 levels: SUPER_BEGINNER → ADVANCED
-- Transcripts for reference
 - Search and filtering
 
+## Key Backend Responsibilities
+- accumulate watch time from heartbeat events
+- derive daily progress and streaks
+- store viewing history
+- provide AI conversation endpoint
 
-## API Reference
-
-| Endpoint                 | Method   | Purpose                         |
-|--------------------------|----------|---------------------------------|
-| `/api/videos`            | GET      | List all videos                 |
-| `/api/videos/[id]`       | GET      | Get video details               |
-| `/api/me`                | GET/PUT  | Current/Update user profile     |
-| `/api/stats`             | GET      | User statistics                 |
-| `/api/history`           | GET/POST | Get/Update history              |
-| `/api/watch-time`        | GET      | Get total watch time            |
-| `/api/watch-time/daily`  | GET/POST | Get/update watch time for today |
-| `/api/watch-time/manual` | POST     | Add hours outside               |
-| `/api/chat`              | POST     | AI chat                         |
-
-## Database Schema
-
-See `prisma/schema.prisma` for full schema.
-
-## Development
+## Local Development
 
 ### Scripts
 ```bash
@@ -162,7 +135,7 @@ npm run prisma:migrate   # Run migrations
 - **UI**:  Tailwind CSS 4 + Shadcn 
 - **State Management**: Zustand + TanStack Query
 - **Auth**: NextAuth.js
-- **Video**: React Player + Embla Carousel
+- **Video**: React Player
 - **Virtualization**: TanStack React Virtual
 - **Forms & Validation**: Zod
 - **Icons**: Lucide React + React Icons
@@ -176,14 +149,6 @@ npm run prisma:migrate   # Run migrations
 - Husky for git hooks
 - Pre-commit checks enabled
 
-
-## Contributing
-
-1. Create feature branch: `git checkout -b feature/name`
-2. Make changes and test: `npm run test:unit`
-3. Lint code: `npm run lint:fix`
-4. Commit with husky checks
-5. Push and create pull request
 
 ## License
 
