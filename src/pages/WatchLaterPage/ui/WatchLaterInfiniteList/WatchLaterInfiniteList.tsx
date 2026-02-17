@@ -1,49 +1,30 @@
 "use client";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
 import { TbDotsVertical } from "react-icons/tb";
 import { getUserWatchLater, VideoList } from "@/entities/Video";
 import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
 import { VideoActions } from "@/features/VideoActions";
+import { InfiniteList, useInfiniteList } from "@/features/InfiniteList";
 
 export const WatchLaterInfiniteList = () => {
-  const { ref, inView, entry } = useInView();
-
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
+  const {
+    items: videos,
+    isLoading,
+    isFetchingNextPage,
+    ref,
+    hasNextPage,
+  } = useInfiniteList({
     queryKey: ["watch-later", "infinite"],
-    queryFn: async ({ pageParam = 1 }) => {
-      return await getUserWatchLater({
-        page: pageParam,
-      });
-    },
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage.length === 0) return undefined;
-      return lastPageParam + 1;
-    },
-    initialPageParam: 1,
-    refetchOnWindowFocus: false,
+    fetchFn: getUserWatchLater,
+    queryParams: {},
   });
 
-  useEffect(() => {
-    if (inView && entry) {
-      fetchNextPage();
-    }
-  }, [entry, fetchNextPage, inView]);
-
-  const videos = data?.pages?.flatMap((page) => page ?? []) ?? [];
-
   return (
-    <div>
-      <VideoList
-        videos={videos}
-        isLoading={isLoading}
-        isFetchingNextPage={isFetchingNextPage}
-        renderActions={(video) => <VideoActions videoId={video.id} isWatchLater={video.isWatchLater} />}
-      />
-      {hasNextPage ? <div ref={ref} /> : null}
-      {videos.length === 0 ? (
+    <InfiniteList
+      itemsLength={videos.length}
+      isLoading={isLoading}
+      hasNextPage={hasNextPage}
+      emptyState={
         <div className={"flex flex-col items-center pt-10"}>
           <NoResultsIcon width={128} height={128} />
           <div className={"text-xl flex flex-col items-center"}>
@@ -57,7 +38,15 @@ export const WatchLaterInfiniteList = () => {
             </p>
           </div>
         </div>
-      ) : null}
-    </div>
+      }
+      ref={ref}
+    >
+      <VideoList
+        videos={videos}
+        isLoading={isLoading}
+        isFetchingNextPage={isFetchingNextPage}
+        renderActions={(video) => <VideoActions videoId={video.id} isWatchLater={video.isWatchLater} />}
+      />
+    </InfiniteList>
   );
 };

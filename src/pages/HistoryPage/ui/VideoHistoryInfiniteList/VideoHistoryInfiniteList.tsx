@@ -1,48 +1,36 @@
 "use client";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 import { getUserVideosHistory, VideoHistoryList } from "@/entities/Video";
 import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
+import { InfiniteList, useInfiniteList } from "@/features/InfiniteList";
 
 export const VideoHistoryInfiniteList = () => {
-  const { ref, inView, entry } = useInView();
-
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
+  const {
+    items: videos,
+    isLoading,
+    isFetchingNextPage,
+    ref,
+    hasNextPage,
+  } = useInfiniteList({
     queryKey: ["video-history"],
-    queryFn: async ({ pageParam = 1 }) => {
-      return await getUserVideosHistory({
-        page: pageParam,
-        limit: 6,
-      });
-    },
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage.length === 0) return undefined;
-      return lastPageParam + 1;
-    },
-    initialPageParam: 1,
-    refetchOnWindowFocus: false,
+    fetchFn: getUserVideosHistory,
+    queryParams: { limit: 6 },
   });
 
-  useEffect(() => {
-    if (inView && entry) {
-      fetchNextPage();
-    }
-  }, [entry, fetchNextPage, inView]);
-
-  const historyData = data?.pages.flatMap((page) => page) ?? [];
-
   return (
-    <div>
-      <VideoHistoryList historyList={historyData} isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} />
-      {hasNextPage ? <div ref={ref} /> : null}
-
-      {!historyData.length ? (
+    <InfiniteList
+      ref={ref}
+      isLoading={isLoading}
+      itemsLength={videos.length}
+      hasNextPage={hasNextPage}
+      emptyState={
         <div className={"flex flex-col items-center pt-10"}>
           <NoResultsIcon width={128} height={128} />
           <p className={"text-xl text-muted-foreground"}>No videos watched yet</p>
         </div>
-      ) : null}
-    </div>
+      }
+    >
+      <VideoHistoryList historyList={videos} isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} />
+      {hasNextPage ? <div ref={ref} /> : null}
+    </InfiniteList>
   );
 };
