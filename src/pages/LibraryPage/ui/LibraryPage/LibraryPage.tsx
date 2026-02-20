@@ -8,7 +8,7 @@ export const LibraryPage = async () => {
   const [historyData, watchLaterData] = await Promise.all([getUserVideosHistory({ limit: 7 }), getUserWatchLater({})]);
 
   return (
-    <div className={"p-5"}>
+    <div className={"p-5 flex flex-col lg:gap-8 gap-4"}>
       <WatchLaterSection initialData={watchLaterData} />
       <section>
         <VideoCarousel

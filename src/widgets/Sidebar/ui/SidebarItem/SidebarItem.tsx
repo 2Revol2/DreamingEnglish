@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/shared/lib/utils";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import type { SidebarItemType } from "../../model/types/types";
 
@@ -12,19 +11,21 @@ interface SidebarItemProps {
 export const SidebarItem = (props: SidebarItemProps) => {
   const { item } = props;
   const pathname = usePathname();
-  const isActive = item.path === pathname;
   const { isMobile } = useIsMobile();
+  const isActive = item.path === pathname;
 
   return (
     <Link
-      href={item.path}
-      className={cn("flex w-full h-full gap-2 lg:flex-row flex-col items-center justify-center border-t-4")}
       style={
         isActive
           ? isMobile
             ? { borderTop: `4px solid ${item.color}` }
             : { borderLeft: `4px solid ${item.color}` }
           : undefined
+      }
+      href={item.path}
+      className={
+        "flex h-full w-full gap-4 lg:flex-row flex-col items-center lg:pl-6 lg:border-l-4 lg:border-transparent"
       }
     >
       <item.Icon className={"lg:text-[30px] text-[24px]"} style={{ color: item.color }} />

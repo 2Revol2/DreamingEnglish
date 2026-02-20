@@ -32,7 +32,7 @@ export const LevelCard = (props: LevelCardProps) => {
           height={80}
           className={cn("w-20 h-20 transition-all", isDisabled && "grayscale")}
         />
-        <div className={"flex flex-col gap-1.5"}>
+        <div className={"flex flex-col gap-1.5 flex-1"}>
           <h5
             className={cn("text-2xl font-bold", isDisabled ? "text-gray-400" : "")}
             style={{ color: `${!isDisabled && level.color}` }}
@@ -40,15 +40,15 @@ export const LevelCard = (props: LevelCardProps) => {
             Level {level.level}
           </h5>
           <p className={"text-sm sm:text-base"}>{level.subtitle}</p>
-          <div className={"flex gap-3 w-full sm:text-sm text-xs"}>
-            <p className={"flex gap-1"}>
+          <div className={"flex gap-1 lg:gap-3 sm:text-sm text-xs flex-col lg:flex-row"}>
+            <p className={"flex gap-1 items-center"}>
               <MdOutlineAccessTimeFilled
                 style={{ color: `${!isDisabled && level.color}` }}
                 className={"text-gray-400"}
               />{" "}
               Hours of input {level.stats.hoursOfInput}
             </p>
-            <p className={"flex gap-1"}>
+            <p className={"flex gap-1 items-center"}>
               <FaComment style={{ color: `${!isDisabled && level.color}` }} className={"text-gray-400"} /> Known words{" "}
               {level.stats.knownWords}
             </p>
