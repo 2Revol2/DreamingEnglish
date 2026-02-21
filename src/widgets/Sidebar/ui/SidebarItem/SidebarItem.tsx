@@ -11,7 +11,7 @@ interface SidebarItemProps {
 export const SidebarItem = (props: SidebarItemProps) => {
   const { item } = props;
   const pathname = usePathname();
-  const { isMobile } = useIsMobile();
+  const { isMobile } = useIsMobile(1020);
   const isActive = item.path === pathname;
 
   return (

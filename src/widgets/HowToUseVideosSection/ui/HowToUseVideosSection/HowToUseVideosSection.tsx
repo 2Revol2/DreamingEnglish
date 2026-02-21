@@ -9,7 +9,7 @@ export const HowToUseVideosSection = () => {
   return (
     <section className="py-10 bg-secondary-background">
       <Container className="max-w-4xl">
-        <SectionHeader title={"How to Use"} highlightedWord={"Our Videos"} />
+        <SectionHeader title={"How to Use "} highlightedWord={"Our Videos"} />
         <p className={"text-base sm:text-lg mb-5"}>
           We said this earlier, but it bears repeating.{" "}
           <span className="font-bold">Watching the videos is by itself what results in acquiring the language.</span>{" "}

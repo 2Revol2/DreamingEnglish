@@ -18,6 +18,12 @@ button {
     cursor: pointer;
 }
 
+@media (min-width: 1100px) and (max-width: 1550px) {
+    .browser-page-container {
+       padding-inline: 20px;
+    }
+}
+
 :root {
     --background: #f3f2f7;
     --secondary-background: #ffffff;

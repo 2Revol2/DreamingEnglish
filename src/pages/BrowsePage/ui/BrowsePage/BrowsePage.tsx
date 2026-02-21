@@ -6,7 +6,7 @@ import { VideosInfiniteList } from "../VideosInfiniteList/VideosInfiniteList";
 
 export const BrowsePage = async () => {
   return (
-    <Container className={"flex flex-col gap-4 lg:pt-8 pt-0"}>
+    <Container className={"flex flex-col gap-4 lg:pt-8 pt-0 browser-page-container"}>
       <Suspense fallback={<div>Loading filters...</div>}>
         <VideoFilters />
         <ActiveFilters />

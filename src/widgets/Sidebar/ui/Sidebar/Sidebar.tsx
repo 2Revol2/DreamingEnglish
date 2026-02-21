@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { RoutePath } from "@/shared/constants/router";
 import { AvatarDropdown } from "@/features/AvatarDropdown";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
@@ -10,7 +9,6 @@ import { SIDEBAR_LINKS } from "../../model/constants/consts";
 
 export const Sidebar = () => {
   const { isMobile } = useIsMobile();
-  const pathname = usePathname();
 
   return (
     <aside
