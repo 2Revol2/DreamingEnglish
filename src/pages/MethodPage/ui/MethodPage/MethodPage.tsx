@@ -3,6 +3,7 @@ import { ProblemSection } from "@/widgets/ProblemSection";
 import { WhyTraditionalFailsSection } from "@/widgets/WhyTraditionalFailsSection";
 import { ComprehensibleInputSection } from "@/widgets/ComprehensibleInputSection";
 import { HowToUseVideosSection } from "@/widgets/HowToUseVideosSection";
+import { QASection } from "@/widgets/QASection";
 
 export const MethodPage = () => {
   return (
@@ -12,6 +13,7 @@ export const MethodPage = () => {
       <WhyTraditionalFailsSection />
       <ComprehensibleInputSection />
       <HowToUseVideosSection />
+      <QASection />
     </div>
   );
 };
