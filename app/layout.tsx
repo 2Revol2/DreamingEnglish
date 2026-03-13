@@ -40,6 +40,29 @@ export const metadata: Metadata = {
   verification: {
     google: "yb9rSJoWy69ulZuuWxgVTUUFTXLhbCGYRG43cZWtSTc",
   },
+  keywords: [
+    "learn English",
+    "English for beginners",
+    "English for intermediate",
+    "English for advanced",
+    "English lessons",
+    "English podcasts",
+    "English videos",
+    "English immersion",
+    "fluency in English",
+    "study English online",
+    "practice English",
+    "English grammar",
+    "English vocabulary",
+    "English listening",
+    "English speaking",
+    "English learning resources",
+    "learn English online",
+    "English courses",
+    "improve English",
+    "Dreaming English",
+    "comprehensible input method",
+  ],
 };
 
 const RootLayout = ({
