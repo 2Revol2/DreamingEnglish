@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: ["/preview.png"],
   },
+  verification: {
+    google: "yb9rSJoWy69ulZuuWxgVTUUFTXLhbCGYRG43cZWtSTc",
+  },
 };
 
 const RootLayout = ({
