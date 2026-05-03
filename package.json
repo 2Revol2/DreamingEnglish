@@ -40,6 +40,7 @@
     "next": "16.1.5",
     "next-auth": "^4.24.13",
     "nextjs-toploader": "^3.9.17",
+    "ollama": "^0.6.3",
     "radix-ui": "^1.4.3",
     "react": "19.2.1",
     "react-day-picker": "^9.12.0",
