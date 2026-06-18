@@ -1,1 +1,6 @@
-npm run lint
+FILES=$(git diff --cached --name-only --diff-filter=ACMR)
+
+if [ -n "$FILES" ]; then
+  echo "$FILES" | xargs -r npx eslint --fix --no-error-on-unmatched-pattern
+  git update-index --again
+fi
