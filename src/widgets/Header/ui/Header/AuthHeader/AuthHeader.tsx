@@ -11,7 +11,7 @@ import { AvatarDropdown } from "@/features/AvatarDropdown";
 export const AuthHeader = () => {
   const { isMobile } = useIsMobile();
 
-  const { data: dailyGoal } = useUserData((user) => user.dailyGoal);
+  const { data: dailyGoal, isLoading } = useUserData((user) => user?.dailyGoal);
   const dailyGoalNormalized = dailyGoal ? secondsToMinutes(dailyGoal) : 15;
 
   return (
@@ -21,13 +21,13 @@ export const AuthHeader = () => {
       }
     >
       <div className={"flex-1 bg-background p-1 rounded flex items-center justify-between gap-1.5"}>
-        {dailyGoal ? (
+        {isLoading ? (
+          <Skeleton className={"w-full h-[20px]"} />
+        ) : (
           <>
             <DailyGoalProgress dailyGoal={dailyGoalNormalized} />
             <SetDailyGoal dailyGoal={dailyGoalNormalized} />
           </>
-        ) : (
-          <Skeleton className={"w-full h-[20px]"} />
         )}
       </div>
       {!isMobile ? (

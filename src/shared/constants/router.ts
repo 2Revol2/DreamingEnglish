@@ -9,6 +9,7 @@ export enum AppRoutes {
   WATCH = "watch",
   WATCH_LATER = "watchLater",
   HISTORY = "history",
+  ADMIN = "admin",
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
@@ -22,4 +23,5 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.ABOUT]: "/about",
   [AppRoutes.METHOD]: "/method",
   [AppRoutes.WATCH]: "/browse/watch/",
+  [AppRoutes.ADMIN]: "/admin",
 };

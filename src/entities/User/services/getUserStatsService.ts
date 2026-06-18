@@ -4,7 +4,7 @@ import { secondsToHours } from "@/shared/lib/secondsToHours/secondsToHours";
 import { calculateUserStreak } from "../lib/calculateUserStreak";
 
 interface GetUserStatsServiceProps {
-  userId: string;
+  userId?: string;
   timeZone: string;
 }
 

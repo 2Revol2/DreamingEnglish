@@ -7,7 +7,7 @@ import { useUserData } from "@/entities/User";
 import { getUserLevel } from "@/shared/lib/getUserLevel/getUserLevel";
 
 export const LearningLevelsList = () => {
-  const { data: totalInputSeconds } = useUserData((state) => state.totalInput);
+  const { data: totalInputSeconds } = useUserData((state) => state?.totalInput);
 
   const { level } = getUserLevel(totalInputSeconds ?? 0);
 

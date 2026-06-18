@@ -2,13 +2,14 @@ import { NextResponse } from "next/server";
 import { formatInTimeZone } from "date-fns-tz";
 import { withAuth } from "@/shared/lib/api/withAuth";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
+import { getOptionalAuth } from "@/shared/lib/api/getOptionalAuth";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
 
-    const { error, userId } = await withAuth();
+    const { error, userId } = await getOptionalAuth();
 
     if (error) {
       return error;

@@ -1,15 +1,16 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
 import { withAuth } from "@/shared/lib/api/withAuth";
+import { getOptionalAuth } from "@/shared/lib/api/getOptionalAuth";
 import type { NextRequest } from "next/server";
 import type { UserData } from "@/entities/User";
 
 export async function GET(req: NextRequest) {
   try {
-    const { error, userId } = await withAuth();
+    const { userId } = await getOptionalAuth();
 
-    if (error) {
-      return error;
+    if (!userId) {
+      return NextResponse.json(null);
     }
 
     const user = await prisma.user.findUnique({

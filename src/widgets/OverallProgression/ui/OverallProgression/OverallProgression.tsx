@@ -8,7 +8,7 @@ import { secondsToHours } from "@/shared/lib/secondsToHours/secondsToHours";
 import { getMinutesFromSeconds } from "@/shared/lib/getMinutesFromSeconds/getMinutesFromSeconds";
 
 export const OverallProgression = () => {
-  const { data: totalInputSeconds } = useUserData((state) => state.totalInput);
+  const { data: totalInputSeconds } = useUserData((state) => state?.totalInput);
 
   const { level, maxSeconds, minSeconds } = getUserLevel(totalInputSeconds ?? 0);
 
