@@ -1,0 +1,17 @@
+name: only-dev-or-hotfix-to-main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  only-dev-or-hotfix-to-main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate source branch
+        run: |
+          if [[ "${{ github.head_ref }}" != "develop" && "${{ github.head_ref }}" != hotfix/*  ]]; then
+            echo "Only develop or hotfix can be merged into main"
+            exit 1
+          fi
