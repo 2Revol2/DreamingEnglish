@@ -1,0 +1,50 @@
+name: linting, testing, building
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test-and-validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+      - name: Check branch pair
+        id: branch_check
+        run: |
+          if [[ "${{ github.base_ref }}" == "develop" && "${{ github.head_ref }}" == "main" ]] || \
+             [[ "${{ github.base_ref }}" == "main" && "${{ github.head_ref }}" == "develop" ]]; then
+            echo "should_skip=true" >> "$GITHUB_OUTPUT"
+            echo "Skipping validation for main <-> develop PR"
+          else
+            echo "should_skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.branch_check.outputs.should_skip != 'true'
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        if: steps.branch_check.outputs.should_skip != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: install modules
+        if: steps.branch_check.outputs.should_skip != 'true'
+        run: npm ci
+
+      - name: linting
+        if: steps.branch_check.outputs.should_skip != 'true'
+        run: npm run lint
+
+      - name: unit testing
+        if: steps.branch_check.outputs.should_skip != 'true'
+        run: npm run test:unit
+
+      - name: build production project
+        if: steps.branch_check.outputs.should_skip != 'true'
+        run: npm run build

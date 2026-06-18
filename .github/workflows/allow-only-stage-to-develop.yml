@@ -1,0 +1,18 @@
+name: only-stage-or-main-to-develop
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  only-stage-or-main-to-develop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail unless PR comes from stage
+        run: |
+          echo "PR source branch: ${{ github.head_ref }}"
+          if [[ "${{ github.head_ref }}" != stage/* && "${{ github.head_ref }}" != "main" ]]; then
+            echo "Only PRs from 'stage' can be merged into 'develop'"
+            exit 1
+          fi
