@@ -52,8 +52,18 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
     setCustomValue(v);
   }, []);
 
+  const onOpenHandler = (open: boolean) => {
+    if (open) {
+      setSelectedOption(defaultValue);
+      setCustomValue(isCustom ? String(dailyGoal) : "15");
+      setError("");
+    }
+
+    setIsOpen(open);
+  };
+
   return (
-    <Dialog onOpenChange={setIsOpen} open={isOpen}>
+    <Dialog onOpenChange={onOpenHandler} open={isOpen}>
       <DialogTrigger>
         <FaPen />
       </DialogTrigger>

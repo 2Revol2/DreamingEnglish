@@ -9,6 +9,7 @@ import { secondsToMinutes } from "@/shared/lib/secondsToMinutes/secondsToMinutes
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { AvatarDropdown } from "@/features/AvatarDropdown";
 import { DAILY_GOAL_LOCAL_STORAGE_KEY } from "@/shared/constants/localstorage";
+import { LoginFormModal } from "@/features/Auth";
 
 export const AuthHeader = () => {
   const { isMobile } = useIsMobile();
@@ -71,6 +72,17 @@ export const AuthHeader = () => {
           </>
         )}
       </div>
+
+      {!user ? (
+        <>
+          <Separator color={"red"} orientation={"vertical"} className={"mx-5"} />
+          <div className={"flex gap-2 items-center"}>
+            {!isMobile ? <p>Sign in now to not lose your progress</p> : null}
+            <LoginFormModal />
+          </div>
+        </>
+      ) : null}
+
       {!isMobile ? (
         <>
           <Separator orientation={"vertical"} className={"mx-5"} />

@@ -13,7 +13,6 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@/shared/ui/avatar";
 import { Button } from "@/shared/ui/button";
-import { RoutePath } from "@/shared/constants/router";
 import { useUserData } from "@/entities/User";
 import { ThemeSwitcher } from "@/shared/ui/theme-switcher";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
@@ -40,11 +39,7 @@ export const AvatarDropdown = memo(() => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className={"flex items-center justify-between p-0"} onSelect={(e) => e.preventDefault()}>
-            <Button
-              onClick={() => signOut({ callbackUrl: RoutePath.main })}
-              variant={"ghost"}
-              className={"flex w-full justify-start"}
-            >
+            <Button onClick={() => signOut()} variant={"ghost"} className={"flex w-full justify-start"}>
               <RiLogoutCircleLine size={24} className={"text-primary"} />
               Logout
             </Button>
