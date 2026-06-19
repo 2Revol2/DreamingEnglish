@@ -4,17 +4,16 @@ import { useCallback, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui/dialog";
 import { RadioGroup } from "@/shared/ui/radio-group";
 import { GOAL_CUSTOM_OPTION, GOAL_DEFAULT_OPTIONS, RadioOptionCard } from "@/entities/DailyGoal";
-import { useUpdateUserData } from "@/entities/User";
 import { Button } from "@/shared/ui/button";
 import { SetDailyGoalSchema } from "../../model/schemas/setDailyGoalSchema";
 
 interface SetDailyGoalProps {
   dailyGoal: number;
+  onSaveDailyGoal: (dailyGoalSeconds: number) => void;
 }
 
 export const SetDailyGoal = (props: SetDailyGoalProps) => {
-  const { dailyGoal } = props;
-  const { mutate } = useUpdateUserData();
+  const { dailyGoal, onSaveDailyGoal } = props;
 
   const isCustom = !GOAL_DEFAULT_OPTIONS.some((option) => Number(option.value) === dailyGoal);
   const defaultValue = isCustom ? "Own Goal" : String(dailyGoal);
@@ -40,14 +39,14 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
 
     if (selectedOption === "Own Goal") {
       const minutesToSeconds = Number(customValue) * 60;
-      mutate({ dailyGoal: minutesToSeconds });
+      onSaveDailyGoal(minutesToSeconds);
     } else {
       const minutesToSeconds = Number(selectedOption) * 60;
-      mutate({ dailyGoal: minutesToSeconds });
+      onSaveDailyGoal(minutesToSeconds);
     }
     setIsOpen(false);
     setError("");
-  }, [customValue, mutate, selectedOption]);
+  }, [customValue, onSaveDailyGoal, selectedOption]);
 
   const onChangeCustomGoalHandler = useCallback((v: string) => {
     setCustomValue(v);
@@ -63,7 +62,7 @@ export const SetDailyGoal = (props: SetDailyGoalProps) => {
           <DialogTitle>Daily goal</DialogTitle>
         </DialogHeader>
         <div>
-          <RadioGroup defaultValue={defaultValue} onValueChange={setSelectedOption}>
+          <RadioGroup value={selectedOption} onValueChange={setSelectedOption}>
             {defaultOptions.map((option) => (
               <RadioOptionCard key={option.id} option={option} />
             ))}
