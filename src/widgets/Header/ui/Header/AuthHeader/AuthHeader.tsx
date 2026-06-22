@@ -86,7 +86,7 @@ export const AuthHeader = () => {
       {!isMobile ? (
         <>
           <Separator orientation={"vertical"} className={"mx-5"} />
-          <AvatarDropdown />
+          <AvatarDropdown userData={user} />
         </>
       ) : null}
     </header>

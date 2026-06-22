@@ -11,6 +11,10 @@ export async function GET(req: NextRequest) {
 
     const { error, userId } = await getOptionalAuth();
 
+    if (!userId) {
+      return NextResponse.json(null);
+    }
+
     if (error) {
       return error;
     }
