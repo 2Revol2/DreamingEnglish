@@ -1,7 +1,7 @@
 "use client";
 import { signOut } from "next-auth/react";
 import { memo, useState } from "react";
-import { RiLogoutCircleLine } from "react-icons/ri";
+import { RiLoginCircleLine, RiLogoutCircleLine } from "react-icons/ri";
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 import {
   DropdownMenu,
@@ -15,6 +15,8 @@ import { Avatar, AvatarImage } from "@/shared/ui/avatar";
 import { Button } from "@/shared/ui/button";
 import { ThemeSwitcher } from "@/shared/ui/theme-switcher";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
+// eslint-disable-next-line revol/layer-imports
+import { LoginFormModal } from "@/features/Auth";
 import type { UserData } from "@/entities/User";
 
 interface AvatarDropdownProps {
@@ -41,22 +43,28 @@ export const AvatarDropdown = memo((props: AvatarDropdownProps) => {
             <ThemeSwitcher />
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        {userData ? (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                className={"flex items-center justify-between p-0"}
-                onSelect={(e) => e.preventDefault()}
-              >
-                <Button onClick={() => signOut()} variant={"ghost"} className={"flex w-full justify-start"}>
-                  <RiLogoutCircleLine size={24} className={"text-primary"} />
-                  Logout
-                </Button>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </>
-        ) : null}
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          {userData ? (
+            <DropdownMenuItem className={"flex items-center justify-between p-0"} onSelect={(e) => e.preventDefault()}>
+              <Button onClick={() => signOut()} variant={"ghost"} className={"flex w-full justify-start"}>
+                <RiLogoutCircleLine size={24} className={"text-primary"} />
+                Logout
+              </Button>
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem className={"flex items-center justify-between p-0"} onSelect={(e) => e.preventDefault()}>
+              <LoginFormModal
+                trigger={
+                  <Button onClick={() => signOut()} variant={"ghost"} className={"flex w-full justify-start"}>
+                    <RiLoginCircleLine size={24} className={"text-primary"} />
+                    Sign up / Log in
+                  </Button>
+                }
+              />
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );
