@@ -1,20 +1,21 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
 import { withAuth } from "@/shared/lib/api/withAuth";
+import { getOptionalAuth } from "@/shared/lib/api/getOptionalAuth";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
 
-    const { error, userId } = await withAuth();
+    const { error, userId } = await getOptionalAuth();
 
     if (error) {
       return error;
     }
 
     if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(null);
     }
 
     const { searchParams } = url;

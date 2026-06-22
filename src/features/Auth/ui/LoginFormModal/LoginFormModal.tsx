@@ -1,17 +1,21 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/shared/ui/dialog";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui/dialog";
 import { LoginFormContent } from "../LoginFormContent/LoginFormContent";
+import type { ReactNode } from "react";
 
-export const LoginFormModal = () => {
-  const router = useRouter();
+interface LoginFormModalProps {
+  trigger: ReactNode;
+}
 
-  const handleClose = () => {
-    router.back();
-  };
+export const LoginFormModal = (props: LoginFormModalProps) => {
+  const { trigger } = props;
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Dialog open={true} onOpenChange={handleClose}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className={"sm:max-w-[425px] bg-secondary-background"}>
         <DialogHeader>
           <DialogTitle> Sign in to your account</DialogTitle>

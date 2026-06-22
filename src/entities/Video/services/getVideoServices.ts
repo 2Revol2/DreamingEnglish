@@ -60,7 +60,7 @@ export const getVideoServices = async (params: GetVideoParams) => {
 
   return videos.map((video) => ({
     ...video,
-    isWatchLater: video.UserWatchLater.length > 0,
+    isWatchLater: video?.UserWatchLater?.length > 0,
     userWatchLater: undefined,
   }));
 };

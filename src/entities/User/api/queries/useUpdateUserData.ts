@@ -6,19 +6,23 @@ export const useUpdateUserData = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: Partial<UserData>) => {
-      const cachedUser = queryClient.getQueryData<UserData>(["user"]);
+    mutationFn: (data: Partial<UserData>) => updateUserData(data),
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({ queryKey: ["user"] });
 
-      if (!cachedUser) {
-        throw new Error("User data is not cached");
+      const previousUser = queryClient.getQueryData<UserData | null>(["user"]);
+
+      if (previousUser) {
+        queryClient.setQueryData<UserData>(["user"], {
+          ...previousUser,
+          ...data,
+        });
       }
 
-      const fullData: UserData = {
-        ...cachedUser,
-        ...data,
-      };
-
-      return updateUserData(fullData);
+      return { previousUser };
+    },
+    onError: (_error, _data, context) => {
+      queryClient.setQueryData(["user"], context?.previousUser ?? null);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });

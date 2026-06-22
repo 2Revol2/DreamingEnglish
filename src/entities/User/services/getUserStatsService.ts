@@ -4,11 +4,15 @@ import { secondsToHours } from "@/shared/lib/secondsToHours/secondsToHours";
 import { calculateUserStreak } from "../lib/calculateUserStreak";
 
 interface GetUserStatsServiceProps {
-  userId: string;
+  userId?: string;
   timeZone: string;
 }
 
 export const getUserStatsService = async ({ userId, timeZone }: GetUserStatsServiceProps) => {
+  if (!userId) {
+    return { hoursThisMonth: 0, streak: 0, weekInRow: 0 };
+  }
+
   const now = new Date();
   const todayStr = formatInTimeZone(now, timeZone, "yyyy-MM-dd");
   const currentMonth = new Date(todayStr).getMonth() + 1;
