@@ -77,7 +77,7 @@ export const AuthHeader = () => {
         <>
           <Separator color={"red"} orientation={"vertical"} className={"mx-5"} />
           <div className={"flex gap-2 items-center"}>
-            {!isMobile ? <p>Sign in now to not lose your progress</p> : null}
+            {!isMobile ? <p>Sign in now to track your progress</p> : null}
             <LoginFormModal />
           </div>
         </>

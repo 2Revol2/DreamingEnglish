@@ -9,6 +9,10 @@ interface GetUserStatsServiceProps {
 }
 
 export const getUserStatsService = async ({ userId, timeZone }: GetUserStatsServiceProps) => {
+  if (!userId) {
+    return { hoursThisMonth: 0, streak: 0, weekInRow: 0 };
+  }
+
   const now = new Date();
   const todayStr = formatInTimeZone(now, timeZone, "yyyy-MM-dd");
   const currentMonth = new Date(todayStr).getMonth() + 1;
