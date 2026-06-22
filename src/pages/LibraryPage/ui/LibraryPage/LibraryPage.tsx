@@ -2,6 +2,8 @@ import { MdOutlineHistory } from "react-icons/md";
 import { getUserVideosHistory, getUserWatchLater } from "@/entities/Video";
 import { RoutePath } from "@/shared/constants/router";
 import { withAuth } from "@/shared/lib/api/withAuth";
+import { Button } from "@/shared/ui/button";
+import { LoginFormModal } from "@/features/Auth";
 import { WatchLaterSection } from "../WatchLaterSection/WatchLaterSection";
 import { VideoCarousel } from "../VideoCarousel/VideoCarousel";
 
@@ -13,7 +15,18 @@ export const LibraryPage = async () => {
   return (
     <div className={"p-5 flex flex-col lg:gap-8 gap-4"}>
       {isNotAuthorized ? (
-        <div>To track your progress sign in</div>
+        <div className="flex items-center justify-center py-16">
+          <div className="max-w-lg text-center space-y-4">
+            <h2 className="text-3xl font-bold">Your library is waiting</h2>
+
+            <p className="text-muted-foreground text-lg">
+              Sign in to save videos for later, keep track of your watch history, and monitor your daily learning
+              progress.
+            </p>
+
+            <LoginFormModal trigger={<Button size={"lg"}>Sign in</Button>} />
+          </div>
+        </div>
       ) : (
         <>
           <WatchLaterSection initialData={watchLaterData} />

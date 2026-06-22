@@ -10,6 +10,7 @@ import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { AvatarDropdown } from "@/features/AvatarDropdown";
 import { DAILY_GOAL_LOCAL_STORAGE_KEY } from "@/shared/constants/localstorage";
 import { LoginFormModal } from "@/features/Auth";
+import { Button } from "@/shared/ui/button";
 
 export const AuthHeader = () => {
   const { isMobile } = useIsMobile();
@@ -78,7 +79,13 @@ export const AuthHeader = () => {
           <Separator color={"red"} orientation={"vertical"} className={"mx-5"} />
           <div className={"flex gap-2 items-center"}>
             {!isMobile ? <p>Sign in now to track your progress</p> : null}
-            <LoginFormModal />
+            <LoginFormModal
+              trigger={
+                <Button variant={"accent"} size={"sm"}>
+                  Sign in
+                </Button>
+              }
+            />
           </div>
         </>
       ) : null}
