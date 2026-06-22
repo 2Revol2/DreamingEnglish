@@ -4,10 +4,13 @@ import { VideoList } from "@/entities/Video";
 import { VideoActions } from "@/features/VideoActions";
 import { InfiniteList, useInfiniteList } from "@/features/InfiniteList";
 import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
+import { useIsAuthenticated } from "@/shared/lib/useIsAuthenticated";
 import { getVideos } from "../../api/getVideos";
 import { useFiltersState } from "../../model/store/useFiltersStore";
 
 export const VideosInfiniteList = () => {
+  const isAuthenticated = useIsAuthenticated();
+
   const sortBy = useFiltersState((state) => state.sortBy);
   const search = useFiltersState((state) => state.searchQuery);
   const levels = useFiltersState((state) => state.levels);
@@ -47,7 +50,9 @@ export const VideosInfiniteList = () => {
         videos={videos}
         isLoading={isLoading}
         isFetchingNextPage={isFetchingNextPage}
-        renderActions={(video) => <VideoActions videoId={video.id} isWatchLater={video.isWatchLater} />}
+        renderActions={(video) =>
+          isAuthenticated ? <VideoActions videoId={video.id} isWatchLater={video.isWatchLater} /> : null
+        }
       />
     </InfiniteList>
   );

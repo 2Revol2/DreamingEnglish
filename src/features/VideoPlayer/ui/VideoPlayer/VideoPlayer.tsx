@@ -2,6 +2,7 @@
 import ReactPlayer from "react-player";
 import { useCallback, useEffect, useRef } from "react";
 import { useThrottledCallback } from "use-debounce";
+import { useIsAuthenticated } from "@/shared/lib/useIsAuthenticated";
 import { updateUserWatchTime } from "../../api/updateUserWatchTime";
 import { useUpdateUserWatchedTime } from "../../api/useUpdateUserWatchedTime";
 
@@ -11,6 +12,7 @@ interface VideoPlayerProps {
 
 export const VideoPlayer = (props: VideoPlayerProps) => {
   const { url } = props;
+  const isAuthenticated = useIsAuthenticated();
 
   const { mutate } = useUpdateUserWatchedTime();
 
@@ -27,6 +29,7 @@ export const VideoPlayer = (props: VideoPlayerProps) => {
   const isPlayingRef = useRef(false);
 
   const handleTimeUpdate = useThrottledCallback(() => {
+    if (!isAuthenticated) return;
     const player = playerRef.current;
     if (!player) return;
 
@@ -42,10 +45,11 @@ export const VideoPlayer = (props: VideoPlayerProps) => {
 
   // we don`t use tanstack here to prevent component rerender to save video player state
   const startInterval = () => {
+    if (!isAuthenticated) return;
     if (intervalRef.current) return;
 
     intervalRef.current = setInterval(async () => {
-      if (watchedSeconds.current > 0) {
+      if (isAuthenticated && watchedSeconds.current > 0) {
         await updateUserWatchTime({ watchedSeconds: watchedSeconds.current });
         watchedSeconds.current = 0;
       }

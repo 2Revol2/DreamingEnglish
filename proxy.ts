@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 import { RoutePath } from "@/shared/constants/router";
 import type { NextRequest } from "next/server";
 
-const protectedRoutes = [RoutePath.browse];
+const protectedRoutes = [RoutePath.admin];
 
 const allowedOrigins = ["https://dreamingenglish.vercel.app"];
 

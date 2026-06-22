@@ -1,7 +1,7 @@
 "use client";
 import { signOut } from "next-auth/react";
 import { memo, useState } from "react";
-import { RiLogoutCircleLine } from "react-icons/ri";
+import { RiLoginCircleLine, RiLogoutCircleLine } from "react-icons/ri";
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 import {
   DropdownMenu,
@@ -13,13 +13,19 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@/shared/ui/avatar";
 import { Button } from "@/shared/ui/button";
-import { RoutePath } from "@/shared/constants/router";
-import { useUserData } from "@/entities/User";
 import { ThemeSwitcher } from "@/shared/ui/theme-switcher";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
+// eslint-disable-next-line revol/layer-imports
+import { LoginFormModal } from "@/features/Auth";
+import type { UserData } from "@/entities/User";
 
-export const AvatarDropdown = memo(() => {
-  const { data: image } = useUserData((user) => user?.image);
+interface AvatarDropdownProps {
+  userData?: UserData | null;
+}
+
+export const AvatarDropdown = memo((props: AvatarDropdownProps) => {
+  const { userData } = props;
+
   const [isOpen, setIsOpen] = useState(false);
   const { isMobile } = useIsMobile();
 
@@ -27,7 +33,7 @@ export const AvatarDropdown = memo(() => {
     <DropdownMenu modal={false} open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger className={"flex gap-0.5"}>
         <Avatar>
-          <AvatarImage src={image || "https://github.com/shadcn.png"} />
+          <AvatarImage src={userData?.image ?? "https://github.com/shadcn.png"} />
         </Avatar>
         {!isMobile ? isOpen ? <MdOutlineKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown /> : null}
       </DropdownMenuTrigger>
@@ -39,16 +45,25 @@ export const AvatarDropdown = memo(() => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem className={"flex items-center justify-between p-0"} onSelect={(e) => e.preventDefault()}>
-            <Button
-              onClick={() => signOut({ callbackUrl: RoutePath.main })}
-              variant={"ghost"}
-              className={"flex w-full justify-start"}
-            >
-              <RiLogoutCircleLine size={24} className={"text-primary"} />
-              Logout
-            </Button>
-          </DropdownMenuItem>
+          {userData ? (
+            <DropdownMenuItem className={"flex items-center justify-between p-0"} onSelect={(e) => e.preventDefault()}>
+              <Button onClick={() => signOut()} variant={"ghost"} className={"flex w-full justify-start"}>
+                <RiLogoutCircleLine size={24} className={"text-primary"} />
+                Logout
+              </Button>
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem className={"flex items-center justify-between p-0"} onSelect={(e) => e.preventDefault()}>
+              <LoginFormModal
+                trigger={
+                  <Button onClick={() => signOut()} variant={"ghost"} className={"flex w-full justify-start"}>
+                    <RiLoginCircleLine size={24} className={"text-primary"} />
+                    Sign up / Log in
+                  </Button>
+                }
+              />
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
