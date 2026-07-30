@@ -56,7 +56,7 @@ export const AvatarDropdown = memo((props: AvatarDropdownProps) => {
             <DropdownMenuItem className={"flex items-center justify-between p-0"} onSelect={(e) => e.preventDefault()}>
               <LoginFormModal
                 trigger={
-                  <Button onClick={() => signOut()} variant={"ghost"} className={"flex w-full justify-start"}>
+                  <Button variant={"ghost"} className={"flex w-full justify-start"}>
                     <RiLoginCircleLine size={24} className={"text-primary"} />
                     Sign up / Log in
                   </Button>
