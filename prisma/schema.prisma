@@ -46,8 +46,7 @@ model UserVideoProgress {
   id     String @id @default(cuid())
   userId String
 
-  videoId         String
-  externalVideoId String?
+  videoId String
 
   watchedSeconds Int     @default(0)
   completed      Boolean @default(false)
@@ -71,8 +70,7 @@ model UserVideoHistory {
   id     String @id @default(cuid())
   userId String
 
-  videoId         String
-  externalVideoId String?
+  videoId String
 
   viewedAt String
   user     User   @relation(fields: [userId], references: [id])
@@ -85,8 +83,7 @@ model UserWatchLater {
   id     String @id @default(cuid())
   userId String
 
-  videoId         String
-  externalVideoId String?
+  videoId String
 
   user  User  @relation(fields: [userId], references: [id])
   video Video @relation(fields: [videoId], references: [id])
