@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 import { VideoPlayer } from "@/features/VideoPlayer";
 import { VideoLevel } from "@/shared/ui/video-level";
 import { Container } from "@/shared/ui/container";
@@ -10,7 +11,13 @@ const ChatWindow = dynamic(() => import("@/widgets/ChatWindow").then((m) => m.Ch
 export const VideoPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
-  const [video] = await Promise.all([getVideoById(id), updateUserVideosHistory({ videoId: id })]);
+  const video = await getVideoById(id);
+
+  if (!video) {
+    notFound();
+  }
+
+  await updateUserVideosHistory({ videoId: video.id });
 
   return (
     <Container className={"flex flex-col gap-8 lg:pt-8 pt-0"}>
