@@ -80,6 +80,19 @@ export async function POST(req: NextRequest) {
 
     const { videoId, timeZone } = body;
 
+    const video = await prisma.video.findUnique({
+      where: {
+        id: videoId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!video) {
+      return NextResponse.json({ error: "Video not found" }, { status: 404 });
+    }
+
     const todayDate = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd, HH:mm:ss");
 
     await prisma.userVideoHistory.upsert({
