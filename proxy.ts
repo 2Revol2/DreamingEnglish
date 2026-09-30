@@ -19,7 +19,7 @@ export async function proxy(request: NextRequest) {
   const isProtected = protectedRoutes.some((route) => pathname.startsWith(route));
 
   if (isProtected && !token) {
-    return NextResponse.redirect(new URL(RoutePath.login, request.url));
+    return NextResponse.redirect(new URL(RoutePath.browse, request.url));
   }
 
   // __
