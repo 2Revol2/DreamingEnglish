@@ -32,6 +32,9 @@ export async function GET(req: NextRequest) {
       include: {
         video: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
       take: limit,
       skip: skip,
     });
