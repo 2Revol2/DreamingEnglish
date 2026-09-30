@@ -17,11 +17,11 @@ model User {
   level            EnglishLevel        @default(A0)
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt
-  role             UserRole            @default(USER)
   image            String?
   emailVerified    DateTime?
   name             String?
   dayStreak        Int                 @default(0)
+  role             UserRole            @default(USER)
   dailyWatch       UserDailyWatch[]
   UserVideoHistory UserVideoHistory[]
   VideoProgress    UserVideoProgress[]
@@ -38,16 +38,14 @@ model Video {
   createdAt        DateTime            @default(now())
   UserVideoHistory UserVideoHistory[]
   progress         UserVideoProgress[]
-  transcript       VideoTranscript?
   UserWatchLater   UserWatchLater[]
+  transcript       VideoTranscript?
 }
 
 model UserVideoProgress {
-  id     String @id @default(cuid())
-  userId String
-
-  videoId String
-
+  id             String  @id @default(cuid())
+  userId         String
+  videoId        String
   watchedSeconds Int     @default(0)
   completed      Boolean @default(false)
   user           User    @relation(fields: [userId], references: [id])
@@ -67,11 +65,9 @@ model UserDailyWatch {
 }
 
 model UserVideoHistory {
-  id     String @id @default(cuid())
-  userId String
-
-  videoId String
-
+  id       String @id @default(cuid())
+  userId   String
+  videoId  String
   viewedAt String
   user     User   @relation(fields: [userId], references: [id])
   video    Video  @relation(fields: [videoId], references: [id])
@@ -80,13 +76,13 @@ model UserVideoHistory {
 }
 
 model UserWatchLater {
-  id     String @id @default(cuid())
-  userId String
-
+  id      String @id @default(cuid())
+  userId  String
   videoId String
 
-  user  User  @relation(fields: [userId], references: [id])
-  video Video @relation(fields: [videoId], references: [id])
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  video     Video    @relation(fields: [videoId], references: [id])
 
   @@unique([userId, videoId])
 }
