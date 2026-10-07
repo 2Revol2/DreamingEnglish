@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { VideoLevel } from "@prisma/client";
 import { getVideoServices } from "@/entities/Video";
-import { withAuth } from "@/shared/lib/api/withAuth";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
-import { getOptionalAuth } from "@/shared/lib/api/getOptionalAuth";
+import { getAuth } from "@/shared/auth/getAuth";
 import type { PostVideoBody } from "@/pages/AdminPage";
 import type { SortBy } from "@/entities/Video";
 import type { NextRequest } from "next/server";
@@ -12,11 +11,7 @@ export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
 
-    const { error, userId } = await getOptionalAuth();
-
-    if (error) {
-      return error;
-    }
+    const { userId } = await getAuth();
 
     const { searchParams } = url;
 
@@ -52,10 +47,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { error, userId } = await withAuth();
+    const { userId } = await getAuth();
 
-    if (error) {
-      return error;
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const user = await prisma.user.findUnique({

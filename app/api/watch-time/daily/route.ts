@@ -1,23 +1,19 @@
 import { NextResponse } from "next/server";
 import { formatInTimeZone } from "date-fns-tz";
-import { withAuth } from "@/shared/lib/api/withAuth";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
-import { getOptionalAuth } from "@/shared/lib/api/getOptionalAuth";
+import { getAuth } from "@/shared/auth/getAuth";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
 
-    const { error, userId } = await getOptionalAuth();
+    const { userId } = await getAuth();
 
     if (!userId) {
-      return NextResponse.json(null);
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (error) {
-      return error;
-    }
     const { searchParams } = url;
     const timeZone = searchParams.get("timeZone");
 
@@ -48,10 +44,11 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const bodyPromise = req.json();
-    const { error, userId } = await withAuth();
 
-    if (error) {
-      return error;
+    const { userId } = await getAuth();
+
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body: { timeZone: string; watchedSeconds: number } = await bodyPromise;
