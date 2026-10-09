@@ -4,12 +4,12 @@ import { VideoList } from "@/entities/Video";
 import { VideoActions } from "@/features/VideoActions";
 import { InfiniteList, useInfiniteList } from "@/features/InfiniteList";
 import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
-import { useIsAuthenticated } from "@/shared/lib/useIsAuthenticated";
+import { useAuth } from "@/shared/auth/useAuth";
 import { getVideos } from "../../api/getVideos";
 import { useFiltersState } from "../../model/store/useFiltersStore";
 
 export const VideosInfiniteList = () => {
-  const isAuthenticated = useIsAuthenticated();
+  const { isAuthenticated } = useAuth();
 
   const sortBy = useFiltersState((state) => state.sortBy);
   const search = useFiltersState((state) => state.searchQuery);
