@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/shared/auth/useAuth";
+import { userKeys } from "../queryKeys";
 import { getUserWatchedTime } from "../getUserWatchedTime";
 
 export const useUserWatchedTime = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, userId } = useAuth();
+
   return useQuery({
-    queryKey: ["watched-time"],
+    queryKey: userKeys.watchedTime(userId),
     queryFn: () => getUserWatchedTime(),
     staleTime: 1000 * 60 * 5,
     enabled: isAuthenticated,

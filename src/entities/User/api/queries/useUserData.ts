@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/shared/auth/useAuth";
+import { userKeys } from "../queryKeys";
 import { getUserData } from "../getUserData";
 import type { UserData } from "../../model/types/type";
 
 export const useUserData = <TSelected = UserData | null>(select?: (data: UserData | null) => TSelected) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, userId } = useAuth();
   return useQuery({
-    queryKey: ["user"],
+    queryKey: userKeys.profile(userId),
     queryFn: getUserData,
     structuralSharing: true,
     staleTime: 1000 * 60 * 5,
