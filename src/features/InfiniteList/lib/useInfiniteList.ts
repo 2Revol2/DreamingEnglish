@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 interface UseInfiniteListProps<TData, TParams> {
   fetchFn: (params: TParams & { page: number }) => Promise<TData[]>;
-  queryKey: unknown[];
+  queryKey: readonly unknown[];
   queryParams?: Omit<TParams, "page">;
 }
 
@@ -14,7 +14,7 @@ export const useInfiniteList = <TData, TParams>(props: UseInfiniteListProps<TDat
   const { ref, inView, entry } = useInView();
 
   const query = useInfiniteQuery({
-    queryKey: [...queryKey, queryParams],
+    queryKey,
     queryFn: async ({ pageParam = 1 }) => {
       return await fetchFn({ ...(queryParams as TParams), page: pageParam });
     },

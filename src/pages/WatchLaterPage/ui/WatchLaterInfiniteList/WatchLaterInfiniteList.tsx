@@ -1,12 +1,15 @@
 "use client";
 
 import { TbDotsVertical } from "react-icons/tb";
-import { getUserWatchLater, VideoList } from "@/entities/Video";
+import { getUserWatchLater, videoKeys, VideoList } from "@/entities/Video";
 import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
+import { useAuth } from "@/shared/auth/useAuth";
 import { VideoActions } from "@/features/VideoActions";
 import { InfiniteList, useInfiniteList } from "@/features/InfiniteList";
 
 export const WatchLaterInfiniteList = () => {
+  const { userId } = useAuth();
+
   const {
     items: videos,
     isLoading,
@@ -14,7 +17,7 @@ export const WatchLaterInfiniteList = () => {
     ref,
     hasNextPage,
   } = useInfiniteList({
-    queryKey: ["watch-later", "infinite"],
+    queryKey: videoKeys.watchLaterInfinite(userId, { limit: 12 }),
     fetchFn: getUserWatchLater,
     queryParams: {},
   });

@@ -1,13 +1,13 @@
 import { MdOutlineHistory } from "react-icons/md";
 import { getUserVideosHistory, getUserWatchLater } from "@/entities/Video";
 import { RoutePath } from "@/shared/constants/router";
-import { withAuth } from "@/shared/lib/api/withAuth";
+import { getAuth } from "@/shared/auth/getAuth";
 import { GuestLibrary } from "../GuestLibrary/GuestLibrary";
 import { WatchLaterSection } from "../WatchLaterSection/WatchLaterSection";
 import { VideoCarousel } from "../VideoCarousel/VideoCarousel";
 
 export const LibraryPage = async () => {
-  const { userId } = await withAuth();
+  const { userId } = await getAuth();
 
   if (!userId) {
     return (

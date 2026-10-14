@@ -9,7 +9,7 @@ interface GetVideoParams {
   search?: string;
   page?: number;
   limit?: number;
-  userId?: string;
+  userId: string | null;
 }
 
 export const getVideoServices = async (params: GetVideoParams) => {

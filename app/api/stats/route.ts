@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import { getUserStatsService } from "@/entities/User";
-import { getOptionalAuth } from "@/shared/lib/api/getOptionalAuth";
+import { getAuth } from "@/shared/auth/getAuth";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
 
-    const { error, userId } = await getOptionalAuth();
+    const { userId } = await getAuth();
 
-    if (error) {
-      return error;
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { searchParams } = url;

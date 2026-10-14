@@ -3,10 +3,10 @@ import { ActivityTracker } from "@/widgets/ActivityTracker";
 import { LearningLevelsList } from "@/widgets/LearningLevelsList";
 import { AddOutsideTime } from "@/features/AddOutsideTime";
 import { Container } from "@/shared/ui/container";
-import { withAuth } from "@/shared/lib/api/withAuth";
+import { getAuth } from "@/shared/auth/getAuth";
 
 export const ProgressPage = async () => {
-  const { userId } = await withAuth();
+  const { userId } = await getAuth();
 
   return (
     <Container className={"flex lg:flex-row flex-col lg:gap-10 gap-5 lg:pt-8 pt-0"}>

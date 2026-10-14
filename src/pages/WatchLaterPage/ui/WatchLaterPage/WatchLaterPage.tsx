@@ -10,11 +10,11 @@ import {
   BreadcrumbSeparator,
 } from "@/shared/ui/breadcrumb";
 import { RoutePath } from "@/shared/constants/router";
-import { withAuth } from "@/shared/lib/api/withAuth";
+import { getAuth } from "@/shared/auth/getAuth";
 import { WatchLaterInfiniteList } from "../WatchLaterInfiniteList/WatchLaterInfiniteList";
 
 export const WatchLaterPage = async () => {
-  const { userId } = await withAuth();
+  const { userId } = await getAuth();
 
   if (!userId) {
     redirect(RoutePath.library);

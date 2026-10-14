@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/shared/auth/useAuth";
 import { getUserWatchLater } from "./getUserWatchLater";
+import { videoKeys } from "./queryKeys";
 import type { Video } from "..";
 
 interface useUserWatchLater {
@@ -9,10 +11,11 @@ interface useUserWatchLater {
 }
 
 export const useUserWatchLater = (props: useUserWatchLater) => {
-  const { page, limit, initialData } = props;
+  const { page = 1, limit = 7, initialData } = props;
+  const { userId } = useAuth();
 
   return useQuery({
-    queryKey: ["watch-later", "list"],
+    queryKey: videoKeys.watchLaterList(userId, { page, limit }),
     queryFn: () => getUserWatchLater({ page, limit }),
     structuralSharing: true,
     staleTime: 1000 * 60 * 5,
