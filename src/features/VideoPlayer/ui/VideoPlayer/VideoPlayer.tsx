@@ -2,7 +2,7 @@
 import ReactPlayer from "react-player";
 import { useCallback, useEffect, useRef } from "react";
 import { useThrottledCallback } from "use-debounce";
-import { useIsAuthenticated } from "@/shared/lib/useIsAuthenticated";
+import { useAuth } from "@/shared/auth/useAuth";
 import { updateUserWatchTime } from "../../api/updateUserWatchTime";
 import { useUpdateUserWatchedTime } from "../../api/useUpdateUserWatchedTime";
 
@@ -12,7 +12,7 @@ interface VideoPlayerProps {
 
 export const VideoPlayer = (props: VideoPlayerProps) => {
   const { url } = props;
-  const isAuthenticated = useIsAuthenticated();
+  const { isAuthenticated } = useAuth();
 
   const { mutate } = useUpdateUserWatchedTime();
 

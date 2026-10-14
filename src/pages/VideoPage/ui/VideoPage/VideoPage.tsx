@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { VideoPlayer } from "@/features/VideoPlayer";
 import { VideoLevel } from "@/shared/ui/video-level";
 import { Container } from "@/shared/ui/container";
+import { getAuth } from "@/shared/auth/getAuth";
 import { updateUserVideosHistory } from "../../api/updateUserVideosHistory";
 import { getVideoById } from "../../api/getVideoById";
 
@@ -10,14 +11,16 @@ const ChatWindow = dynamic(() => import("@/widgets/ChatWindow").then((m) => m.Ch
 
 export const VideoPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-
+  const { userId } = await getAuth();
   const video = await getVideoById(id);
 
   if (!video) {
     notFound();
   }
 
-  await updateUserVideosHistory({ videoId: video.id });
+  if (userId) {
+    await updateUserVideosHistory({ videoId: video.id });
+  }
 
   return (
     <Container className={"flex flex-col gap-8 lg:pt-8 pt-0"}>

@@ -1,14 +1,14 @@
 import dynamic from "next/dynamic";
-import { withAuth } from "@/shared/lib/api/withAuth";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
+import { getAuth } from "@/shared/auth/getAuth";
 import type { NextRequest } from "next/server";
 
 const AdminForm = dynamic(() => import("../AdminForm/AdminForm"));
 
 export const AdminPage = async (req: NextRequest) => {
-  const { userId, error } = await withAuth();
+  const { userId } = await getAuth();
 
-  if (error) {
+  if (!userId) {
     return <div>Error</div>;
   }
 

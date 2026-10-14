@@ -1,15 +1,16 @@
 import { NextResponse } from "next/server";
-import { withAuth } from "@/shared/lib/api/withAuth";
 import { prisma } from "@/shared/lib/prisma/prismaClient";
+import { getAuth } from "@/shared/auth/getAuth";
 import type { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     const bodyPromise = req.json();
-    const { error, userId } = await withAuth();
 
-    if (error) {
-      return error;
+    const { userId } = await getAuth();
+
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body: { outsideTime: number } = await bodyPromise;
