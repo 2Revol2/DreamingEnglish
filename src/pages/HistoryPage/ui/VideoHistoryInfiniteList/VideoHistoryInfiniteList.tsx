@@ -1,9 +1,12 @@
 "use client";
-import { getUserVideosHistory, VideoHistoryList } from "@/entities/Video";
+import { getUserVideosHistory, videoKeys, VideoHistoryList } from "@/entities/Video";
 import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
+import { useAuth } from "@/shared/auth/useAuth";
 import { InfiniteList, useInfiniteList } from "@/features/InfiniteList";
 
 export const VideoHistoryInfiniteList = () => {
+  const { userId } = useAuth();
+
   const {
     items: videos,
     isLoading,
@@ -11,7 +14,7 @@ export const VideoHistoryInfiniteList = () => {
     ref,
     hasNextPage,
   } = useInfiniteList({
-    queryKey: ["video-history"],
+    queryKey: videoKeys.historyInfinite(userId, { limit: 6 }),
     fetchFn: getUserVideosHistory,
     queryParams: { limit: 6 },
   });

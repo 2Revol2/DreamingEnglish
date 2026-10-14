@@ -1,6 +1,6 @@
 "use client";
 
-import { VideoList } from "@/entities/Video";
+import { videoKeys, VideoList } from "@/entities/Video";
 import { VideoActions } from "@/features/VideoActions";
 import { InfiniteList, useInfiniteList } from "@/features/InfiniteList";
 import { NoResultsIcon } from "@/shared/assets/NoResultsIcon";
@@ -9,7 +9,7 @@ import { getVideos } from "../../api/getVideos";
 import { useFiltersState } from "../../model/store/useFiltersStore";
 
 export const VideosInfiniteList = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, userId } = useAuth();
 
   const sortBy = useFiltersState((state) => state.sortBy);
   const search = useFiltersState((state) => state.searchQuery);
@@ -23,7 +23,7 @@ export const VideosInfiniteList = () => {
     ref,
     hasNextPage,
   } = useInfiniteList({
-    queryKey: ["videos", search, sortBy, levels, duration],
+    queryKey: videoKeys.list(userId, { search, sortBy, levels, duration }),
     fetchFn: getVideos,
     queryParams: {
       search,
