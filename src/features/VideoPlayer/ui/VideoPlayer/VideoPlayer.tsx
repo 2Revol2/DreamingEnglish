@@ -5,6 +5,7 @@ import { useThrottledCallback } from "use-debounce";
 import { useAuth } from "@/shared/auth/useAuth";
 import { updateUserWatchTime } from "../../api/updateUserWatchTime";
 import { useUpdateUserWatchedTime } from "../../api/useUpdateUserWatchedTime";
+import { useVideoVolumeStore } from "../../model/useVideoVolumeStore";
 
 interface VideoPlayerProps {
   url: string;
@@ -15,6 +16,7 @@ export const VideoPlayer = (props: VideoPlayerProps) => {
   const { isAuthenticated } = useAuth();
 
   const { mutate } = useUpdateUserWatchedTime();
+  const { volume, muted, setVolume, setMuted } = useVideoVolumeStore();
 
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const setPlayerRef = useCallback((player: HTMLVideoElement) => {
@@ -90,7 +92,13 @@ export const VideoPlayer = (props: VideoPlayerProps) => {
         onPlay={handlePlay}
         onPause={handlePause}
         onTimeUpdate={handleTimeUpdate}
+        onVolumeChange={(event) => {
+          setVolume(event.currentTarget.volume);
+          setMuted(event.currentTarget.muted);
+        }}
         src={url}
+        volume={volume}
+        muted={muted}
         controls
         width="100%"
         height="100%"
