@@ -38,7 +38,7 @@ describe("getVideoService", () => {
   it("should return videos filtered by levels", async () => {
     vi.mocked(prisma.video.findMany).mockResolvedValue([mockVideos[0]]);
 
-    const videos = await getVideoServices({ levels: [VideoLevel.Beginner] });
+    const videos = await getVideoServices({ levels: [VideoLevel.Beginner], userId: null });
     expect(videos[0].level).toBe(VideoLevel.Beginner);
     expect(videos[0].isWatchLater).toBe(false);
   });
@@ -46,7 +46,7 @@ describe("getVideoService", () => {
   it("should sort videos by difficulty when sort=hard", async () => {
     vi.mocked(prisma.video.findMany).mockResolvedValue([mockVideos[1]]);
 
-    const videos = await getVideoServices({ sortBy: "hard" });
+    const videos = await getVideoServices({ sortBy: "hard", userId: null });
     expect(videos[0].level).toBe(VideoLevel.Advanced);
     expect(videos[0].isWatchLater).toBe(false);
   });
@@ -54,7 +54,7 @@ describe("getVideoService", () => {
   it("should filter videos by search query", async () => {
     vi.mocked(prisma.video.findMany).mockResolvedValue([mockVideos[1]]);
 
-    const videos = await getVideoServices({ search: "test" });
+    const videos = await getVideoServices({ search: "test", userId: null });
     expect(videos[0].title).toBe("Test 2");
     expect(videos[0].isWatchLater).toBe(false);
   });
@@ -62,7 +62,7 @@ describe("getVideoService", () => {
   it("should sort videos by difficulty when sort=easy", async () => {
     vi.mocked(prisma.video.findMany).mockResolvedValue([mockVideos[0]]);
 
-    const videos = await getVideoServices({ sortBy: "easy" });
+    const videos = await getVideoServices({ sortBy: "easy", userId: null });
     expect(videos[0].level).toBe(VideoLevel.Beginner);
     expect(videos[0].isWatchLater).toBe(false);
   });
@@ -70,7 +70,7 @@ describe("getVideoService", () => {
   it("should filter videos by duration range", async () => {
     vi.mocked(prisma.video.findMany).mockResolvedValue([mockVideos[0]]);
 
-    const videos = await getVideoServices({ duration: [1000, 1300] });
+    const videos = await getVideoServices({ duration: [1000, 1300], userId: null });
     expect(videos.every((v) => v.duration >= 1000 && v.duration <= 1300)).toBe(true);
     expect(videos[0].isWatchLater).toBe(false);
   });

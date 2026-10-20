@@ -1,13 +1,12 @@
 import { MethodPage } from "@/pages/MethodPage";
-import type { Metadata } from "next";
+import { createMetadata } from "@/shared/lib/createMetadata";
+import { RoutePath } from "@/shared/constants/router";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Our Method – Learn English Naturally with Comprehensible Input",
   description:
     "Discover how Dreaming English helps learners achieve fluency through the comprehensible input method, engaging videos, podcasts, and AI support. Learn English naturally and effectively.",
-  icons: {
-    icon: "/logo.png",
-  },
+  path: RoutePath.method,
   keywords: [
     "Dreaming English",
     "learn English",
@@ -22,6 +21,6 @@ export const metadata: Metadata = {
     "effective English learning",
     "learn English online",
   ],
-};
+});
 
 export default MethodPage;

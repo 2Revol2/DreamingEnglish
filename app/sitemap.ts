@@ -1,21 +1,13 @@
 import { prisma } from "@/shared/lib/prisma/prismaClient";
+import { SITE_URL } from "@/shared/constants/site";
 import type { MetadataRoute } from "next";
 
 export const dynamic = "force-dynamic";
 
-const staticRoutes = [
-  "/",
-  "/about",
-  "/method",
-  "/browse",
-  "/browse/library",
-  "/browse/library/history",
-  "/browse/library/watch-later",
-  "/browse/progress",
-];
+const staticRoutes = ["/", "/about", "/method", "/browse"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://dreamingenglish.vercel.app";
+  const baseUrl = SITE_URL;
   const now = new Date();
 
   const videos = await prisma.video.findMany({
