@@ -1,7 +1,8 @@
+import { SITE_URL } from "@/shared/constants/site";
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://dreamingenglish.vercel.app";
+  const baseUrl = SITE_URL;
 
   return {
     rules: {

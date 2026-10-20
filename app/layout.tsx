@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { AuthProvider } from "@/app/providers/AuthProvider";
 import { TanstackProvider } from "@/app/providers/TanstackProvider";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/shared/constants/site";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
@@ -14,28 +15,27 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Dreaming English – Learn English with Content for All Levels",
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
+  title: {
+    default: "Dreaming English – Learn English with Content for All Levels",
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
   icons: {
     icon: "/logo.png",
+    apple: "/logo.png",
   },
-  description:
-    "Master English with interesting videos and podcasts tailored for all levels. Achieve fluency through immersion.",
-  openGraph: {
-    title: "Dreaming English – Learn English with Content for All Levels",
-    description: "Master English with interesting videos and podcasts tailored for all levels.",
-    images: [
-      {
-        url: "/preview.png",
-        width: 1200,
-        height: 630,
-        alt: "Dreaming English",
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    images: ["/preview.png"],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+      "max-snippet": -1,
+    },
   },
   verification: {
     google: "yb9rSJoWy69ulZuuWxgVTUUFTXLhbCGYRG43cZWtSTc",
