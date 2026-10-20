@@ -1,4 +1,4 @@
-import { SITE_NAME, SITE_PREVIEW_IMAGE } from "@/shared/constants/site";
+import { SITE_NAME } from "@/shared/constants/site";
 import type { Metadata } from "next";
 
 interface CreateMetadataParams {
@@ -20,7 +20,7 @@ export const createMetadata = ({
   description,
   path,
   absoluteTitle = false,
-  image = { url: SITE_PREVIEW_IMAGE, width: 1200, height: 630, alt: SITE_NAME },
+  image,
   keywords,
   noIndex = false,
   type = "website",
@@ -41,13 +41,13 @@ export const createMetadata = ({
       siteName: SITE_NAME,
       locale: "en_US",
       type,
-      images: [image],
+      images: image ? [image] : undefined,
     },
     twitter: {
-      card: "summary_large_image",
+      card: image ? "summary_large_image" : "summary",
       title: fullTitle,
       description,
-      images: [image.url],
+      images: image ? [image.url] : undefined,
     },
     robots: noIndex ? { index: false, follow: true } : undefined,
   };
