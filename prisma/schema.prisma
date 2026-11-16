@@ -121,3 +121,14 @@ enum UserRole {
   ADMIN
   USER
 }
+
+/// Daily AI chat usage counter.
+/// identifier: "user:<userId>" | "guest:<sha256(ip)>" | "global"
+model AiChatDailyUsage {
+  id           String @id @default(cuid())
+  identifier   String
+  date         String
+  messagesSent Int    @default(0)
+
+  @@unique([identifier, date])
+}
