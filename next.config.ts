@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     "/api/**/*": ["./node_modules/.prisma/client/**/*"],
     "/*": ["./node_modules/.prisma/client/**/*"],
   },
+  output: "standalone",
   experimental: {
     optimizePackageImports: ["lucide-react", "react-icons", "radix-ui"],
   },
